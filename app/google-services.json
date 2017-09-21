@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "103680565938",
+    "firebase_url": "https://siemusuarios.firebaseio.com",
+    "project_id": "siemusuarios",
+    "storage_bucket": "siemusuarios.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103680565938:android:f2ff7e92690aeaa8",
+        "android_client_info": {
+          "package_name": "com.siem.siemusuarios"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103680565938-hdbvma94e6b5776pf7cfadvb2f3g6mie.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8u-XxSS1NTFZrvWwahFcZGn1CAvBnby8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
