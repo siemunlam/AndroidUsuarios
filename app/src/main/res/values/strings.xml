@@ -3,4 +3,9 @@
     <string name="name">SIEM</string>
     <string name="nameToolbar">S I E M</string>
 
+    <!-- Menu -->
+    <string name="menuWhatsapp">Whatsapp</string>
+    <string name="menuLlamar">Llamar</string>
+    <string name="menuPerfiles">Perfiles</string>
+    <string name="menuConsultarAuxilio">Consultar auxilio</string>
 </resources>
