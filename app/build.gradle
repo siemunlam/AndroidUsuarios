@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "BASE_API_URL", "\"http://siemunlam.pythonanywhere.com/api/\""
     }
     buildTypes {
         release {
@@ -39,6 +40,12 @@ dependencies {
      * Firebase Cloud Messaging
      */
     compile 'com.google.firebase:firebase-messaging:10.2.6'
+
+    /**
+     * Retrofit
+     */
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

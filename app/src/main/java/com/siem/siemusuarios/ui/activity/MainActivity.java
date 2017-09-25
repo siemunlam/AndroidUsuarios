@@ -14,9 +14,15 @@ import com.siem.siemusuarios.databinding.ActivityMainBinding;
 import com.siem.siemusuarios.model.Motivos;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerItem;
+import com.siem.siemusuarios.utils.Constants;
+import com.siem.siemusuarios.utils.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends ToolbarActivity {
 
@@ -42,6 +48,8 @@ public class MainActivity extends ToolbarActivity {
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerEndItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
+
+        getMotivosPrecategorizacion();
     }
 
     @Override
@@ -73,5 +81,31 @@ public class MainActivity extends ToolbarActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void getMotivosPrecategorizacion() {
+        Call<Object> response = RetrofitClient.getServerClient().getMotivosPrecategorizacion();
+        response.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                switch(response.code()){
+                    case Constants.CODE_SERVER_OK:
+                        //TODO: Terminar
+                        break;
+                    default:
+                        error();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                error();
+            }
+
+            private void error() {
+                finish();
+            }
+        });
     }
 }
