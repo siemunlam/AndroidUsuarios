@@ -4,11 +4,11 @@ package com.siem.siemusuarios.model;
  * Created by Lucas on 22/9/17.
  */
 
-public class Motivos {
+public class Motivo {
 
     private String mDescripcion;
 
-    public Motivos(String descripcion){
+    public Motivo(String descripcion){
         mDescripcion = descripcion;
     }
 

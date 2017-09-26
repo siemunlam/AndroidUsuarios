@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.siem.siemusuarios.ui.custom.CustomToolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/appBarLayout"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyclerview"
+            android:layout_below="@+id/appBarLayout"
+            android:visibility="gone"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/appBarLayout"
+            android:gravity="center"
+            android:padding="@dimen/defaultMargin"
+            android:id="@+id/contentNoPerfiles">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/sizeIconNoPerfiles"
+                android:layout_height="@dimen/sizeIconNoPerfiles"
+                app:srcCompat="@drawable/ic_person"
+                android:id="@+id/icon"
+                android:layout_centerHorizontal="true"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/msgNoPerfiles"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/textsizeMsgNoPerfiles"
+                android:gravity="center"
+                android:layout_below="@+id/icon"
+                android:id="@+id/textviewMsgNoPerfiles"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

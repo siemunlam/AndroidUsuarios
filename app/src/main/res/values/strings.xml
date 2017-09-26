@@ -8,4 +8,8 @@
     <string name="menuLlamar">Llamar</string>
     <string name="menuPerfiles">Perfiles</string>
     <string name="menuConsultarAuxilio">Consultar auxilio</string>
+
+    <!-- Perfiles -->
+    <string name="msgNoPerfiles">Pulse el + para agregar un nuevo perfil</string>
+    <string name="menuAgregarPerfil">Agregar</string>
 </resources>

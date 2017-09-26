@@ -1,5 +1,6 @@
 package com.siem.siemusuarios.ui.activity;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -11,11 +12,12 @@ import android.view.MenuItem;
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.adapter.MotivosAdapter;
 import com.siem.siemusuarios.databinding.ActivityMainBinding;
-import com.siem.siemusuarios.model.Motivos;
+import com.siem.siemusuarios.model.Motivo;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerItem;
 import com.siem.siemusuarios.utils.Constants;
 import com.siem.siemusuarios.utils.RetrofitClient;
+import com.siem.siemusuarios.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +38,10 @@ public class MainActivity extends ToolbarActivity {
         setToolbar(false);
 
 
-        Motivos motivo1 = new Motivos("pepe");
-        Motivos motivo2 = new Motivos("adrian");
-        Motivos motivo3 = new Motivos("juan");
-        List<Motivos> listMotivos = new ArrayList<>();
+        Motivo motivo1 = new Motivo("pepe");
+        Motivo motivo2 = new Motivo("adrian");
+        Motivo motivo3 = new Motivo("juan");
+        List<Motivo> listMotivos = new ArrayList<>();
         listMotivos.add(motivo1);
         listMotivos.add(motivo2);
         listMotivos.add(motivo3);
@@ -49,7 +51,7 @@ public class MainActivity extends ToolbarActivity {
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerEndItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
 
-        getMotivosPrecategorizacion();
+        //getMotivosPrecategorizacion();
     }
 
     @Override
@@ -71,7 +73,7 @@ public class MainActivity extends ToolbarActivity {
                 return true;
 
             case R.id.menuPerfiles:
-
+                Utils.startActivityWithTransition(this, new Intent(MainActivity.this, PerfilesActivity.class));
                 return true;
 
             case R.id.menuConsultarAuxilio:

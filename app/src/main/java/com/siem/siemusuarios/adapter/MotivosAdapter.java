@@ -5,15 +5,15 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.siem.siemusuarios.databinding.FilaMotivosBinding;
-import com.siem.siemusuarios.model.Motivos;
+import com.siem.siemusuarios.model.Motivo;
 
 import java.util.List;
 
 public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosViewHolder> {
 
-    private List<Motivos> mListDatos;
+    private List<Motivo> mListDatos;
 
-    public MotivosAdapter(List<Motivos> datos){
+    public MotivosAdapter(List<Motivo> datos){
         mListDatos = datos;
     }
 
@@ -26,7 +26,7 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
 
     @Override
     public void onBindViewHolder(final MotivosViewHolder holder, int position) {
-        Motivos motivo = mListDatos.get(holder.getAdapterPosition());
+        Motivo motivo = mListDatos.get(holder.getAdapterPosition());
         holder.bind(motivo);
     }
 
@@ -44,7 +44,7 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
             mBinding = binding;
         }
 
-        public void bind(Motivos motivo) {
+        public void bind(Motivo motivo) {
             mBinding.textMotivo.setText(motivo.getDescripcion());
         }
     }
