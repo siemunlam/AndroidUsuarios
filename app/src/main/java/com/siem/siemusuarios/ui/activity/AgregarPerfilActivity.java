@@ -32,6 +32,8 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
     private ActivityAgregarPerfilBinding mBinding;
     private Date mFechaNacimiento;
 
+    //TODO: SaveInstanceState
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
