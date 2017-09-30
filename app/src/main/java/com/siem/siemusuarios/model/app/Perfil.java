@@ -1,5 +1,9 @@
 package com.siem.siemusuarios.model.app;
 
+import android.content.Context;
+
+import com.siem.siemusuarios.db.DBWrapper;
+
 /**
  * Created by Lucas on 25/9/17.
  */
@@ -42,4 +46,9 @@ public class Perfil {
     public void setFechaNacimiento(String fechaNacimiento) {
         mFechaNacimiento = fechaNacimiento;
     }
+
+    public void save(Context context){
+        DBWrapper.savePerfil(context, this);
+    }
+
 }

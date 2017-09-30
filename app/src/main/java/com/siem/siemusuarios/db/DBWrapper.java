@@ -26,7 +26,7 @@ public class DBWrapper {
         );
     }
 
-    public static void addPerfil(Context context, Perfil perfil){
+    public static void savePerfil(Context context, Perfil perfil){
         ContentValues cv = new ContentValues();
         cv.put(DBContract.Perfiles.COLUMN_NAME_NOMBRE, perfil.getNombre());
         cv.put(DBContract.Perfiles.COLUMN_NAME_APELLIDO, perfil.getApellido());

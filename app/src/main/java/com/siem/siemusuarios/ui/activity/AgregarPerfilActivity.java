@@ -10,10 +10,12 @@ import android.view.animation.AnimationUtils;
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.ActivityAgregarPerfilBinding;
 import com.siem.siemusuarios.interfaces.SexoSelectedListener;
+import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.model.app.Sexo;
 import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
 import com.siem.siemusuarios.utils.Constants;
 import com.siem.siemusuarios.utils.SexoLoader;
+import com.siem.siemusuarios.utils.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -92,6 +94,20 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
             @Override
             public void afterTextChanged(Editable s) {
                 controlateAddButton();
+            }
+        });
+
+        mBinding.addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Perfil perfil = new Perfil();
+                perfil.setNombre(mBinding.edittextNombre.getText().toString());
+                perfil.setApellido(mBinding.edittextApellido.getText().toString());
+                perfil.setSexo(mBinding.edittextSexo.getText().toString());
+                perfil.setFechaNacimiento(String.valueOf(mFechaNacimiento.getTime()));
+                perfil.save(AgregarPerfilActivity.this);
+                Utils.addFinishTransitionAnimation(AgregarPerfilActivity.this);
+                finish();
             }
         });
     }
