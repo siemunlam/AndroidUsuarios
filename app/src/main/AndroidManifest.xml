@@ -27,7 +27,8 @@
         <activity
             android:name=".ui.activity.AgregarPerfilActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
         </activity>
 
         <!-- FCM -->
