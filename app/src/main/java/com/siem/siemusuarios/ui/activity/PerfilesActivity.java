@@ -1,5 +1,6 @@
 package com.siem.siemusuarios.ui.activity;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.adapter.PerfilesAdapter;
 import com.siem.siemusuarios.databinding.ActivityPerfilesBinding;
 import com.siem.siemusuarios.utils.Constants;
+import com.siem.siemusuarios.utils.Utils;
 
 /**
  * Created by Lucas on 25/9/17.
@@ -27,7 +29,7 @@ public class PerfilesActivity extends ToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_perfiles);
-        setToolbar(false);
+        setToolbar(true);
 
         mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT);
         mBinding.recyclerview.setAdapter(new PerfilesAdapter(null));
@@ -49,7 +51,7 @@ public class PerfilesActivity extends ToolbarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuAgregarPerfil:
-
+                Utils.startActivityWithTransition(PerfilesActivity.this, new Intent(PerfilesActivity.this, AgregarPerfilActivity.class));
                 return true;
 
             default:

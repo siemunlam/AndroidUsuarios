@@ -12,4 +12,10 @@
     <!-- Perfiles -->
     <string name="msgNoPerfiles">Pulse el + para agregar un nuevo perfil</string>
     <string name="menuAgregarPerfil">Agregar</string>
+
+    <!-- Agregar perfil -->
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="sexo">Sexo</string>
+    <string name="fechaNacimiento">Fecha de nacimiento</string>
 </resources>
