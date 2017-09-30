@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.siem.siemusuarios.databinding.FilaMotivosBinding;
-import com.siem.siemusuarios.model.Motivo;
+import com.siem.siemusuarios.model.api.Motivo;
 
 import java.util.List;
 
@@ -33,6 +33,10 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
     @Override
     public int getItemCount() {
         return mListDatos != null ? mListDatos.size() : 0;
+    }
+
+    public void addMotivo(Motivo motivo){
+        mListDatos.add(motivo);
     }
 
     public class MotivosViewHolder extends RecyclerView.ViewHolder{

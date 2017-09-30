@@ -1,6 +1,5 @@
 package com.siem.siemusuarios.ui.activity;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.adapter.PerfilesAdapter;
 import com.siem.siemusuarios.databinding.ActivityPerfilesBinding;
 import com.siem.siemusuarios.utils.Constants;
-import com.siem.siemusuarios.utils.Utils;
 
 /**
  * Created by Lucas on 25/9/17.

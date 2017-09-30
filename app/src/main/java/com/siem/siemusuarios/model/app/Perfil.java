@@ -1,4 +1,4 @@
-package com.siem.siemusuarios.model;
+package com.siem.siemusuarios.model.app;
 
 /**
  * Created by Lucas on 25/9/17.

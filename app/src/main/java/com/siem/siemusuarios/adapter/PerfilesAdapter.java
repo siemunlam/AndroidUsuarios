@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.siem.siemusuarios.databinding.FilaMotivosBinding;
-import com.siem.siemusuarios.model.Perfil;
+import com.siem.siemusuarios.model.app.Perfil;
 
 import java.util.List;
 

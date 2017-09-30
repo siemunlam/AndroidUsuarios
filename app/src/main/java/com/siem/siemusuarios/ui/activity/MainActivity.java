@@ -12,7 +12,8 @@ import android.view.MenuItem;
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.adapter.MotivosAdapter;
 import com.siem.siemusuarios.databinding.ActivityMainBinding;
-import com.siem.siemusuarios.model.Motivo;
+import com.siem.siemusuarios.model.api.Motivo;
+import com.siem.siemusuarios.model.api.ResponseMotivos;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerItem;
 import com.siem.siemusuarios.utils.Constants;
@@ -20,7 +21,9 @@ import com.siem.siemusuarios.utils.RetrofitClient;
 import com.siem.siemusuarios.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,21 +40,13 @@ public class MainActivity extends ToolbarActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         setToolbar(false);
 
-
-        Motivo motivo1 = new Motivo("pepe");
-        Motivo motivo2 = new Motivo("adrian");
-        Motivo motivo3 = new Motivo("juan");
-        List<Motivo> listMotivos = new ArrayList<>();
-        listMotivos.add(motivo1);
-        listMotivos.add(motivo2);
-        listMotivos.add(motivo3);
-        mAdapter = new MotivosAdapter(listMotivos);
+        mAdapter = new MotivosAdapter(new ArrayList<Motivo>());
         mBinding.recyclerview.setAdapter(mAdapter);
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerEndItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
 
-        //getMotivosPrecategorizacion();
+        getMotivosPrecategorizacion();
     }
 
     @Override
@@ -86,13 +81,23 @@ public class MainActivity extends ToolbarActivity {
     }
 
     public void getMotivosPrecategorizacion() {
-        Call<Object> response = RetrofitClient.getServerClient().getMotivosPrecategorizacion();
-        response.enqueue(new Callback<Object>() {
+        Call<ResponseMotivos> response = RetrofitClient.getServerClient().getMotivosPrecategorizacion();
+        response.enqueue(new Callback<ResponseMotivos>() {
             @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
+            public void onResponse(Call<ResponseMotivos> call, Response<ResponseMotivos> response) {
                 switch(response.code()){
                     case Constants.CODE_SERVER_OK:
-                        //TODO: Terminar
+                        ResponseMotivos responseMotivos = response.body();
+                        HashMap<String, List<String>> motivos = responseMotivos.getListMotivos();
+                        if(motivos != null){
+                            for (Map.Entry<String, List<String>> entry : motivos.entrySet()) {
+                                Motivo motivo = new Motivo(entry.getKey());
+                                List<String> listOptions = entry.getValue();
+                                motivo.setListOptions(listOptions);
+                                mAdapter.addMotivo(motivo);
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
                         break;
                     default:
                         error();
@@ -101,7 +106,7 @@ public class MainActivity extends ToolbarActivity {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<ResponseMotivos> call, Throwable t) {
                 error();
             }
 
