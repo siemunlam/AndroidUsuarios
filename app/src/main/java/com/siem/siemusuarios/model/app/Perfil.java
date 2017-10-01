@@ -12,6 +12,7 @@ public class Perfil {
 
     private String mNombre;
     private String mApellido;
+    private Integer mNroContacto;
     private String mSexo;
     private String mFechaNacimiento;
 
@@ -29,6 +30,20 @@ public class Perfil {
 
     public void setApellido(String apellido) {
         mApellido = apellido;
+    }
+
+    public Integer getNroContacto() {
+        return mNroContacto;
+    }
+
+    public void setNroContacto(int nroContacto) {
+        mNroContacto = nroContacto;
+    }
+
+    public void setNroContacto(String nroContacto){
+        try{
+            mNroContacto = Integer.parseInt(nroContacto);
+        }catch (Exception e){}
     }
 
     public String getSexo() {

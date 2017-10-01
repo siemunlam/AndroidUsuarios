@@ -18,6 +18,7 @@
     <string name="apellido">Apellido</string>
     <string name="sexo">Sexo</string>
     <string name="fechaNacimiento">Fecha de nacimiento</string>
+    <string name="nroContacto">Nro. de contacto</string>
     <string name="aceptar">Aceptar</string>
     <string name="masculino">Masculino</string>
     <string name="femenino">Femenino</string>

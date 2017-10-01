@@ -51,6 +51,20 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/halfDefaultMargin">
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/edittextNroContacto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/nroContacto"
+                        android:maxLength="30"
+                        android:inputType="number"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/halfDefaultMargin"
                     android:focusable="false">
                     <android.support.v7.widget.AppCompatEditText

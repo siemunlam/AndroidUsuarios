@@ -27,6 +27,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             "CREATE TABLE " + DBContract.Perfiles.TABLE_NAME + "("
                     + DBContract.Perfiles._ID + DBContract.INTEGER_TYPE + DBContract.PRIMARY_KEY + DBContract.AUTOINCREMENT + DBContract.COMMA_SEP
                     + DBContract.Perfiles.COLUMN_NAME_NOMBRE + DBContract.TEXT_TYPE + DBContract.COMMA_SEP
+                    + DBContract.Perfiles.COLUMN_NAME_NRO_CONTACTO + DBContract.INTEGER_TYPE + DBContract.COMMA_SEP
                     + DBContract.Perfiles.COLUMN_NAME_APELLIDO + DBContract.TEXT_TYPE + DBContract.COMMA_SEP
                     + DBContract.Perfiles.COLUMN_NAME_SEXO + DBContract.TEXT_TYPE + DBContract.COMMA_SEP
                     + DBContract.Perfiles.COLUMN_NAME_FECHA_NACIMIENTO + DBContract.TEXT_TYPE + ") ";

@@ -47,6 +47,7 @@ public class DBContract {
 
         public static final String COLUMN_NAME_NOMBRE = "nombre";
         public static final String COLUMN_NAME_APELLIDO = "apellido";
+        public static final String COLUMN_NAME_NRO_CONTACTO = "nro_contacto";
         public static final String COLUMN_NAME_SEXO = "sexo";
         public static final String COLUMN_NAME_FECHA_NACIMIENTO = "fecha_nacimiento";
     }

@@ -97,12 +97,26 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
             }
         });
 
+        mBinding.edittextNroContacto.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                controlateAddButton();
+            }
+        });
+
         mBinding.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Perfil perfil = new Perfil();
                 perfil.setNombre(mBinding.edittextNombre.getText().toString());
                 perfil.setApellido(mBinding.edittextApellido.getText().toString());
+                perfil.setNroContacto(mBinding.edittextNroContacto.getText().toString());
                 perfil.setSexo(mBinding.edittextSexo.getText().toString());
                 perfil.setFechaNacimiento(String.valueOf(mFechaNacimiento.getTime()));
                 perfil.save(AgregarPerfilActivity.this);
