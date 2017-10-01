@@ -4,12 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.siem.siemusuarios.databinding.FilaMotivosBinding;
+import com.siem.siemusuarios.databinding.FilaPerfilesBinding;
 import com.siem.siemusuarios.model.app.Perfil;
 
 import java.util.List;
 
 public class PerfilesAdapter extends RecyclerView.Adapter<PerfilesAdapter.PerfilesViewHolder> {
+
+    private static final String FORMAT_NOMBRE_APELLIDO = "%1$s %2$s";
 
     private List<Perfil> mListDatos;
 
@@ -20,8 +22,8 @@ public class PerfilesAdapter extends RecyclerView.Adapter<PerfilesAdapter.Perfil
     @Override
     public PerfilesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        FilaMotivosBinding filaMotivosBinding = FilaMotivosBinding.inflate(layoutInflater, parent, false);
-        return new PerfilesViewHolder(filaMotivosBinding);
+        FilaPerfilesBinding filaPerfilesBinding = FilaPerfilesBinding.inflate(layoutInflater, parent, false);
+        return new PerfilesViewHolder(filaPerfilesBinding);
     }
 
     @Override
@@ -35,17 +37,26 @@ public class PerfilesAdapter extends RecyclerView.Adapter<PerfilesAdapter.Perfil
         return mListDatos != null ? mListDatos.size() : 0;
     }
 
+    public void setListDatos(List<Perfil> listDatos) {
+        mListDatos = listDatos;
+        notifyDataSetChanged();
+    }
+
+    public boolean haveDate() {
+        return mListDatos != null && mListDatos.size() > 0;
+    }
+
     public class PerfilesViewHolder extends RecyclerView.ViewHolder{
 
-        private final FilaMotivosBinding mBinding;
+        private final FilaPerfilesBinding mBinding;
 
-        public PerfilesViewHolder(FilaMotivosBinding binding) {
+        public PerfilesViewHolder(FilaPerfilesBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }
 
         public void bind(Perfil perfil) {
-            //mBinding.textMotivo.setText(motivo.getDescripcion());
+            mBinding.textNombreApellido.setText(String.format(FORMAT_NOMBRE_APELLIDO, perfil.getNombre(), perfil.getApellido()));
         }
     }
 

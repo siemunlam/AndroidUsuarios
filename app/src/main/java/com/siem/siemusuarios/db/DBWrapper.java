@@ -2,8 +2,12 @@ package com.siem.siemusuarios.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 
 import com.siem.siemusuarios.model.app.Perfil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lucas on 21/8/17.
@@ -36,6 +40,36 @@ public class DBWrapper {
                 DBContract.Perfiles.CONTENT_URI,
                 cv
         );
+    }
+
+    public static List<Perfil> getAllPerfiles(Context context){
+        Cursor cursor = context.getContentResolver().query(
+                DBContract.Perfiles.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        List<Perfil> listPerfiles = new ArrayList<>();
+        if(cursor != null){
+            while(cursor.moveToNext()){
+                String nombre = cursor.getString(cursor.getColumnIndex(DBContract.Perfiles.COLUMN_NAME_NOMBRE));
+                String apellido = cursor.getString(cursor.getColumnIndex(DBContract.Perfiles.COLUMN_NAME_APELLIDO));
+                String sexo = cursor.getString(cursor.getColumnIndex(DBContract.Perfiles.COLUMN_NAME_SEXO));
+                String fechaNacimiento = cursor.getString(cursor.getColumnIndex(DBContract.Perfiles.COLUMN_NAME_FECHA_NACIMIENTO));
+                Perfil perfil = new Perfil();
+
+                perfil.setNombre(nombre);
+                perfil.setApellido(apellido);
+                perfil.setSexo(sexo);
+                perfil.setFechaNacimiento(fechaNacimiento);
+                listPerfiles.add(perfil);
+            }
+            cursor.close();
+        }
+
+        return listPerfiles;
     }
 
 }
