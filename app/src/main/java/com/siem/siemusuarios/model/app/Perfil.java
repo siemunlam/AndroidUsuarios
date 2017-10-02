@@ -54,7 +54,9 @@ public class Perfil implements Serializable{
     public void setNroContacto(String nroContacto){
         try{
             mNroContacto = Integer.parseInt(nroContacto);
-        }catch (Exception e){}
+        }catch (Exception e){
+            mNroContacto = null;
+        }
     }
 
     public String getSexo() {
