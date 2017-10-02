@@ -1,22 +1,32 @@
 package com.siem.siemusuarios.adapter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.siem.siemusuarios.databinding.FilaPerfilesBinding;
 import com.siem.siemusuarios.model.app.Perfil;
+import com.siem.siemusuarios.ui.activity.AgregarPerfilActivity;
+import com.siem.siemusuarios.utils.Constants;
+import com.siem.siemusuarios.utils.Utils;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class PerfilesAdapter extends RecyclerView.Adapter<PerfilesAdapter.PerfilesViewHolder> {
 
     private static final String FORMAT_NOMBRE_APELLIDO = "%1$s %2$s";
 
+    private WeakReference<Activity> mActivity;
     private List<Perfil> mListDatos;
 
-    public PerfilesAdapter(List<Perfil> datos){
+    //TODO: Eliminar perfiles
+    public PerfilesAdapter(Activity activity, List<Perfil> datos){
         mListDatos = datos;
+        mActivity = new WeakReference<>(activity);
     }
 
     @Override
@@ -55,8 +65,18 @@ public class PerfilesAdapter extends RecyclerView.Adapter<PerfilesAdapter.Perfil
             mBinding = binding;
         }
 
-        public void bind(Perfil perfil) {
+        public void bind(final Perfil perfil) {
             mBinding.textNombreApellido.setText(String.format(FORMAT_NOMBRE_APELLIDO, perfil.getNombre(), perfil.getApellido()));
+            mBinding.fila.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mActivity != null && mActivity.get() != null){
+                        Intent intent = new Intent(mActivity.get(), AgregarPerfilActivity.class);
+                        intent.putExtra(Constants.KEY_PERFIL, perfil);
+                        Utils.startActivityWithTransition(mActivity.get(), intent);
+                    }
+                }
+            });
         }
     }
 

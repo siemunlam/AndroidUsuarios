@@ -37,7 +37,7 @@ public class PerfilesActivity extends ToolbarActivity {
         setToolbar(true);
 
         mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT);
-        mAdapter = new PerfilesAdapter(null);
+        mAdapter = new PerfilesAdapter(this, null);
         mBinding.recyclerview.setAdapter(mAdapter);
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));

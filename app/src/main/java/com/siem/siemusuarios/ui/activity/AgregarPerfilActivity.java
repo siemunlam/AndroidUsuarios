@@ -33,6 +33,7 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
 
     private ActivityAgregarPerfilBinding mBinding;
     private Date mFechaNacimiento;
+    private Perfil mPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,12 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
 
         mFechaNacimiento = new Date();
 
+        if(getIntent().getSerializableExtra(Constants.KEY_PERFIL) != null){
+            mPerfil = (Perfil)getIntent().getSerializableExtra(Constants.KEY_PERFIL);
+            bindData(mPerfil);
+        }else{
+            mPerfil = new Perfil();
+        }
         mBinding.edittextSexo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,13 +120,12 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
         mBinding.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Perfil perfil = new Perfil();
-                perfil.setNombre(mBinding.edittextNombre.getText().toString());
-                perfil.setApellido(mBinding.edittextApellido.getText().toString());
-                perfil.setNroContacto(mBinding.edittextNroContacto.getText().toString());
-                perfil.setSexo(mBinding.edittextSexo.getText().toString());
-                perfil.setFechaNacimiento(String.valueOf(mFechaNacimiento.getTime()));
-                perfil.save(AgregarPerfilActivity.this);
+                mPerfil.setNombre(mBinding.edittextNombre.getText().toString());
+                mPerfil.setApellido(mBinding.edittextApellido.getText().toString());
+                mPerfil.setNroContacto(mBinding.edittextNroContacto.getText().toString());
+                mPerfil.setSexo(mBinding.edittextSexo.getText().toString());
+                mPerfil.setFechaNacimiento(String.valueOf(mFechaNacimiento.getTime()));
+                mPerfil.save(AgregarPerfilActivity.this);
                 Utils.addFinishTransitionAnimation(AgregarPerfilActivity.this);
                 finish();
             }
@@ -151,6 +157,16 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
     public void sexoSelected(Sexo sexo) {
         mBinding.edittextSexo.setText(sexo.getDescripcion());
         controlateAddButton();
+    }
+
+    private void bindData(Perfil perfil) {
+        mBinding.edittextNombre.setText(perfil.getNombre());
+        mBinding.edittextApellido.setText(perfil.getApellido());
+        mBinding.edittextSexo.setText(perfil.getSexo());
+        mFechaNacimiento = new Date(Long.parseLong(perfil.getFechaNacimiento()));
+        setDateText();
+        if(perfil.getNroContacto() != null)
+            mBinding.edittextNroContacto.setText(String.valueOf(perfil.getNroContacto()));
     }
 
     private void setDateText() {

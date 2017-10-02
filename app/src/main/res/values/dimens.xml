@@ -10,4 +10,6 @@
     <!-- Perfiles -->
     <dimen name="sizeIconNoPerfiles">120dp</dimen>
     <dimen name="textsizeMsgNoPerfiles">25sp</dimen>
+    <dimen name="textsizeFilaPerfiles">20sp</dimen>
+    <dimen name="heightFilaPerfiles">65dp</dimen>
 </resources>

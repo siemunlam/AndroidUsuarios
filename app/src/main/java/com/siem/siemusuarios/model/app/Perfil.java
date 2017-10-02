@@ -4,17 +4,28 @@ import android.content.Context;
 
 import com.siem.siemusuarios.db.DBWrapper;
 
+import java.io.Serializable;
+
 /**
  * Created by Lucas on 25/9/17.
  */
 
-public class Perfil {
+public class Perfil implements Serializable{
 
+    private Integer mId;
     private String mNombre;
     private String mApellido;
     private Integer mNroContacto;
     private String mSexo;
     private String mFechaNacimiento;
+
+    public Integer getId() {
+        return mId;
+    }
+
+    public void setId(Integer id) {
+        mId = id;
+    }
 
     public String getNombre() {
         return mNombre;
@@ -63,7 +74,10 @@ public class Perfil {
     }
 
     public void save(Context context){
-        DBWrapper.savePerfil(context, this);
+        if(mId != null)
+            DBWrapper.updatePerfil(context, this);
+        else
+            DBWrapper.savePerfil(context, this);
     }
 
 }

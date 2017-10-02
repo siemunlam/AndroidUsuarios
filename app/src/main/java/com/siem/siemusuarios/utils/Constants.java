@@ -9,6 +9,8 @@ import java.util.Locale;
 
 public class Constants {
 
+    public static final String KEY_PERFIL = "KEY_PERFIL";
+
     /**
      * Fonts
      */
