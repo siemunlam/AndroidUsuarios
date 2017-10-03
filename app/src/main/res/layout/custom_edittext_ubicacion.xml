@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:test="http://schemas.android.com/tools">
+
+    <android.support.v7.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heightEdittextUbicacion"
+        android:id="@+id/edittext"
+        android:layout_margin="@dimen/halfDefaultMargin"
+        android:background="@drawable/ic_edittext_ubicacion"
+        test:hint="@string/ubicacion"
+        android:lines="1"
+        android:paddingLeft="@dimen/paddingLeftEdittextUbicacion"
+        android:paddingRight="@dimen/paddingRightEdittextUbicacion"/>
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="@dimen/heightEdittextUbicacion"
+        android:layout_height="@dimen/heightEdittextUbicacion"
+        android:id="@+id/iconUbicacion"
+        android:padding="@dimen/paddingIconEdittextUbicacion"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/halfDefaultMargin"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_location"/>
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="@dimen/heightEdittextUbicacion"
+        android:layout_height="@dimen/heightEdittextUbicacion"
+        android:id="@+id/iconClear"
+        android:padding="@dimen/paddingIconEdittextUbicacion"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/halfDefaultMargin"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_close"/>
+
+</RelativeLayout>

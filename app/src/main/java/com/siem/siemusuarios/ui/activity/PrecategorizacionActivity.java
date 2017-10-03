@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.adapter.MotivosAdapter;
-import com.siem.siemusuarios.databinding.ActivityMainBinding;
+import com.siem.siemusuarios.databinding.ActivityPrecategorizacionBinding;
 import com.siem.siemusuarios.model.api.Motivo;
 import com.siem.siemusuarios.model.api.ResponseMotivos;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
@@ -29,15 +29,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends ToolbarActivity {
+public class PrecategorizacionActivity extends ToolbarActivity {
 
-    private ActivityMainBinding mBinding;
+    private ActivityPrecategorizacionBinding mBinding;
     private MotivosAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_precategorizacion);
         setToolbar(false);
 
         mAdapter = new MotivosAdapter(new ArrayList<Motivo>());
@@ -68,7 +68,7 @@ public class MainActivity extends ToolbarActivity {
                 return true;
 
             case R.id.menuPerfiles:
-                Utils.startActivityWithTransition(this, new Intent(MainActivity.this, PerfilesActivity.class));
+                Utils.startActivityWithTransition(this, new Intent(PrecategorizacionActivity.this, PerfilesActivity.class));
                 return true;
 
             case R.id.menuConsultarAuxilio:

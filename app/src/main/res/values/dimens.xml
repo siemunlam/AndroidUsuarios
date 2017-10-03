@@ -7,6 +7,12 @@
     <dimen name="doubleDefaultMargin">32dp</dimen>
     <dimen name="textsizeToolbarLogo">26sp</dimen>
 
+    <!-- Precategorizacion -->
+    <dimen name="heightEdittextUbicacion">40dp</dimen>
+    <dimen name="paddingIconEdittextUbicacion">7dp</dimen>
+    <dimen name="paddingLeftEdittextUbicacion">10dp</dimen>
+    <dimen name="paddingRightEdittextUbicacion">45dp</dimen>
+
     <!-- Splash -->
     <dimen name="marginHorizontalLogo">50dp</dimen>
 
