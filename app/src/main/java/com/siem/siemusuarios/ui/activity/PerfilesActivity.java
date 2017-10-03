@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -16,6 +17,8 @@ import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.adapter.PerfilesAdapter;
 import com.siem.siemusuarios.databinding.ActivityPerfilesBinding;
 import com.siem.siemusuarios.db.DBWrapper;
+import com.siem.siemusuarios.interfaces.SwipePerfilDeleteListener;
+import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerItem;
 import com.siem.siemusuarios.utils.Constants;
@@ -26,7 +29,7 @@ import com.siem.siemusuarios.utils.swipe.SimpleItemTouchHelperCallback;
  * Created by Lucas on 25/9/17.
  */
 
-public class PerfilesActivity extends ToolbarActivity {
+public class PerfilesActivity extends ToolbarActivity implements SwipePerfilDeleteListener {
 
     private Typeface mTypeface;
     private ActivityPerfilesBinding mBinding;
@@ -39,7 +42,7 @@ public class PerfilesActivity extends ToolbarActivity {
         setToolbar(true);
 
         mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT);
-        mAdapter = new PerfilesAdapter(this, null);
+        mAdapter = new PerfilesAdapter(this, null, this);
         mBinding.recyclerview.setAdapter(mAdapter);
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
@@ -76,6 +79,24 @@ public class PerfilesActivity extends ToolbarActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * SwipePerfilDeleteListener
+     */
+    @Override
+    public void deletePerfil(final Perfil perfil) {
+        DBWrapper.deletePerfil(this, perfil);
+        controlatePerfiles();
+        Snackbar.make(mBinding.view, getString(R.string.perfilEliminado), Snackbar.LENGTH_LONG)
+                .setActionTextColor(ContextCompat.getColor(this, R.color.colorAccent))
+                .setAction(getString(R.string.deshacer), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        perfil.save(PerfilesActivity.this);
+                        controlatePerfiles();
+                    }
+                }).show();
     }
 
     private void controlatePerfiles() {

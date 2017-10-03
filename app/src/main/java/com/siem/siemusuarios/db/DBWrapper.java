@@ -39,10 +39,18 @@ public class DBWrapper {
     }
 
     public static void updatePerfil(Context context, Perfil perfil){
+        deletePerfil(context, perfil);
         ContentValues cv = getPerfilesContentValues(perfil);
-        context.getContentResolver().update(
+        cv.put(DBContract.Perfiles._ID, perfil.getId());
+        context.getContentResolver().insert(
                 DBContract.Perfiles.CONTENT_URI,
-                cv,
+                cv
+        );
+    }
+
+    public static void deletePerfil(Context context, Perfil perfil){
+        context.getContentResolver().delete(
+                DBContract.Perfiles.CONTENT_URI,
                 DBContract.Perfiles._ID + " = ? ",
                 new String[]{ String.valueOf(perfil.getId()) }
         );

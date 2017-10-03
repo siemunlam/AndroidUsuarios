@@ -22,4 +22,6 @@
     <string name="aceptar">Aceptar</string>
     <string name="masculino">Masculino</string>
     <string name="femenino">Femenino</string>
+    <string name="perfilEliminado">Se eliminó el perfil</string>
+    <string name="deshacer">Deshacer</string>
 </resources>

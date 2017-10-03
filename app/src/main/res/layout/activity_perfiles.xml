@@ -5,7 +5,8 @@
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/view">
 
         <com.siem.siemusuarios.ui.custom.CustomToolbar
             android:layout_width="match_parent"

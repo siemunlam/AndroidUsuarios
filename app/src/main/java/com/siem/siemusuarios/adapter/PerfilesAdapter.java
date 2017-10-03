@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.siem.siemusuarios.databinding.FilaPerfilesBinding;
+import com.siem.siemusuarios.interfaces.SwipePerfilDeleteListener;
 import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.ui.activity.AgregarPerfilActivity;
 import com.siem.siemusuarios.utils.Constants;
@@ -23,12 +24,14 @@ public class PerfilesAdapter extends RecyclerView.Adapter<PerfilesAdapter.Perfil
     private static final String FORMAT_NOMBRE_APELLIDO = "%1$s %2$s";
 
     private WeakReference<Activity> mActivity;
+    private WeakReference<SwipePerfilDeleteListener> mListener;
     private List<Perfil> mListDatos;
 
     //TODO: Eliminar perfiles
-    public PerfilesAdapter(Activity activity, List<Perfil> datos){
+    public PerfilesAdapter(Activity activity, List<Perfil> datos, SwipePerfilDeleteListener swipePerfilDeleteListener){
         mListDatos = datos;
         mActivity = new WeakReference<>(activity);
+        mListener = new WeakReference<>(swipePerfilDeleteListener);
     }
 
     @Override
@@ -63,8 +66,10 @@ public class PerfilesAdapter extends RecyclerView.Adapter<PerfilesAdapter.Perfil
      */
     @Override
     public void onItemDismiss(int position) {
-        mListDatos.remove(position);
+        Perfil perfil = mListDatos.remove(position);
         notifyItemRemoved(position);
+        if(mListener != null && mListener.get() != null)
+            mListener.get().deletePerfil(perfil);
     }
 
     public class PerfilesViewHolder extends RecyclerView.ViewHolder{

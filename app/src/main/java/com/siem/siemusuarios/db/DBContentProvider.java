@@ -96,11 +96,13 @@ public class DBContentProvider extends ContentProvider {
 
         switch (match){
             case PERFILES:
-                return db.delete(
+                int deleted = db.delete(
                         DBContract.Perfiles.TABLE_NAME,
                         selection,
                         selectionArgs
                 );
+                notifyChange(DBContract.Perfiles.CONTENT_URI, null);
+                return deleted;
 
             default:
                 return 0;
