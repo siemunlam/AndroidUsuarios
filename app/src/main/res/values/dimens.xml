@@ -7,6 +7,9 @@
     <dimen name="doubleDefaultMargin">32dp</dimen>
     <dimen name="textsizeToolbarLogo">26sp</dimen>
 
+    <!-- Splash -->
+    <dimen name="marginHorizontalLogo">50dp</dimen>
+
     <!-- Perfiles -->
     <dimen name="sizeIconNoPerfiles">120dp</dimen>
     <dimen name="textsizeMsgNoPerfiles">25sp</dimen>
