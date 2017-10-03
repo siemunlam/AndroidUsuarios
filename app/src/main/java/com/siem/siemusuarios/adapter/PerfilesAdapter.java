@@ -12,11 +12,13 @@ import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.ui.activity.AgregarPerfilActivity;
 import com.siem.siemusuarios.utils.Constants;
 import com.siem.siemusuarios.utils.Utils;
+import com.siem.siemusuarios.utils.swipe.ItemTouchHelperAdapter;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class PerfilesAdapter extends RecyclerView.Adapter<PerfilesAdapter.PerfilesViewHolder> {
+public class PerfilesAdapter extends RecyclerView.Adapter<PerfilesAdapter.PerfilesViewHolder> implements
+        ItemTouchHelperAdapter {
 
     private static final String FORMAT_NOMBRE_APELLIDO = "%1$s %2$s";
 
@@ -54,6 +56,15 @@ public class PerfilesAdapter extends RecyclerView.Adapter<PerfilesAdapter.Perfil
 
     public boolean haveDate() {
         return mListDatos != null && mListDatos.size() > 0;
+    }
+
+    /**
+     * ItemTouchHelperAdapter
+     */
+    @Override
+    public void onItemDismiss(int position) {
+        mListDatos.remove(position);
+        notifyItemRemoved(position);
     }
 
     public class PerfilesViewHolder extends RecyclerView.ViewHolder{
