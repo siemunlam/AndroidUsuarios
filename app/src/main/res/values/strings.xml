@@ -11,6 +11,9 @@
 
     <!-- Precategorizacion -->
     <string name="ubicacion">Ubicación</string>
+    <string name="noPermissionLocationGranted">Debe otorgar el permiso para poder obtener la ubicación.</string>
+    <string name="activateGPS">Debe activar el GPS para continuar.</string>
+    <string name="getLocation">Estamos obteniendo su ubicación.</string>
 
     <!-- Perfiles -->
     <string name="msgNoPerfiles">Pulse el + para agregar un nuevo perfil</string>

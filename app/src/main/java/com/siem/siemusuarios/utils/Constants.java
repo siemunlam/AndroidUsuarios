@@ -1,5 +1,7 @@
 package com.siem.siemusuarios.utils;
 
+import android.Manifest;
+
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -30,5 +32,13 @@ public class Constants {
     public static final int CODE_UNAUTHORIZED = 401;
     public static final int CODE_SERVER_ERROR = 500;
     public static final String API_MOTIVOS_PRECATEGORIZACION = "rules/motivospc/";
+
+    /**
+     * Permissions
+     */
+    public static final String[] permissions = {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    };
 
 }

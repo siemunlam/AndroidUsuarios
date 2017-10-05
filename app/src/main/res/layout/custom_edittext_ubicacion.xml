@@ -15,7 +15,8 @@
         test:hint="@string/ubicacion"
         android:lines="1"
         android:paddingLeft="@dimen/paddingLeftEdittextUbicacion"
-        android:paddingRight="@dimen/paddingRightEdittextUbicacion"/>
+        android:paddingRight="@dimen/paddingRightEdittextUbicacion"
+        android:paddingTop="4dp"/>
     <android.support.v7.widget.AppCompatImageView
         android:layout_width="@dimen/heightEdittextUbicacion"
         android:layout_height="@dimen/heightEdittextUbicacion"

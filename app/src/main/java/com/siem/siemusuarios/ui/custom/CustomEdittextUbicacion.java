@@ -1,6 +1,7 @@
 package com.siem.siemusuarios.ui.custom;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
@@ -16,6 +17,7 @@ import com.siem.siemusuarios.utils.Constants;
 
 public class CustomEdittextUbicacion extends RelativeLayout {
 
+    private Context mContext;
     private Typeface mTypeface;
     private AppCompatEditText mEdittext;
     private AppCompatImageView mIconUbicacion;
@@ -33,10 +35,22 @@ public class CustomEdittextUbicacion extends RelativeLayout {
 
     private void initialice(Context context, AttributeSet attrs){
         inflate(context, R.layout.custom_edittext_ubicacion, this);
+        mContext = context;
         mTypeface = Typeface.createFromAsset(context.getAssets(), Constants.PRIMARY_FONT);
         mEdittext = (AppCompatEditText)findViewById(R.id.edittext);
         mIconUbicacion = (AppCompatImageView)findViewById(R.id.iconUbicacion);
         mIconClear = (AppCompatImageView)findViewById(R.id.iconClear);
         mEdittext.setTypeface(mTypeface);
+
+        if(attrs != null){
+            TypedArray typed = mContext.obtainStyledAttributes(attrs, R.styleable.customComponents);
+            mEdittext.setHint(typed.getString(R.styleable.customComponents_android_hint));
+            typed.recycle();
+        }
     }
+
+    public void setUbicacionOnClickListener(OnClickListener listener){
+        mIconUbicacion.setOnClickListener(listener);
+    }
+
 }

@@ -12,7 +12,7 @@ import com.siem.siemusuarios.utils.Utils;
  * Created by Lucas on 20/9/17.
  */
 
-public class ToolbarActivity extends AppCompatActivity {
+public class ToolbarActivity extends AppCompatActivity{
 
     private CustomToolbar mToolbar;
 
@@ -46,5 +46,4 @@ public class ToolbarActivity extends AppCompatActivity {
         supportFinishAfterTransition();
         Utils.addFinishTransitionAnimation(this);
     }
-
 }

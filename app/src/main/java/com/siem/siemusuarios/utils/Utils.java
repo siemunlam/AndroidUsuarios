@@ -1,7 +1,9 @@
 package com.siem.siemusuarios.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 
 import com.siem.siemusuarios.R;
 
@@ -25,5 +27,10 @@ public class Utils {
     public static void startActivityWithTransition(Activity activity, Intent intent) {
         activity.startActivity(intent);
         addStartTransitionAnimation(activity);
+    }
+
+    public static boolean isGPSOn(final Activity activity) {
+        LocationManager manager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+        return manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 }
