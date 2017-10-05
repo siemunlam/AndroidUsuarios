@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:custom="http://schemas.android.com/apk/res-auto">
     <data>
     </data>
     <LinearLayout
@@ -16,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/customEdittextUbicacion"
-            android:hint="@string/ubicacion"/>
+            android:hint="@string/ubicacion"
+            android:focusable="false"/>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

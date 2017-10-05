@@ -45,8 +45,16 @@ public class CustomEdittextUbicacion extends RelativeLayout {
         if(attrs != null){
             TypedArray typed = mContext.obtainStyledAttributes(attrs, R.styleable.customComponents);
             mEdittext.setHint(typed.getString(R.styleable.customComponents_android_hint));
+            mEdittext.setFocusable(typed.getBoolean(R.styleable.customComponents_android_focusable, true));
+
+            boolean iconUbicacionEnable = typed.getBoolean(R.styleable.customComponents_locationEnable, true);
+            mIconUbicacion.setVisibility(iconUbicacionEnable ? VISIBLE : GONE);
             typed.recycle();
         }
+    }
+
+    public void setEdittextOnClickListener(OnClickListener listener){
+        mEdittext.setOnClickListener(listener);
     }
 
     public void setUbicacionOnClickListener(OnClickListener listener){

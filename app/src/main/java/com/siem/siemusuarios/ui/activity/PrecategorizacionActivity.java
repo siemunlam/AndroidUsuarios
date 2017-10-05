@@ -64,6 +64,13 @@ public class PrecategorizacionActivity extends ActivateGpsActivity {
                 }
             }
         });
+
+        mBinding.customEdittextUbicacion.setEdittextOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.startActivityWithTransition(PrecategorizacionActivity.this, new Intent(PrecategorizacionActivity.this, ObtenerDireccionActivity.class));
+            }
+        });
         getMotivosPrecategorizacion();
     }
 

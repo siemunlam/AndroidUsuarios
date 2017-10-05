@@ -3,6 +3,8 @@
 
     <declare-styleable name="customComponents">
         <attr name="android:hint"/>
+        <attr name="android:focusable"/>
+        <attr name="locationEnable" format="boolean"/>
     </declare-styleable>
 
 </resources>
