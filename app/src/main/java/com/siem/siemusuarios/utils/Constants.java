@@ -41,4 +41,12 @@ public class Constants {
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
 
+    /**
+     * ENUM AsincTask Geocoder
+     */
+    public enum ReturnAsincTask {
+        OK_ADDRESS,
+        NO_ADDRESS,
+        IOEXCEPTION
+    }
 }

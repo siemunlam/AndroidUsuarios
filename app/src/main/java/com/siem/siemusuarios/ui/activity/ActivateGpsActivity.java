@@ -116,6 +116,10 @@ public class ActivateGpsActivity extends ToolbarActivity implements
         Toast.makeText(ActivateGpsActivity.this, getString(R.string.activateGPS), Toast.LENGTH_LONG).show();
     }
 
+    protected void newLocation(Location location) {
+        //Implements in subclass
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -155,9 +159,7 @@ public class ActivateGpsActivity extends ToolbarActivity implements
 
         @Override
         public void onLocationChanged(Location location) {
-            //newLocation(location);
-            //TODO: new Location
-            Log.i("123456789", "Lat: " + location.getLatitude() + " - Lng: " + location.getLongitude());
+            newLocation(location);
             stopLocationManager();
         }
 
