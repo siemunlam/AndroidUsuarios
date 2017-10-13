@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
     </data>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <com.siem.siemusuarios.ui.custom.CustomToolbar
             android:layout_width="match_parent"
@@ -17,15 +17,38 @@
             android:layout_height="wrap_content"
             android:id="@+id/customEdittextUbicacion"
             android:hint="@string/ubicacion"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:layout_below="@+id/appBarLayout"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/itemSeparator"
+            android:layout_below="@+id/customEdittextUbicacion"
+            android:background="@color/colorSeparator"/>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recyclerview"
-            android:focusable="true">
+            android:focusable="true"
+            android:layout_below="@+id/itemSeparator">
             <requestFocus />
         </android.support.v7.widget.RecyclerView>
 
-    </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/defaultMargin"
+            android:tint="@android:color/white"
+            android:id="@+id/buttonNext"
+            android:visibility="gone"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_arrow_forward"/>
+
+    </RelativeLayout>
 </layout>
