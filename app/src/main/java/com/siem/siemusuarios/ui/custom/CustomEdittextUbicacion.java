@@ -3,14 +3,11 @@ package com.siem.siemusuarios.ui.custom;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
@@ -19,12 +16,9 @@ import android.widget.Toast;
 
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.utils.Constants;
+import com.siem.siemusuarios.utils.Utils;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Lucas on 2/10/17.
@@ -32,14 +26,15 @@ import java.util.Locale;
 
 public class CustomEdittextUbicacion extends RelativeLayout {
 
-    private static final String FORMAT_NO_DIRECTION = "%1$s, %2$s";
-    private static final DecimalFormat df = new DecimalFormat(".000");
-
     private Context mContext;
     private Typeface mTypeface;
     private AppCompatEditText mEdittext;
     private AppCompatImageView mIconUbicacion;
     private AppCompatImageView mIconClear;
+
+    private boolean mIconUbicacionEnable = true;
+    private Double mLatitude;
+    private Double mLongitude;
 
     public CustomEdittextUbicacion(Context context) {
         super(context);
@@ -65,8 +60,8 @@ public class CustomEdittextUbicacion extends RelativeLayout {
             mEdittext.setHint(typed.getString(R.styleable.customComponents_android_hint));
             mEdittext.setFocusable(typed.getBoolean(R.styleable.customComponents_android_focusable, true));
 
-            boolean iconUbicacionEnable = typed.getBoolean(R.styleable.customComponents_locationEnable, true);
-            mIconUbicacion.setVisibility(iconUbicacionEnable ? VISIBLE : GONE);
+            mIconUbicacionEnable = typed.getBoolean(R.styleable.customComponents_locationEnable, true);
+            mIconUbicacion.setVisibility(mIconUbicacionEnable ? VISIBLE : GONE);
             typed.recycle();
         }
 
@@ -81,7 +76,8 @@ public class CustomEdittextUbicacion extends RelativeLayout {
             public void afterTextChanged(Editable s) {
                 if(mEdittext.getText().toString().isEmpty()){
                     mIconClear.setVisibility(GONE);
-                    mIconUbicacion.setVisibility(VISIBLE);
+                    if(mIconUbicacionEnable)
+                        mIconUbicacion.setVisibility(VISIBLE);
                 }else{
                     mIconClear.setVisibility(VISIBLE);
                     mIconUbicacion.setVisibility(GONE);
@@ -92,13 +88,15 @@ public class CustomEdittextUbicacion extends RelativeLayout {
         mIconClear.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEdittext.setText("");
+                setText("", null, null);
             }
         });
     }
 
-    public void setText(String text){
+    public void setText(String text, Double lat, Double lng){
         mEdittext.setText(text);
+        mLatitude = lat;
+        mLongitude = lng;
     }
 
     public void setEdittextOnClickListener(OnClickListener listener){
@@ -116,26 +114,14 @@ public class CustomEdittextUbicacion extends RelativeLayout {
     private class NewLocationTask extends AsyncTask<Location, Constants.ReturnAsincTask, Void> {
 
         private Location mLocation;
-        private Address mAddress;
         private String mDireccion;
 
         @Override
         protected Void doInBackground(Location... params) {
             mLocation = params[0];
             try{
-                Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
-                final List<Address> addresses = geocoder.getFromLocation(mLocation.getLatitude(), mLocation.getLongitude(), 1);
-                if(addresses.size() > 0 && addresses.get(0).getCountryCode() != null){
-                    mAddress = addresses.get(0);
-                    ArrayList<String> addressFragments = new ArrayList<>();
-                    for(int i = 0; i <= mAddress.getMaxAddressLineIndex(); i++) {
-                        addressFragments.add(mAddress.getAddressLine(i));
-                    }
-                    mDireccion = TextUtils.join(", ", addressFragments);
-                    publishProgress(Constants.ReturnAsincTask.OK_ADDRESS);
-                }else
-                    mDireccion = String.format(FORMAT_NO_DIRECTION, df.format(mLocation.getLatitude()), df.format(mLocation.getLongitude()));
-                publishProgress(Constants.ReturnAsincTask.NO_ADDRESS);
+                mDireccion = Utils.getStringAddress(mContext, mLocation.getLatitude(), mLocation.getLongitude());
+                publishProgress(Constants.ReturnAsincTask.OK_ADDRESS);
             }catch(IOException e1){
                 publishProgress(Constants.ReturnAsincTask.IOEXCEPTION);
             }
@@ -147,8 +133,7 @@ public class CustomEdittextUbicacion extends RelativeLayout {
             Constants.ReturnAsincTask returnAsincTask = values[0];
             switch(returnAsincTask){
                 case OK_ADDRESS:
-                case NO_ADDRESS:
-                    mEdittext.setText(mDireccion);
+                    setText(mDireccion, mLocation.getLatitude(), mLocation.getLongitude());
                     break;
 
                 case IOEXCEPTION:

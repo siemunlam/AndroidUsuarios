@@ -38,12 +38,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden">
         </activity>
-        <activity
-            android:name=".ui.activity.ObtenerDireccionActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
 
         <!-- FCM -->
         <service
@@ -66,6 +60,11 @@
             android:exported="true"
             android:label="@string/app_name"
             android:syncable="true"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/keyGooglePlacesAPI"/>
+
     </application>
 
 </manifest>

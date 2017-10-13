@@ -4,22 +4,25 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.maps.model.LatLng;
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.adapter.MotivosAdapter;
 import com.siem.siemusuarios.databinding.ActivityPrecategorizacionBinding;
@@ -32,11 +35,9 @@ import com.siem.siemusuarios.utils.RetrofitClient;
 import com.siem.siemusuarios.utils.Utils;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -46,6 +47,7 @@ import retrofit2.Response;
 public class PrecategorizacionActivity extends ActivateGpsActivity {
 
     private static final int LOCATION_PERMISSIONS_REQUEST = 1000;
+    private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1010;
     private ActivityPrecategorizacionBinding mBinding;
     private MotivosAdapter mAdapter;
 
@@ -76,7 +78,20 @@ public class PrecategorizacionActivity extends ActivateGpsActivity {
         mBinding.customEdittextUbicacion.setEdittextOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.startActivityWithTransition(PrecategorizacionActivity.this, new Intent(PrecategorizacionActivity.this, ObtenerDireccionActivity.class));
+                try {
+                    AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                            .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
+                            .setCountry(Constants.CODE_ARGENTINA)
+                            .build();
+
+                    Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                            .setFilter(typeFilter)
+                            .build(PrecategorizacionActivity.this);
+
+                    startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+                } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+                    Toast.makeText(PrecategorizacionActivity.this, getString(R.string.errorNoPlayServices), Toast.LENGTH_LONG).show();
+                }
             }
         });
         getMotivosPrecategorizacion();
@@ -132,6 +147,25 @@ public class PrecategorizacionActivity extends ActivateGpsActivity {
     @Override
     protected void newLocation(Location location) {
         mBinding.customEdittextUbicacion.newLocation(location);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                LatLng latlng = place.getLatLng();
+                try{
+                    String direccion = Utils.getStringAddress(this, latlng.latitude, latlng.longitude);
+                    mBinding.customEdittextUbicacion.setText(direccion, latlng.latitude, latlng.longitude);
+                }catch(IOException e1){
+                    Toast.makeText(this, getString(R.string.error), Toast.LENGTH_LONG).show();
+                }
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                Toast.makeText(PrecategorizacionActivity.this, getString(R.string.errorPlaceApi, status.getStatusCode()), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     public void getMotivosPrecategorizacion() {

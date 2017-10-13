@@ -5,6 +5,8 @@
 
     <!-- Errores -->
     <string name="error">Hubo un error. Intente de nuevo más tarde.</string>
+    <string name="errorNoPlayServices">Debe instalar Google Play Services desde el Play Store.</string>
+    <string name="errorPlaceApi">Ha ocurrido un error: %1$d</string>
 
     <!-- Menu -->
     <string name="menuWhatsapp">Whatsapp</string>

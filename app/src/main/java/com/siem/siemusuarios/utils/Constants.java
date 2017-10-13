@@ -2,6 +2,7 @@ package com.siem.siemusuarios.utils;
 
 import android.Manifest;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -32,6 +33,13 @@ public class Constants {
     public static final int CODE_UNAUTHORIZED = 401;
     public static final int CODE_SERVER_ERROR = 500;
     public static final String API_MOTIVOS_PRECATEGORIZACION = "rules/motivospc/";
+
+    /**
+     * PlaceAutocomplete API
+     */
+    public static final String CODE_ARGENTINA = "AR";
+    public static final String FORMAT_NO_DIRECTION = "%1$s, %2$s";
+    public static final DecimalFormat df = new DecimalFormat(".000");
 
     /**
      * Permissions
