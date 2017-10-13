@@ -208,6 +208,15 @@ public class DBWrapper {
                 null,
                 null
         );
+        cleanOpcionAjuste(context);
+    }
+
+    private static void cleanOpcionAjuste(Context context){
+        context.getContentResolver().delete(
+                DBContract.OpcionAjuste.CONTENT_URI,
+                null,
+                null
+        );
     }
 
     public static void saveAjuste(Context context, MotivoAjuste motivo){
@@ -217,6 +226,19 @@ public class DBWrapper {
                 DBContract.Ajuste.CONTENT_URI,
                 cv
         );
+        saveOpcionAjuste(context, motivo, ContentUris.parseId(uri));
+    }
+
+    private static void saveOpcionAjuste(Context context, MotivoAjuste motivo, long idAjuste) {
+        for (String descripcion : motivo.getListOptions()) {
+            ContentValues cv = new ContentValues();
+            cv.put(DBContract.OpcionAjuste.COLUMN_NAME_DESCRIPCION, descripcion);
+            cv.put(DBContract.OpcionAjuste.COLUMN_NAME_ID_AJUSTE, idAjuste);
+            context.getContentResolver().insert(
+                    DBContract.OpcionAjuste.CONTENT_URI,
+                    cv
+            );
+        }
     }
 
     public static List<MotivoAjuste> getAllAjuste(Context context){
@@ -235,13 +257,35 @@ public class DBWrapper {
                 String descripcion = cursor.getString(cursor.getColumnIndex(DBContract.Ajuste.COLUMN_NAME_DESCRIPCION));
 
                 MotivoAjuste ajuste = new MotivoAjuste(descripcion);
-                //precategorizacion.setListOptions(getAllOpcionesPrecategorizacion(context, id));
+                ajuste.setListOptions(getAllOpcionesAjuste(context, id));
                 listMotivosAjuste.add(ajuste);
             }
             cursor.close();
         }
 
         return listMotivosAjuste;
+    }
+
+    public static List<String> getAllOpcionesAjuste(Context context, int idAjuste){
+        Cursor cursor = context.getContentResolver().query(
+                DBContract.OpcionAjuste.CONTENT_URI,
+                null,
+                DBContract.OpcionAjuste.COLUMN_NAME_ID_AJUSTE + " = ? ",
+                new String[]{ String.valueOf(idAjuste) },
+                null
+        );
+
+        List<String> listOpcionesAjuste = new ArrayList<>();
+        if(cursor != null){
+            while(cursor.moveToNext()){
+                String descripcion = cursor.getString(cursor.getColumnIndex(DBContract.OpcionAjuste.COLUMN_NAME_DESCRIPCION));
+
+                listOpcionesAjuste.add(descripcion);
+            }
+            cursor.close();
+        }
+
+        return listOpcionesAjuste;
     }
 
 }

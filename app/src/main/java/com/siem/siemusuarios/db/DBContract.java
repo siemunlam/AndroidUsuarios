@@ -32,6 +32,7 @@ public class DBContract {
     public static final String PRECATEGORIZACION = "precategorizacion";
     public static final String OPCION_PRECATEGORIZACION = "opcion_precategorizacion";
     public static final String AJUSTE = "ajuste";
+    public static final String OPCION_AJUSTE = "opcion_ajuste";
 
     /**
      * Tipos MIME
@@ -55,6 +56,9 @@ public class DBContract {
         public static final String COLUMN_NAME_FECHA_NACIMIENTO = "fecha_nacimiento";
     }
 
+    /**
+     * Precategorizacion
+     */
     public static abstract class Precategorizacion implements BaseColumns {
         public static final String TABLE_NAME = "precategorizacion";
 
@@ -74,12 +78,25 @@ public class DBContract {
         public static final String COLUMN_NAME_DESCRIPCION = "descripcion";
     }
 
+    /**
+     * Ajustes
+     */
     public static abstract class Ajuste implements BaseColumns {
         public static final String TABLE_NAME = "ajuste";
 
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendEncodedPath(AJUSTE).build();
 
+        public static final String COLUMN_NAME_DESCRIPCION = "descripcion";
+    }
+
+    public static abstract class OpcionAjuste implements BaseColumns {
+        public static final String TABLE_NAME = "opcion_ajuste";
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendEncodedPath(OPCION_AJUSTE).build();
+
+        public static final String COLUMN_NAME_ID_AJUSTE = "id_ajuste";
         public static final String COLUMN_NAME_DESCRIPCION = "descripcion";
     }
 }

@@ -101,6 +101,7 @@ public class SplashActivity extends AppCompatActivity {
             }
 
             private void saveAjusteMotivos(ResponseMotivos responseMotivos) {
+                DBWrapper.cleanAjuste(SplashActivity.this);
                 HashMap<String, List<String>> motivos = responseMotivos.getListMotivos();
                 if(motivos != null){
                     for (Map.Entry<String, List<String>> entry : motivos.entrySet()) {

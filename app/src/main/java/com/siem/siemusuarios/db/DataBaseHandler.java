@@ -23,8 +23,10 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             "DROP TABLE IF EXISTS " + DBContract.Precategorizacion.TABLE_NAME;
     public static final String SQL_DELETE_OPCION_PRECATEGORIZACION =
             "DROP TABLE IF EXISTS " + DBContract.OpcionPrecategorizacion.TABLE_NAME;
-    public static final String SQL_DELETE_OPCION_AJUSTE =
+    public static final String SQL_DELETE_AJUSTE =
             "DROP TABLE IF EXISTS " + DBContract.Ajuste.TABLE_NAME;
+    public static final String SQL_DELETE_OPCION_AJUSTE =
+            "DROP TABLE IF EXISTS " + DBContract.OpcionAjuste.TABLE_NAME;
 
     /**
      * Create tables
@@ -53,6 +55,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             "CREATE TABLE " + DBContract.Ajuste.TABLE_NAME + "("
                     + DBContract.Ajuste._ID + DBContract.INTEGER_TYPE + DBContract.PRIMARY_KEY + DBContract.AUTOINCREMENT + DBContract.COMMA_SEP
                     + DBContract.Ajuste.COLUMN_NAME_DESCRIPCION + DBContract.TEXT_TYPE + ") ";
+
+    private static final String SQL_CREATE_OPCION_AJUSTE =
+            "CREATE TABLE " + DBContract.OpcionAjuste.TABLE_NAME + "("
+                    + DBContract.OpcionAjuste._ID + DBContract.INTEGER_TYPE + DBContract.PRIMARY_KEY + DBContract.AUTOINCREMENT + DBContract.COMMA_SEP
+                    + DBContract.OpcionAjuste.COLUMN_NAME_ID_AJUSTE + DBContract.INTEGER_TYPE + DBContract.COMMA_SEP
+                    + DBContract.OpcionAjuste.COLUMN_NAME_DESCRIPCION + DBContract.TEXT_TYPE + ") ";
 
 
     private DataBaseHandler(Context context) {
