@@ -39,6 +39,7 @@ public class Constants {
     public static final int CODE_UNAUTHORIZED = 401;
     public static final int CODE_SERVER_ERROR = 500;
     public static final String API_MOTIVOS_PRECATEGORIZACION = "rules/motivospc/";
+    public static final String API_MOTIVOS_AJUSTE = "rules/motivosajuste/";
 
     /**
      * PlaceAutocomplete API

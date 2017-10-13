@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.siem.siemusuarios.model.api.MotivoAjuste;
 import com.siem.siemusuarios.model.api.MotivoPrecategorizacion;
 import com.siem.siemusuarios.model.app.Perfil;
 
@@ -21,6 +22,7 @@ public class DBWrapper {
     public static void cleanAllDB(Context context){
         cleanPerfiles(context);
         cleanPrecategorizaciones(context);
+        cleanAjuste(context);
     }
 
     /**
@@ -195,6 +197,51 @@ public class DBWrapper {
         }
 
         return listOpcionesPrecategorizacion;
+    }
+
+    /**
+     * Motivos de Ajuste
+     */
+    public static void cleanAjuste(Context context) {
+        context.getContentResolver().delete(
+                DBContract.Ajuste.CONTENT_URI,
+                null,
+                null
+        );
+    }
+
+    public static void saveAjuste(Context context, MotivoAjuste motivo){
+        ContentValues cv = new ContentValues();
+        cv.put(DBContract.Ajuste.COLUMN_NAME_DESCRIPCION, motivo.getDescripcion());
+        Uri uri = context.getContentResolver().insert(
+                DBContract.Ajuste.CONTENT_URI,
+                cv
+        );
+    }
+
+    public static List<MotivoAjuste> getAllAjuste(Context context){
+        Cursor cursor = context.getContentResolver().query(
+                DBContract.Ajuste.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        List<MotivoAjuste> listMotivosAjuste = new ArrayList<>();
+        if(cursor != null){
+            while(cursor.moveToNext()){
+                int id = cursor.getInt(cursor.getColumnIndex(DBContract.Ajuste._ID));
+                String descripcion = cursor.getString(cursor.getColumnIndex(DBContract.Ajuste.COLUMN_NAME_DESCRIPCION));
+
+                MotivoAjuste ajuste = new MotivoAjuste(descripcion);
+                //precategorizacion.setListOptions(getAllOpcionesPrecategorizacion(context, id));
+                listMotivosAjuste.add(ajuste);
+            }
+            cursor.close();
+        }
+
+        return listMotivosAjuste;
     }
 
 }

@@ -12,4 +12,7 @@ public interface ServerApi {
     @GET(Constants.API_MOTIVOS_PRECATEGORIZACION)
     Call<ResponseMotivos> getMotivosPrecategorizacion();
 
+    @GET(Constants.API_MOTIVOS_AJUSTE)
+    Call<ResponseMotivos> getMotivosAjuste();
+
 }

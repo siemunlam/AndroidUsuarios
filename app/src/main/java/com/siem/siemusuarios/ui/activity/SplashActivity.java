@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.ActivitySplashBinding;
 import com.siem.siemusuarios.db.DBWrapper;
+import com.siem.siemusuarios.model.api.MotivoAjuste;
 import com.siem.siemusuarios.model.api.MotivoPrecategorizacion;
 import com.siem.siemusuarios.model.api.ResponseMotivos;
 import com.siem.siemusuarios.utils.Constants;
@@ -28,14 +29,16 @@ import retrofit2.Response;
 public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding mBinding;
+    private boolean mIsSavePrecategorizaciones = false;
+    private boolean mIsSaveAjustes = false;
 
-    //TODO: Terminar splash
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
 
         getMotivosPrecategorizacion();
+        getMotivosAjuste();
     }
 
     public void getMotivosPrecategorizacion() {
@@ -70,13 +73,56 @@ public class SplashActivity extends AppCompatActivity {
                         DBWrapper.savePrecategorizacion(SplashActivity.this, motivo);
                     }
                 }
-                goToFirstActivity();
-            }
-
-            private void error() {
-                finish();
+                mIsSavePrecategorizaciones = true;
+                isFinished();
             }
         });
+    }
+
+    public void getMotivosAjuste() {
+        Call<ResponseMotivos> response = RetrofitClient.getServerClient().getMotivosAjuste();
+        response.enqueue(new Callback<ResponseMotivos>() {
+            @Override
+            public void onResponse(Call<ResponseMotivos> call, Response<ResponseMotivos> response) {
+                switch(response.code()){
+                    case Constants.CODE_SERVER_OK:
+                        ResponseMotivos responseMotivos = response.body();
+                        saveAjusteMotivos(responseMotivos);
+                        break;
+                    default:
+                        error();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMotivos> call, Throwable t) {
+                error();
+            }
+
+            private void saveAjusteMotivos(ResponseMotivos responseMotivos) {
+                HashMap<String, List<String>> motivos = responseMotivos.getListMotivos();
+                if(motivos != null){
+                    for (Map.Entry<String, List<String>> entry : motivos.entrySet()) {
+                        MotivoAjuste ajuste = new MotivoAjuste(entry.getKey());
+                        List<String> listOptions = entry.getValue();
+                        ajuste.setListOptions(listOptions);
+                        DBWrapper.saveAjuste(SplashActivity.this, ajuste);
+                    }
+                }
+                mIsSaveAjustes = true;
+                isFinished();
+            }
+        });
+    }
+
+    private void error() {
+        finish();
+    }
+
+    private void isFinished() {
+        if(mIsSavePrecategorizaciones && mIsSaveAjustes)
+            goToFirstActivity();
     }
 
     private void goToFirstActivity() {
