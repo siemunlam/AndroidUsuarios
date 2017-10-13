@@ -1,8 +1,10 @@
 package com.siem.siemusuarios.db;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 
 import com.siem.siemusuarios.model.api.MotivoPrecategorizacion;
 import com.siem.siemusuarios.model.app.Perfil;
@@ -129,11 +131,23 @@ public class DBWrapper {
     public static void savePrecategorizacion(Context context, MotivoPrecategorizacion motivo){
         ContentValues cv = new ContentValues();
         cv.put(DBContract.Precategorizacion.COLUMN_NAME_DESCRIPCION, motivo.getDescripcion());
-        context.getContentResolver().insert(
+        Uri uri = context.getContentResolver().insert(
                 DBContract.Precategorizacion.CONTENT_URI,
                 cv
         );
-        //TODO: Insert opcion precategorizacion
+        saveOpcionPrecategorizacion(context, motivo, ContentUris.parseId(uri));
+    }
+
+    private static void saveOpcionPrecategorizacion(Context context, MotivoPrecategorizacion motivo, long idPrecategorizacion) {
+        for (String descripcion : motivo.getListOptions()) {
+            ContentValues cv = new ContentValues();
+            cv.put(DBContract.OpcionPrecategorizacion.COLUMN_NAME_DESCRIPCION, descripcion);
+            cv.put(DBContract.OpcionPrecategorizacion.COLUMN_NAME_ID_PRECATEGORIZACION, idPrecategorizacion);
+            context.getContentResolver().insert(
+                    DBContract.OpcionPrecategorizacion.CONTENT_URI,
+                    cv
+            );
+        }
     }
 
     public static List<MotivoPrecategorizacion> getAllPrecategorizaciones(Context context){
@@ -148,16 +162,39 @@ public class DBWrapper {
         List<MotivoPrecategorizacion> listPrecategorizaciones = new ArrayList<>();
         if(cursor != null){
             while(cursor.moveToNext()){
+                int id = cursor.getInt(cursor.getColumnIndex(DBContract.Precategorizacion._ID));
                 String descripcion = cursor.getString(cursor.getColumnIndex(DBContract.Precategorizacion.COLUMN_NAME_DESCRIPCION));
 
                 MotivoPrecategorizacion precategorizacion = new MotivoPrecategorizacion(descripcion);
+                precategorizacion.setListOptions(getAllOpcionesPrecategorizacion(context, id));
                 listPrecategorizaciones.add(precategorizacion);
-                //TODO: Get opcion precategorizacion
             }
             cursor.close();
         }
 
         return listPrecategorizaciones;
+    }
+
+    public static List<String> getAllOpcionesPrecategorizacion(Context context, int idPrecategorizacion){
+        Cursor cursor = context.getContentResolver().query(
+                DBContract.OpcionPrecategorizacion.CONTENT_URI,
+                null,
+                DBContract.OpcionPrecategorizacion.COLUMN_NAME_ID_PRECATEGORIZACION + " = ? ",
+                new String[]{ String.valueOf(idPrecategorizacion) },
+                null
+        );
+
+        List<String> listOpcionesPrecategorizacion = new ArrayList<>();
+        if(cursor != null){
+            while(cursor.moveToNext()){
+                String descripcion = cursor.getString(cursor.getColumnIndex(DBContract.OpcionPrecategorizacion.COLUMN_NAME_DESCRIPCION));
+
+                listOpcionesPrecategorizacion.add(descripcion);
+            }
+            cursor.close();
+        }
+
+        return listOpcionesPrecategorizacion;
     }
 
 }
