@@ -26,22 +26,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.adapter.MotivosAdapter;
 import com.siem.siemusuarios.databinding.ActivityPrecategorizacionBinding;
-import com.siem.siemusuarios.model.api.Motivo;
-import com.siem.siemusuarios.model.api.ResponseMotivos;
+import com.siem.siemusuarios.db.DBWrapper;
+import com.siem.siemusuarios.model.api.MotivoPrecategorizacion;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerItem;
 import com.siem.siemusuarios.utils.Constants;
-import com.siem.siemusuarios.utils.RetrofitClient;
 import com.siem.siemusuarios.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PrecategorizacionActivity extends ActivateGpsActivity {
 
@@ -56,7 +48,7 @@ public class PrecategorizacionActivity extends ActivateGpsActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_precategorizacion);
         setToolbar(false);
 
-        mAdapter = new MotivosAdapter(new ArrayList<Motivo>());
+        mAdapter = new MotivosAdapter(new ArrayList<MotivoPrecategorizacion>());
         mBinding.recyclerview.setAdapter(mAdapter);
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
@@ -93,7 +85,8 @@ public class PrecategorizacionActivity extends ActivateGpsActivity {
                 }
             }
         });
-        getMotivosPrecategorizacion();
+
+        mAdapter.setListDatos(DBWrapper.getAllPrecategorizaciones(this));
     }
 
     @Override
@@ -160,41 +153,5 @@ public class PrecategorizacionActivity extends ActivateGpsActivity {
                 Toast.makeText(PrecategorizacionActivity.this, getString(R.string.errorPlaceApi, status.getStatusCode()), Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    public void getMotivosPrecategorizacion() {
-        Call<ResponseMotivos> response = RetrofitClient.getServerClient().getMotivosPrecategorizacion();
-        response.enqueue(new Callback<ResponseMotivos>() {
-            @Override
-            public void onResponse(Call<ResponseMotivos> call, Response<ResponseMotivos> response) {
-                switch(response.code()){
-                    case Constants.CODE_SERVER_OK:
-                        ResponseMotivos responseMotivos = response.body();
-                        HashMap<String, List<String>> motivos = responseMotivos.getListMotivos();
-                        if(motivos != null){
-                            for (Map.Entry<String, List<String>> entry : motivos.entrySet()) {
-                                Motivo motivo = new Motivo(entry.getKey());
-                                List<String> listOptions = entry.getValue();
-                                motivo.setListOptions(listOptions);
-                                mAdapter.addMotivo(motivo);
-                            }
-                            mAdapter.notifyDataSetChanged();
-                        }
-                        break;
-                    default:
-                        error();
-                        break;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseMotivos> call, Throwable t) {
-                error();
-            }
-
-            private void error() {
-                finish();
-            }
-        });
     }
 }

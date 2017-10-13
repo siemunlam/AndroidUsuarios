@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 public class DBContentProvider extends ContentProvider {
 
     public static final int PERFILES = 1;
+    public static final int PRECATEGORIZACION = 2;
 
     private DataBaseHandler dbHandler;
     private SQLiteDatabase db;
@@ -21,6 +22,7 @@ public class DBContentProvider extends ContentProvider {
 
     static {
         sUriMatcher.addURI(cAuthority, DBContract.PERFILES, PERFILES);
+        sUriMatcher.addURI(cAuthority, DBContract.PRECATEGORIZACION, PRECATEGORIZACION);
     }
 
     public DBContentProvider() {
@@ -40,6 +42,9 @@ public class DBContentProvider extends ContentProvider {
             case PERFILES:
                 return DBContract.MIME_DIR + "/" + DBContract.PERFILES;
 
+            case PRECATEGORIZACION:
+                return DBContract.MIME_DIR + "/" + DBContract.PRECATEGORIZACION;
+
             default:
                 return null;
         }
@@ -55,6 +60,17 @@ public class DBContentProvider extends ContentProvider {
             case PERFILES:
                 return db.query(
                         DBContract.Perfiles.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+
+            case PRECATEGORIZACION:
+                return db.query(
+                        DBContract.Precategorizacion.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -84,6 +100,14 @@ public class DBContentProvider extends ContentProvider {
                 notifyChange(DBContract.Perfiles.CONTENT_URI, null);
                 return Uri.parse(DBContract.Perfiles.CONTENT_URI + "/" + id);
 
+            case PRECATEGORIZACION:
+                id = db.insert(
+                        DBContract.Precategorizacion.TABLE_NAME,
+                        null,
+                        contentValues
+                );
+                return Uri.parse(DBContract.Precategorizacion.CONTENT_URI + "/" + id);
+
             default:
                 return uri;
         }
@@ -104,6 +128,15 @@ public class DBContentProvider extends ContentProvider {
                 notifyChange(DBContract.Perfiles.CONTENT_URI, null);
                 return deleted;
 
+            case PRECATEGORIZACION:
+                deleted = db.delete(
+                        DBContract.Precategorizacion.TABLE_NAME,
+                        selection,
+                        selectionArgs
+                );
+                notifyChange(DBContract.Precategorizacion.CONTENT_URI, null);
+                return deleted;
+
             default:
                 return 0;
         }
@@ -118,6 +151,14 @@ public class DBContentProvider extends ContentProvider {
             case PERFILES:
                 return db.update(
                         DBContract.Perfiles.TABLE_NAME,
+                        values,
+                        selection,
+                        selectionArgs
+                );
+
+            case PRECATEGORIZACION:
+                return db.update(
+                        DBContract.Precategorizacion.TABLE_NAME,
                         values,
                         selection,
                         selectionArgs

@@ -5,15 +5,15 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.siem.siemusuarios.databinding.FilaMotivosBinding;
-import com.siem.siemusuarios.model.api.Motivo;
+import com.siem.siemusuarios.model.api.MotivoPrecategorizacion;
 
 import java.util.List;
 
 public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosViewHolder> {
 
-    private List<Motivo> mListDatos;
+    private List<MotivoPrecategorizacion> mListDatos;
 
-    public MotivosAdapter(List<Motivo> datos){
+    public MotivosAdapter(List<MotivoPrecategorizacion> datos){
         mListDatos = datos;
     }
 
@@ -26,7 +26,7 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
 
     @Override
     public void onBindViewHolder(final MotivosViewHolder holder, int position) {
-        Motivo motivo = mListDatos.get(holder.getAdapterPosition());
+        MotivoPrecategorizacion motivo = mListDatos.get(holder.getAdapterPosition());
         holder.bind(motivo);
     }
 
@@ -35,9 +35,15 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
         return mListDatos != null ? mListDatos.size() : 0;
     }
 
-    public void addMotivo(Motivo motivo){
+    public void addMotivo(MotivoPrecategorizacion motivo){
         mListDatos.add(motivo);
     }
+
+    public void setListDatos(List<MotivoPrecategorizacion> listDatos) {
+        mListDatos = listDatos;
+        notifyDataSetChanged();
+    }
+
 
     public class MotivosViewHolder extends RecyclerView.ViewHolder{
 
@@ -48,7 +54,7 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
             mBinding = binding;
         }
 
-        public void bind(Motivo motivo) {
+        public void bind(MotivoPrecategorizacion motivo) {
             mBinding.textMotivo.setText(motivo.getDescripcion());
         }
     }

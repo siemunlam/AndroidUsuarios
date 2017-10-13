@@ -19,11 +19,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
      */
     public static final String SQL_DELETE_PERFILES =
             "DROP TABLE IF EXISTS " + DBContract.Perfiles.TABLE_NAME;
+    public static final String SQL_DELETE_PRECATEGORIZACION =
+            "DROP TABLE IF EXISTS " + DBContract.Precategorizacion.TABLE_NAME;
 
     /**
      * Create tables
      */
-    private static final String SQL_CREATE_LOCATIONS =
+    private static final String SQL_CREATE_PERFILES =
             "CREATE TABLE " + DBContract.Perfiles.TABLE_NAME + "("
                     + DBContract.Perfiles._ID + DBContract.INTEGER_TYPE + DBContract.PRIMARY_KEY + DBContract.AUTOINCREMENT + DBContract.COMMA_SEP
                     + DBContract.Perfiles.COLUMN_NAME_NOMBRE + DBContract.TEXT_TYPE + DBContract.COMMA_SEP
@@ -31,6 +33,11 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     + DBContract.Perfiles.COLUMN_NAME_APELLIDO + DBContract.TEXT_TYPE + DBContract.COMMA_SEP
                     + DBContract.Perfiles.COLUMN_NAME_SEXO + DBContract.TEXT_TYPE + DBContract.COMMA_SEP
                     + DBContract.Perfiles.COLUMN_NAME_FECHA_NACIMIENTO + DBContract.TEXT_TYPE + ") ";
+
+    private static final String SQL_CREATE_PRECATEGORIZACION =
+            "CREATE TABLE " + DBContract.Precategorizacion.TABLE_NAME + "("
+                    + DBContract.Precategorizacion._ID + DBContract.INTEGER_TYPE + DBContract.PRIMARY_KEY + DBContract.AUTOINCREMENT + DBContract.COMMA_SEP
+                    + DBContract.Precategorizacion.COLUMN_NAME_DESCRIPCION + DBContract.TEXT_TYPE + ") ";
 
 
     private DataBaseHandler(Context context) {

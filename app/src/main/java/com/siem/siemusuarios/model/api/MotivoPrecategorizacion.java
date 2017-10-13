@@ -7,12 +7,12 @@ import java.util.List;
  * Created by Lucas on 22/9/17.
  */
 
-public class Motivo {
+public class MotivoPrecategorizacion {
 
     private String mDescripcion;
     private List<String> mListOptions;
 
-    public Motivo(String descripcion){
+    public MotivoPrecategorizacion(String descripcion){
         mDescripcion = descripcion;
         mListOptions = new ArrayList<>();
     }

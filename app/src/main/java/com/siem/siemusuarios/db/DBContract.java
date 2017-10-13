@@ -29,6 +29,7 @@ public class DBContract {
      * Path constants
      */
     public static final String PERFILES = "perfiles";
+    public static final String PRECATEGORIZACION = "precategorizacion";
 
     /**
      * Tipos MIME
@@ -50,5 +51,14 @@ public class DBContract {
         public static final String COLUMN_NAME_NRO_CONTACTO = "nro_contacto";
         public static final String COLUMN_NAME_SEXO = "sexo";
         public static final String COLUMN_NAME_FECHA_NACIMIENTO = "fecha_nacimiento";
+    }
+
+    public static abstract class Precategorizacion implements BaseColumns {
+        public static final String TABLE_NAME = "precategorizacion";
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendEncodedPath(PRECATEGORIZACION).build();
+
+        public static final String COLUMN_NAME_DESCRIPCION = "descripcion";
     }
 }

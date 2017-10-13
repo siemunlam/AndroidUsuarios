@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.siem.siemusuarios.model.api.MotivoPrecategorizacion;
 import com.siem.siemusuarios.model.app.Perfil;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class DBWrapper {
 
     public static void cleanAllDB(Context context){
         cleanPerfiles(context);
+        cleanPrecategorizaciones(context);
     }
 
     /**
@@ -102,6 +104,49 @@ public class DBWrapper {
         }
 
         return listPerfiles;
+    }
+
+    /**
+     * Precategorizacion
+     */
+    public static void cleanPrecategorizaciones(Context context) {
+        context.getContentResolver().delete(
+                DBContract.Precategorizacion.CONTENT_URI,
+                null,
+                null
+        );
+    }
+
+    public static void savePrecategorizacion(Context context, MotivoPrecategorizacion motivo){
+        ContentValues cv = new ContentValues();
+        cv.put(DBContract.Precategorizacion.COLUMN_NAME_DESCRIPCION, motivo.getDescripcion());
+        context.getContentResolver().insert(
+                DBContract.Precategorizacion.CONTENT_URI,
+                cv
+        );
+    }
+
+    public static List<MotivoPrecategorizacion> getAllPrecategorizaciones(Context context){
+        Cursor cursor = context.getContentResolver().query(
+                DBContract.Precategorizacion.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        List<MotivoPrecategorizacion> listPrecategorizaciones = new ArrayList<>();
+        if(cursor != null){
+            while(cursor.moveToNext()){
+                String descripcion = cursor.getString(cursor.getColumnIndex(DBContract.Precategorizacion.COLUMN_NAME_DESCRIPCION));
+
+                MotivoPrecategorizacion precategorizacion = new MotivoPrecategorizacion(descripcion);
+                listPrecategorizaciones.add(precategorizacion);
+            }
+            cursor.close();
+        }
+
+        return listPrecategorizaciones;
     }
 
 }
