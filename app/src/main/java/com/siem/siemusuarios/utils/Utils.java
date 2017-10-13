@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.siem.siemusuarios.R;
 
@@ -54,5 +56,20 @@ public class Utils {
             return TextUtils.join(", ", addressFragments);
         }else
             return String.format(Constants.FORMAT_NO_DIRECTION, Constants.df.format(latitude), Constants.df.format(longitude));
+    }
+
+    public static void sendMessageWhatsapp(Activity activity) {
+        try {
+            String url = activity.getString(R.string.sendWhatsapp, Constants.NUMBER_SIEM, activity.getString(R.string.textSendWhatsapp));
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            activity.startActivity(i);
+        } catch (Exception e) {
+            try {
+                activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + Constants.PACKAGE_WHATSAPP)));
+            } catch (Exception e1){
+                Toast.makeText(activity, activity.getString(R.string.errorNoWhatsapp), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

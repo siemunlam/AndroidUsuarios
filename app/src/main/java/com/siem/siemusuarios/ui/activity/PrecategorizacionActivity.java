@@ -107,7 +107,7 @@ public class PrecategorizacionActivity extends ActivateGpsActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuWhatsapp:
-
+                Utils.sendMessageWhatsapp(this);
                 return true;
 
             case R.id.menuLlamar:

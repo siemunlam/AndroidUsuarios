@@ -15,6 +15,12 @@ public class Constants {
     public static final String KEY_PERFIL = "KEY_PERFIL";
 
     /**
+     * Number SIEM
+     */
+    public static final String NUMBER_SIEM = "541166036790";
+    public static final String PACKAGE_WHATSAPP = "com.whatsapp";
+
+    /**
      * Fonts
      */
     public static final String PRIMARY_FONT = "fonts/rounded_elegance.ttf";

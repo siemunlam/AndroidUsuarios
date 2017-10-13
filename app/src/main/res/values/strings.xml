@@ -7,12 +7,17 @@
     <string name="error">Hubo un error. Intente de nuevo más tarde.</string>
     <string name="errorNoPlayServices">Debe instalar Google Play Services desde el Play Store.</string>
     <string name="errorPlaceApi">Ha ocurrido un error: %1$d</string>
+    <string name="errorNoWhatsapp">Debe instalar Whatsapp desde el Play Store.</string>
 
     <!-- Menu -->
     <string name="menuWhatsapp">Whatsapp</string>
     <string name="menuLlamar">Llamar</string>
     <string name="menuPerfiles">Perfiles</string>
     <string name="menuConsultarAuxilio">Consultar auxilio</string>
+
+    <!-- Whatsapp -->
+    <string name="sendWhatsapp" translatable="false">https://api.whatsapp.com/send?phone=%1$s&amp;text=%2$s</string>
+    <string name="textSendWhatsapp">Hola SIEM!</string>
 
     <!-- Precategorizacion -->
     <string name="ubicacion">Ubicación</string>
