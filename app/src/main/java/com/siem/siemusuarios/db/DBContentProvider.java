@@ -14,6 +14,7 @@ public class DBContentProvider extends ContentProvider {
 
     public static final int PERFILES = 1;
     public static final int PRECATEGORIZACION = 2;
+    public static final int OPCION_PRECATEGORIZACION = 3;
 
     private DataBaseHandler dbHandler;
     private SQLiteDatabase db;
@@ -23,6 +24,7 @@ public class DBContentProvider extends ContentProvider {
     static {
         sUriMatcher.addURI(cAuthority, DBContract.PERFILES, PERFILES);
         sUriMatcher.addURI(cAuthority, DBContract.PRECATEGORIZACION, PRECATEGORIZACION);
+        sUriMatcher.addURI(cAuthority, DBContract.OPCION_PRECATEGORIZACION, OPCION_PRECATEGORIZACION);
     }
 
     public DBContentProvider() {
@@ -44,6 +46,9 @@ public class DBContentProvider extends ContentProvider {
 
             case PRECATEGORIZACION:
                 return DBContract.MIME_DIR + "/" + DBContract.PRECATEGORIZACION;
+
+            case OPCION_PRECATEGORIZACION:
+                return DBContract.MIME_DIR + "/" + DBContract.OPCION_PRECATEGORIZACION;
 
             default:
                 return null;
@@ -71,6 +76,17 @@ public class DBContentProvider extends ContentProvider {
             case PRECATEGORIZACION:
                 return db.query(
                         DBContract.Precategorizacion.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+
+            case OPCION_PRECATEGORIZACION:
+                return db.query(
+                        DBContract.OpcionPrecategorizacion.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -108,6 +124,14 @@ public class DBContentProvider extends ContentProvider {
                 );
                 return Uri.parse(DBContract.Precategorizacion.CONTENT_URI + "/" + id);
 
+            case OPCION_PRECATEGORIZACION:
+                id = db.insert(
+                        DBContract.OpcionPrecategorizacion.TABLE_NAME,
+                        null,
+                        contentValues
+                );
+                return Uri.parse(DBContract.OpcionPrecategorizacion.CONTENT_URI + "/" + id);
+
             default:
                 return uri;
         }
@@ -134,7 +158,14 @@ public class DBContentProvider extends ContentProvider {
                         selection,
                         selectionArgs
                 );
-                notifyChange(DBContract.Precategorizacion.CONTENT_URI, null);
+                return deleted;
+
+            case OPCION_PRECATEGORIZACION:
+                deleted = db.delete(
+                        DBContract.OpcionPrecategorizacion.TABLE_NAME,
+                        selection,
+                        selectionArgs
+                );
                 return deleted;
 
             default:
@@ -159,6 +190,14 @@ public class DBContentProvider extends ContentProvider {
             case PRECATEGORIZACION:
                 return db.update(
                         DBContract.Precategorizacion.TABLE_NAME,
+                        values,
+                        selection,
+                        selectionArgs
+                );
+
+            case OPCION_PRECATEGORIZACION:
+                return db.update(
+                        DBContract.OpcionPrecategorizacion.TABLE_NAME,
                         values,
                         selection,
                         selectionArgs

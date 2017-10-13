@@ -115,6 +115,15 @@ public class DBWrapper {
                 null,
                 null
         );
+        cleanOpcionPrecategorizacion(context);
+    }
+
+    private static void cleanOpcionPrecategorizacion(Context context){
+        context.getContentResolver().delete(
+                DBContract.OpcionPrecategorizacion.CONTENT_URI,
+                null,
+                null
+        );
     }
 
     public static void savePrecategorizacion(Context context, MotivoPrecategorizacion motivo){
@@ -124,6 +133,7 @@ public class DBWrapper {
                 DBContract.Precategorizacion.CONTENT_URI,
                 cv
         );
+        //TODO: Insert opcion precategorizacion
     }
 
     public static List<MotivoPrecategorizacion> getAllPrecategorizaciones(Context context){
@@ -142,6 +152,7 @@ public class DBWrapper {
 
                 MotivoPrecategorizacion precategorizacion = new MotivoPrecategorizacion(descripcion);
                 listPrecategorizaciones.add(precategorizacion);
+                //TODO: Get opcion precategorizacion
             }
             cursor.close();
         }

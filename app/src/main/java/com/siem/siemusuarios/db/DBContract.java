@@ -30,6 +30,7 @@ public class DBContract {
      */
     public static final String PERFILES = "perfiles";
     public static final String PRECATEGORIZACION = "precategorizacion";
+    public static final String OPCION_PRECATEGORIZACION = "opcion_precategorizacion";
 
     /**
      * Tipos MIME
@@ -59,6 +60,16 @@ public class DBContract {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendEncodedPath(PRECATEGORIZACION).build();
 
+        public static final String COLUMN_NAME_DESCRIPCION = "descripcion";
+    }
+
+    public static abstract class OpcionPrecategorizacion implements BaseColumns {
+        public static final String TABLE_NAME = "opcion_precategorizacion";
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendEncodedPath(OPCION_PRECATEGORIZACION).build();
+
+        public static final String COLUMN_NAME_ID_PRECATEGORIZACION = "id_precategorizacion";
         public static final String COLUMN_NAME_DESCRIPCION = "descripcion";
     }
 }
