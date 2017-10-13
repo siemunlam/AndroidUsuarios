@@ -34,7 +34,6 @@ import com.siem.siemusuarios.utils.Constants;
 import com.siem.siemusuarios.utils.RetrofitClient;
 import com.siem.siemusuarios.utils.Utils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -155,12 +154,7 @@ public class PrecategorizacionActivity extends ActivateGpsActivity {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 LatLng latlng = place.getLatLng();
-                try{
-                    String direccion = Utils.getStringAddress(this, latlng.latitude, latlng.longitude);
-                    mBinding.customEdittextUbicacion.setText(direccion, latlng.latitude, latlng.longitude);
-                }catch(IOException e1){
-                    Toast.makeText(this, getString(R.string.error), Toast.LENGTH_LONG).show();
-                }
+                mBinding.customEdittextUbicacion.setText(place.getAddress().toString(), latlng.latitude, latlng.longitude);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 Toast.makeText(PrecategorizacionActivity.this, getString(R.string.errorPlaceApi, status.getStatusCode()), Toast.LENGTH_LONG).show();
