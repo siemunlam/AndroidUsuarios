@@ -72,4 +72,9 @@ public class Utils {
             }
         }
     }
+
+    public static void dialSiem(Activity activity) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Constants.NUMBER_SIEM));
+        activity.startActivity(intent);
+    }
 }

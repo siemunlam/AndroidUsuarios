@@ -111,7 +111,7 @@ public class PrecategorizacionActivity extends ActivateGpsActivity {
                 return true;
 
             case R.id.menuLlamar:
-
+                Utils.dialSiem(this);
                 return true;
 
             case R.id.menuPerfiles:
