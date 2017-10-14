@@ -11,6 +11,7 @@ public class MotivoPrecategorizacion {
 
     private String mDescripcion;
     private List<String> mListOptions;
+    private Integer mPositionOptionSelected;
 
     public MotivoPrecategorizacion(String descripcion){
         mDescripcion = descripcion;
@@ -31,6 +32,14 @@ public class MotivoPrecategorizacion {
 
     public void setListOptions(List<String> listOptions) {
         mListOptions = listOptions;
+    }
+
+    public Integer getPositionOptionSelected() {
+        return mPositionOptionSelected;
+    }
+
+    public void setPositionOptionSelected(int positionOptionSelected) {
+        mPositionOptionSelected = positionOptionSelected;
     }
 
     public void addOption(String option){

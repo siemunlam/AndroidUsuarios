@@ -9,9 +9,8 @@ import android.view.animation.AnimationUtils;
 
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.ActivityAgregarPerfilBinding;
-import com.siem.siemusuarios.interfaces.SexoSelectedListener;
+import com.siem.siemusuarios.interfaces.RadioButtonSelectedListener;
 import com.siem.siemusuarios.model.app.Perfil;
-import com.siem.siemusuarios.model.app.Sexo;
 import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
 import com.siem.siemusuarios.utils.Constants;
 import com.siem.siemusuarios.utils.SexoLoader;
@@ -27,7 +26,7 @@ import java.util.Date;
 
 public class AgregarPerfilActivity extends ToolbarActivity implements
         DatePickerDialog.OnDateSetListener,
-        SexoSelectedListener{
+        RadioButtonSelectedListener {
 
     private static final String TEXT_EMPTY = "";
 
@@ -151,11 +150,11 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
     }
 
     /**
-     * SexoSelectedListener
+     * RadioButtonSelectedListener
      */
     @Override
-    public void sexoSelected(Sexo sexo) {
-        mBinding.edittextSexo.setText(sexo.getDescripcion());
+    public void radioButtonSelected(int positionItem) {
+        mBinding.edittextSexo.setText(SexoLoader.getListSexo(AgregarPerfilActivity.this).get(positionItem));
         controlateAddButton();
     }
 
