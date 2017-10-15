@@ -108,7 +108,6 @@ public class ActivateGpsActivity extends ToolbarActivity implements
                         break;
                 }
             }
-
         });
     }
 

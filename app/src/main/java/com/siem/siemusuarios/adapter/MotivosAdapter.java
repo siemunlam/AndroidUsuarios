@@ -8,19 +8,23 @@ import android.view.ViewGroup;
 
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.FilaMotivosBinding;
+import com.siem.siemusuarios.interfaces.DeterminateNextListener;
 import com.siem.siemusuarios.interfaces.RadioButtonSelectedListener;
 import com.siem.siemusuarios.model.api.MotivoPrecategorizacion;
 import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
 import com.siem.siemusuarios.utils.Constants;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosViewHolder> {
 
     private List<MotivoPrecategorizacion> mListDatos;
+    private WeakReference<DeterminateNextListener> mListener;
 
-    public MotivosAdapter(List<MotivoPrecategorizacion> datos){
+    public MotivosAdapter(List<MotivoPrecategorizacion> datos, DeterminateNextListener listener){
         mListDatos = datos;
+        mListener = new WeakReference<>(listener);
     }
 
     @Override
@@ -48,6 +52,15 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
     public void setListDatos(List<MotivoPrecategorizacion> listDatos) {
         mListDatos = listDatos;
         notifyDataSetChanged();
+    }
+
+    public boolean haveData(){
+        for (MotivoPrecategorizacion motivo : mListDatos) {
+            if(motivo.getPositionOptionSelected() != null)
+                return true;
+        }
+
+        return false;
     }
 
 
@@ -106,6 +119,8 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
         private void setPositionOptionSelected(Integer position) {
             mMotivo.setPositionOptionSelected(position);
             notifyDataSetChanged();
+            if(mListener != null && mListener.get() != null)
+                mListener.get().determinateNext();
         }
     }
 
