@@ -38,7 +38,7 @@ public class MotivoPrecategorizacion {
         return mPositionOptionSelected;
     }
 
-    public void setPositionOptionSelected(int positionOptionSelected) {
+    public void setPositionOptionSelected(Integer positionOptionSelected) {
         mPositionOptionSelected = positionOptionSelected;
     }
 

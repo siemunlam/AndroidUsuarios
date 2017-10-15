@@ -3,6 +3,7 @@ package com.siem.siemusuarios.ui.activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.siem.siemusuarios.R;
@@ -29,6 +30,8 @@ import retrofit2.Response;
 public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding mBinding;
+    private Handler mHandler;
+    private Runnable mRunnable;
     private boolean mIsSavePrecategorizaciones = false;
     private boolean mIsSaveAjustes = false;
 
@@ -36,9 +39,30 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
 
         getMotivosPrecategorizacion();
         getMotivosAjuste();
+
+        mHandler = new Handler();
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                goToFirstActivity();
+            }
+        };
+        mHandler.postDelayed(mRunnable, 5000);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if(mHandler != null)
+            mHandler.removeCallbacks(mRunnable);
     }
 
     public void getMotivosPrecategorizacion() {
@@ -118,7 +142,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void error() {
-        finish();
+        //finish();
     }
 
     private void isFinished() {

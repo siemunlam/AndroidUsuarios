@@ -1,6 +1,6 @@
 package com.siem.siemusuarios.adapter;
 
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,7 @@ import com.siem.siemusuarios.databinding.FilaMotivosBinding;
 import com.siem.siemusuarios.interfaces.RadioButtonSelectedListener;
 import com.siem.siemusuarios.model.api.MotivoPrecategorizacion;
 import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
+import com.siem.siemusuarios.utils.Constants;
 
 import java.util.List;
 
@@ -53,9 +54,9 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
     public class MotivosViewHolder extends RecyclerView.ViewHolder
             implements RadioButtonSelectedListener{
 
-        //TODO: Change letter to San francisco
         private FilaMotivosBinding mBinding;
         private MotivoPrecategorizacion mMotivo;
+        private Typeface mTypeface;
 
         public MotivosViewHolder(FilaMotivosBinding binding) {
             super(binding.getRoot());
@@ -66,8 +67,6 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
             mMotivo = motivo;
 
             mBinding.textMotivo.setText(motivo.getDescripcion());
-            if(mMotivo.getPositionOptionSelected() != null)
-                mBinding.contentRow.setBackgroundColor(Color.RED);
 
             mBinding.contentRow.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -81,11 +80,31 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
                     ).show();
                 }
             });
+
+            mBinding.imgDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setPositionOptionSelected(null);
+                }
+            });
+
+            if(mMotivo.getPositionOptionSelected() != null){
+                mBinding.imgDelete.setVisibility(View.VISIBLE);
+                mTypeface = Typeface.createFromAsset(mBinding.contentRow.getContext().getAssets(), Constants.PRIMARY_FONT_BOLD);
+            }else{
+                mBinding.imgDelete.setVisibility(View.GONE);
+                mTypeface = Typeface.createFromAsset(mBinding.contentRow.getContext().getAssets(), Constants.PRIMARY_FONT);
+            }
+            mBinding.textMotivo.setTypeface(mTypeface);
         }
 
         @Override
         public void radioButtonSelected(int positionItem) {
-            mMotivo.setPositionOptionSelected(positionItem);
+            setPositionOptionSelected(positionItem);
+        }
+
+        private void setPositionOptionSelected(Integer position) {
+            mMotivo.setPositionOptionSelected(position);
             notifyDataSetChanged();
         }
     }

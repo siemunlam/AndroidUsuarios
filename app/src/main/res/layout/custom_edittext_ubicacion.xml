@@ -22,7 +22,6 @@
             android:ems="10"
             android:paddingLeft="@dimen/paddingLeftEdittextUbicacion"
             android:paddingRight="@dimen/paddingRightEdittextUbicacion"
-            android:paddingTop="4dp"
             android:inputType="text"
             android:maxLines="1"/>
         <android.support.v7.widget.AppCompatImageView

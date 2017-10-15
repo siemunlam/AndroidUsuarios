@@ -23,7 +23,8 @@ public class Constants {
     /**
      * Fonts
      */
-    public static final String PRIMARY_FONT = "fonts/rounded_elegance.ttf";
+    public static final String PRIMARY_FONT = "fonts/sanfrancisco.otf";
+    public static final String PRIMARY_FONT_BOLD = "fonts/sanfrancisco_bold.otf";
     public static final String LOGO_FONT = "fonts/logo_font.ttf";
 
     /**
