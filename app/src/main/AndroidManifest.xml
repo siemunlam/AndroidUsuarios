@@ -29,6 +29,12 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
+            android:name=".ui.activity.AjusteActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
             android:name=".ui.activity.PerfilesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">

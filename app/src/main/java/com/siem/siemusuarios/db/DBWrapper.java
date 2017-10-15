@@ -6,8 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.siem.siemusuarios.model.api.MotivoAjuste;
-import com.siem.siemusuarios.model.api.MotivoPrecategorizacion;
+import com.siem.siemusuarios.model.api.Motivo;
 import com.siem.siemusuarios.model.app.Perfil;
 
 import java.util.ArrayList;
@@ -130,7 +129,7 @@ public class DBWrapper {
         );
     }
 
-    public static void savePrecategorizacion(Context context, MotivoPrecategorizacion motivo){
+    public static void savePrecategorizacion(Context context, Motivo motivo){
         ContentValues cv = new ContentValues();
         cv.put(DBContract.Precategorizacion.COLUMN_NAME_DESCRIPCION, motivo.getDescripcion());
         Uri uri = context.getContentResolver().insert(
@@ -140,7 +139,7 @@ public class DBWrapper {
         saveOpcionPrecategorizacion(context, motivo, ContentUris.parseId(uri));
     }
 
-    private static void saveOpcionPrecategorizacion(Context context, MotivoPrecategorizacion motivo, long idPrecategorizacion) {
+    private static void saveOpcionPrecategorizacion(Context context, Motivo motivo, long idPrecategorizacion) {
         for (String descripcion : motivo.getListOptions()) {
             ContentValues cv = new ContentValues();
             cv.put(DBContract.OpcionPrecategorizacion.COLUMN_NAME_DESCRIPCION, descripcion);
@@ -152,7 +151,7 @@ public class DBWrapper {
         }
     }
 
-    public static List<MotivoPrecategorizacion> getAllPrecategorizaciones(Context context){
+    public static List<Motivo> getAllPrecategorizaciones(Context context){
         Cursor cursor = context.getContentResolver().query(
                 DBContract.Precategorizacion.CONTENT_URI,
                 null,
@@ -161,13 +160,13 @@ public class DBWrapper {
                 null
         );
 
-        List<MotivoPrecategorizacion> listPrecategorizaciones = new ArrayList<>();
+        List<Motivo> listPrecategorizaciones = new ArrayList<>();
         if(cursor != null){
             while(cursor.moveToNext()){
                 int id = cursor.getInt(cursor.getColumnIndex(DBContract.Precategorizacion._ID));
                 String descripcion = cursor.getString(cursor.getColumnIndex(DBContract.Precategorizacion.COLUMN_NAME_DESCRIPCION));
 
-                MotivoPrecategorizacion precategorizacion = new MotivoPrecategorizacion(descripcion);
+                Motivo precategorizacion = new Motivo(descripcion);
                 precategorizacion.setListOptions(getAllOpcionesPrecategorizacion(context, id));
                 listPrecategorizaciones.add(precategorizacion);
             }
@@ -219,7 +218,7 @@ public class DBWrapper {
         );
     }
 
-    public static void saveAjuste(Context context, MotivoAjuste motivo){
+    public static void saveAjuste(Context context, Motivo motivo){
         ContentValues cv = new ContentValues();
         cv.put(DBContract.Ajuste.COLUMN_NAME_DESCRIPCION, motivo.getDescripcion());
         Uri uri = context.getContentResolver().insert(
@@ -229,7 +228,7 @@ public class DBWrapper {
         saveOpcionAjuste(context, motivo, ContentUris.parseId(uri));
     }
 
-    private static void saveOpcionAjuste(Context context, MotivoAjuste motivo, long idAjuste) {
+    private static void saveOpcionAjuste(Context context, Motivo motivo, long idAjuste) {
         for (String descripcion : motivo.getListOptions()) {
             ContentValues cv = new ContentValues();
             cv.put(DBContract.OpcionAjuste.COLUMN_NAME_DESCRIPCION, descripcion);
@@ -241,7 +240,7 @@ public class DBWrapper {
         }
     }
 
-    public static List<MotivoAjuste> getAllAjuste(Context context){
+    public static List<Motivo> getAllAjuste(Context context){
         Cursor cursor = context.getContentResolver().query(
                 DBContract.Ajuste.CONTENT_URI,
                 null,
@@ -250,13 +249,13 @@ public class DBWrapper {
                 null
         );
 
-        List<MotivoAjuste> listMotivosAjuste = new ArrayList<>();
+        List<Motivo> listMotivosAjuste = new ArrayList<>();
         if(cursor != null){
             while(cursor.moveToNext()){
                 int id = cursor.getInt(cursor.getColumnIndex(DBContract.Ajuste._ID));
                 String descripcion = cursor.getString(cursor.getColumnIndex(DBContract.Ajuste.COLUMN_NAME_DESCRIPCION));
 
-                MotivoAjuste ajuste = new MotivoAjuste(descripcion);
+                Motivo ajuste = new Motivo(descripcion);
                 ajuste.setListOptions(getAllOpcionesAjuste(context, id));
                 listMotivosAjuste.add(ajuste);
             }

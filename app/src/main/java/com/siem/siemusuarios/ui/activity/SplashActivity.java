@@ -9,8 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.ActivitySplashBinding;
 import com.siem.siemusuarios.db.DBWrapper;
-import com.siem.siemusuarios.model.api.MotivoAjuste;
-import com.siem.siemusuarios.model.api.MotivoPrecategorizacion;
+import com.siem.siemusuarios.model.api.Motivo;
 import com.siem.siemusuarios.model.api.ResponseMotivos;
 import com.siem.siemusuarios.utils.Constants;
 import com.siem.siemusuarios.utils.RetrofitClient;
@@ -91,7 +90,7 @@ public class SplashActivity extends AppCompatActivity {
                 HashMap<String, List<String>> motivos = responseMotivos.getListMotivos();
                 if(motivos != null){
                     for (Map.Entry<String, List<String>> entry : motivos.entrySet()) {
-                        MotivoPrecategorizacion motivo = new MotivoPrecategorizacion(entry.getKey());
+                        Motivo motivo = new Motivo(entry.getKey());
                         List<String> listOptions = entry.getValue();
                         motivo.setListOptions(listOptions);
                         DBWrapper.savePrecategorizacion(SplashActivity.this, motivo);
@@ -129,7 +128,7 @@ public class SplashActivity extends AppCompatActivity {
                 HashMap<String, List<String>> motivos = responseMotivos.getListMotivos();
                 if(motivos != null){
                     for (Map.Entry<String, List<String>> entry : motivos.entrySet()) {
-                        MotivoAjuste ajuste = new MotivoAjuste(entry.getKey());
+                        Motivo ajuste = new Motivo(entry.getKey());
                         List<String> listOptions = entry.getValue();
                         ajuste.setListOptions(listOptions);
                         DBWrapper.saveAjuste(SplashActivity.this, ajuste);

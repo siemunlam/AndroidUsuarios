@@ -7,12 +7,17 @@ import java.util.List;
  * Created by Lucas on 22/9/17.
  */
 
-public class MotivoAjuste {
+public class Motivo {
 
     private String mDescripcion;
     private List<String> mListOptions;
+    private Integer mPositionOptionSelected;
 
-    public MotivoAjuste(String descripcion){
+    public Motivo(){
+        mListOptions = new ArrayList<>();
+    }
+
+    public Motivo(String descripcion){
         mDescripcion = descripcion;
         mListOptions = new ArrayList<>();
     }
@@ -31,6 +36,14 @@ public class MotivoAjuste {
 
     public void setListOptions(List<String> listOptions) {
         mListOptions = listOptions;
+    }
+
+    public Integer getPositionOptionSelected() {
+        return mPositionOptionSelected;
+    }
+
+    public void setPositionOptionSelected(Integer positionOptionSelected) {
+        mPositionOptionSelected = positionOptionSelected;
     }
 
     public void addOption(String option){

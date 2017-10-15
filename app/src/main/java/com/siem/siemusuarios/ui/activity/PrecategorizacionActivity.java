@@ -29,7 +29,7 @@ import com.siem.siemusuarios.adapter.MotivosAdapter;
 import com.siem.siemusuarios.databinding.ActivityPrecategorizacionBinding;
 import com.siem.siemusuarios.db.DBWrapper;
 import com.siem.siemusuarios.interfaces.DeterminateNextListener;
-import com.siem.siemusuarios.model.api.MotivoPrecategorizacion;
+import com.siem.siemusuarios.model.api.Motivo;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerItem;
 import com.siem.siemusuarios.utils.Constants;
@@ -45,13 +45,15 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
     private ActivityPrecategorizacionBinding mBinding;
     private MotivosAdapter mAdapter;
 
+    //TODO: SaveInstanceState
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_precategorizacion);
         setToolbar(false);
 
-        mAdapter = new MotivosAdapter(new ArrayList<MotivoPrecategorizacion>(), this);
+        mAdapter = new MotivosAdapter(new ArrayList<Motivo>(), this);
         mBinding.recyclerview.setAdapter(mAdapter);
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
@@ -87,6 +89,13 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
                 } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
                     Toast.makeText(PrecategorizacionActivity.this, getString(R.string.errorNoPlayServices), Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        mBinding.buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.startActivityWithTransition(PrecategorizacionActivity.this, new Intent(PrecategorizacionActivity.this, AjusteActivity.class));
             }
         });
 

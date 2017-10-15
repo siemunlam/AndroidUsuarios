@@ -10,7 +10,7 @@ import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.FilaMotivosBinding;
 import com.siem.siemusuarios.interfaces.DeterminateNextListener;
 import com.siem.siemusuarios.interfaces.RadioButtonSelectedListener;
-import com.siem.siemusuarios.model.api.MotivoPrecategorizacion;
+import com.siem.siemusuarios.model.api.Motivo;
 import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
 import com.siem.siemusuarios.utils.Constants;
 
@@ -19,10 +19,10 @@ import java.util.List;
 
 public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosViewHolder> {
 
-    private List<MotivoPrecategorizacion> mListDatos;
+    private List<Motivo> mListDatos;
     private WeakReference<DeterminateNextListener> mListener;
 
-    public MotivosAdapter(List<MotivoPrecategorizacion> datos, DeterminateNextListener listener){
+    public MotivosAdapter(List<Motivo> datos, DeterminateNextListener listener){
         mListDatos = datos;
         mListener = new WeakReference<>(listener);
     }
@@ -36,7 +36,7 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
 
     @Override
     public void onBindViewHolder(final MotivosViewHolder holder, int position) {
-        MotivoPrecategorizacion motivo = mListDatos.get(holder.getAdapterPosition());
+        Motivo motivo = mListDatos.get(holder.getAdapterPosition());
         holder.bind(motivo);
     }
 
@@ -45,17 +45,17 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
         return mListDatos != null ? mListDatos.size() : 0;
     }
 
-    public void addMotivo(MotivoPrecategorizacion motivo){
+    public void addMotivo(Motivo motivo){
         mListDatos.add(motivo);
     }
 
-    public void setListDatos(List<MotivoPrecategorizacion> listDatos) {
+    public void setListDatos(List<Motivo> listDatos) {
         mListDatos = listDatos;
         notifyDataSetChanged();
     }
 
     public boolean haveData(){
-        for (MotivoPrecategorizacion motivo : mListDatos) {
+        for (Motivo motivo : mListDatos) {
             if(motivo.getPositionOptionSelected() != null)
                 return true;
         }
@@ -68,7 +68,7 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
             implements RadioButtonSelectedListener{
 
         private FilaMotivosBinding mBinding;
-        private MotivoPrecategorizacion mMotivo;
+        private Motivo mMotivo;
         private Typeface mTypeface;
 
         public MotivosViewHolder(FilaMotivosBinding binding) {
@@ -76,7 +76,7 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
             mBinding = binding;
         }
 
-        public void bind(MotivoPrecategorizacion motivo) {
+        public void bind(Motivo motivo) {
             mMotivo = motivo;
 
             mBinding.textMotivo.setText(motivo.getDescripcion());
