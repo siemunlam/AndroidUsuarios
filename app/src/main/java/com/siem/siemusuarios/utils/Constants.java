@@ -54,9 +54,12 @@ public class Constants {
     /**
      * Permissions
      */
-    public static final String[] permissions = {
+    public static final String[] locations_permissions = {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
+    };
+    public static final String[] contacts_permissions = {
+            Manifest.permission.READ_CONTACTS
     };
 
     /**

@@ -12,12 +12,61 @@
             android:layout_height="wrap_content"
             android:id="@+id/appBarLayout"/>
 
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/heightTitleSeleccionarContacto"
+            android:layout_below="@+id/appBarLayout"
+            android:id="@+id/title"
+            android:text="@string/seleccionarPerfil"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:textSize="@dimen/sizeTitleSeleccionarContacto"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/itemSeparatorTop"
+            android:layout_below="@+id/title"
+            android:background="@color/colorSeparator"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/heightFilaPerfiles"
+            android:layout_below="@+id/itemSeparatorTop"
+            android:id="@+id/agregarContacto"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="@dimen/sizeIconAgregarPerfil"
+                android:layout_height="@dimen/sizeIconAgregarPerfil"
+                app:srcCompat="@drawable/ic_person_add"
+                android:tint="@android:color/black"
+                android:layout_margin="@dimen/defaultMargin"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/agregarNuevoPerfil"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sizeTitleAgregarPerfil"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/itemSeparatorBottom"
+            android:layout_below="@+id/agregarContacto"
+            android:background="@color/colorSeparator"/>
+
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recyclerview"
             android:focusable="true"
-            android:layout_below="@+id/appBarLayout">
+            android:layout_below="@+id/itemSeparatorBottom">
             <requestFocus />
         </android.support.v7.widget.RecyclerView>
 
@@ -32,7 +81,7 @@
             android:id="@+id/buttonNext"
             app:backgroundTint="@color/colorPrimary"
             app:fabSize="normal"
-            app:srcCompat="@drawable/ic_arrow_forward"/>
+            app:srcCompat="@drawable/ic_send"/>
 
     </RelativeLayout>
 </layout>

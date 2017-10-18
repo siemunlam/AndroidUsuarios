@@ -1,17 +1,22 @@
 package com.siem.siemusuarios.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.ActivityAgregarPerfilBinding;
@@ -35,6 +40,7 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
         RadioButtonSelectedListener {
 
     private static final int REQUEST_CHOOSE_CONTACT = 50;
+    private static final int CONTACT_PERMISSIONS_REQUEST = 1000;
     private static final String TEXT_EMPTY = "";
 
     private Intent mSeleccionarContactIntent;
@@ -148,7 +154,11 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
         mBinding.buttonSeleccionarContacto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(mSeleccionarContactIntent, REQUEST_CHOOSE_CONTACT);
+                if(ActivityCompat.checkSelfPermission(AgregarPerfilActivity.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED){
+                    startActivityForResult(mSeleccionarContactIntent, REQUEST_CHOOSE_CONTACT);
+                }else{
+                    ActivityCompat.requestPermissions(AgregarPerfilActivity.this, Constants.contacts_permissions, CONTACT_PERMISSIONS_REQUEST);
+                }
             }
         });
     }
@@ -185,6 +195,21 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
                     }
                     break;
             }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode){
+            case CONTACT_PERMISSIONS_REQUEST:
+                if(ActivityCompat.checkSelfPermission(AgregarPerfilActivity.this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED){
+                    startActivityForResult(mSeleccionarContactIntent, REQUEST_CHOOSE_CONTACT);
+                }else{
+                    Toast.makeText(AgregarPerfilActivity.this, getString(R.string.noPermissionContactGranted), Toast.LENGTH_LONG).show();
+                }
+                break;
         }
     }
 

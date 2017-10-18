@@ -21,4 +21,10 @@
     <dimen name="textsizeMsgNoPerfiles">25sp</dimen>
     <dimen name="textsizeFilaPerfiles">20sp</dimen>
     <dimen name="heightFilaPerfiles">65dp</dimen>
+
+    <!-- Seleccionar contacto -->
+    <dimen name="heightTitleSeleccionarContacto">50dp</dimen>
+    <dimen name="sizeTitleSeleccionarContacto">20sp</dimen>
+    <dimen name="sizeTitleAgregarPerfil">16sp</dimen>
+    <dimen name="sizeIconAgregarPerfil">35dp</dimen>
 </resources>

@@ -1,9 +1,11 @@
 package com.siem.siemusuarios.ui.activity;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.adapter.ContactoAdapter;
@@ -12,6 +14,7 @@ import com.siem.siemusuarios.db.DBWrapper;
 import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerItem;
+import com.siem.siemusuarios.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -36,6 +39,17 @@ public class SeleccionarContactoActivity extends ToolbarActivity {
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerEndItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
 
+        mBinding.agregarContacto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.startActivityWithTransition(SeleccionarContactoActivity.this, new Intent(SeleccionarContactoActivity.this, AgregarPerfilActivity.class));
+            }
+        });
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
         mAdapter.setListDatos(DBWrapper.getAllPerfiles(this));
     }
 

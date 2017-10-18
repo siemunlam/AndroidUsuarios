@@ -47,6 +47,7 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
 
     //TODO: SaveInstanceState
     //TODO: Search
+    //TODO: Ordenar precategorizacion y ajustes alfabeticamente
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,7 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
                         ActivityCompat.checkSelfPermission(PrecategorizacionActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
                     getLocation();
                 }else{
-                    ActivityCompat.requestPermissions(PrecategorizacionActivity.this, Constants.permissions, LOCATION_PERMISSIONS_REQUEST);
+                    ActivityCompat.requestPermissions(PrecategorizacionActivity.this, Constants.locations_permissions, LOCATION_PERMISSIONS_REQUEST);
                 }
             }
         });

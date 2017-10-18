@@ -27,7 +27,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/seleccionarContacto"
-                    android:id="@+id/buttonSeleccionarContacto"/>
+                    android:id="@+id/buttonSeleccionarContacto"
+                    android:background="@drawable/ic_button_select_contacts"
+                    android:layout_marginTop="@dimen/halfDefaultMargin"
+                    android:textColor="@android:color/white"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
