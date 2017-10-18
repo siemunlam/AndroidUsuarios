@@ -2,6 +2,7 @@ package com.siem.siemusuarios.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,14 +73,17 @@ public class AddPerfilesAdapter extends RecyclerView.Adapter<AddPerfilesAdapter.
     public class PerfilesViewHolder extends RecyclerView.ViewHolder{
 
         private final FilaPerfilesBinding mBinding;
+        private Typeface mTypeface;
 
         public PerfilesViewHolder(FilaPerfilesBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
+            mTypeface = Typeface.createFromAsset(mBinding.textNombreApellido.getContext().getAssets(), Constants.PRIMARY_FONT);
         }
 
         public void bind(final Perfil perfil) {
             mBinding.textNombreApellido.setText(String.format(Constants.FORMAT_NOMBRE_APELLIDO, perfil.getNombre(), perfil.getApellido()));
+            mBinding.textNombreApellido.setTypeface(mTypeface);
             mBinding.fila.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

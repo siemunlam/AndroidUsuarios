@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -45,6 +46,7 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
 
     private Intent mSeleccionarContactIntent;
     private ActivityAgregarPerfilBinding mBinding;
+    private Typeface mTypeface;
     private Date mFechaNacimiento;
     private Perfil mPerfil;
 
@@ -56,6 +58,8 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
 
         mFechaNacimiento = new Date();
         mSeleccionarContactIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT);
+        setTypeface();
 
         if(getIntent().getSerializableExtra(Constants.KEY_PERFIL) != null){
             mPerfil = (Perfil)getIntent().getSerializableExtra(Constants.KEY_PERFIL);
@@ -211,6 +215,15 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
                 }
                 break;
         }
+    }
+
+    private void setTypeface() {
+        mBinding.buttonSeleccionarContacto.setTypeface(mTypeface);
+        mBinding.edittextNombre.setTypeface(mTypeface);
+        mBinding.edittextApellido.setTypeface(mTypeface);
+        mBinding.edittextNroContacto.setTypeface(mTypeface);
+        mBinding.edittextFechaNacimiento.setTypeface(mTypeface);
+        mBinding.edittextSexo.setTypeface(mTypeface);
     }
 
     private String getPhone(Cursor cursor) {

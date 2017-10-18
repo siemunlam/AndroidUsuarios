@@ -51,7 +51,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/agregarNuevoPerfil"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/sizeTitleAgregarPerfil"/>
+                android:textSize="@dimen/sizeTitleAgregarPerfil"
+                android:id="@+id/titleAgregarNuevoPerfil"/>
         </LinearLayout>
 
         <RelativeLayout

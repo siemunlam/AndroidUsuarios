@@ -1,5 +1,6 @@
 package com.siem.siemusuarios.adapter;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -45,14 +46,17 @@ public class ContactoAdapter extends RecyclerView.Adapter<ContactoAdapter.Contac
     public class ContactoViewHolder extends RecyclerView.ViewHolder{
 
         private final FilaPerfilesBinding mBinding;
+        private Typeface mTypeface;
 
         public ContactoViewHolder(FilaPerfilesBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
+            mTypeface = Typeface.createFromAsset(mBinding.textNombreApellido.getContext().getAssets(), Constants.PRIMARY_FONT);
         }
 
         public void bind(final Perfil perfil) {
             mBinding.textNombreApellido.setText(String.format(Constants.FORMAT_NOMBRE_APELLIDO, perfil.getNombre(), perfil.getApellido()));
+            mBinding.textNombreApellido.setTypeface(mTypeface);
         }
     }
 
