@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.siem.siemusuarios.R;
-import com.siem.siemusuarios.adapter.PerfilesAdapter;
+import com.siem.siemusuarios.adapter.AddPerfilesAdapter;
 import com.siem.siemusuarios.databinding.ActivityPerfilesBinding;
 import com.siem.siemusuarios.db.DBWrapper;
 import com.siem.siemusuarios.interfaces.SwipePerfilDeleteListener;
@@ -33,7 +33,7 @@ public class PerfilesActivity extends ToolbarActivity implements SwipePerfilDele
 
     private Typeface mTypeface;
     private ActivityPerfilesBinding mBinding;
-    private PerfilesAdapter mAdapter;
+    private AddPerfilesAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class PerfilesActivity extends ToolbarActivity implements SwipePerfilDele
         setToolbar(true);
 
         mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT);
-        mAdapter = new PerfilesAdapter(this, null, this);
+        mAdapter = new AddPerfilesAdapter(this, null, this);
         mBinding.recyclerview.setAdapter(mAdapter);
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));

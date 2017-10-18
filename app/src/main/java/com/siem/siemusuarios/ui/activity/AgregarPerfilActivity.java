@@ -1,7 +1,13 @@
 package com.siem.siemusuarios.ui.activity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -28,8 +34,10 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
         DatePickerDialog.OnDateSetListener,
         RadioButtonSelectedListener {
 
+    private static final int REQUEST_CHOOSE_CONTACT = 50;
     private static final String TEXT_EMPTY = "";
 
+    private Intent mSeleccionarContactIntent;
     private ActivityAgregarPerfilBinding mBinding;
     private Date mFechaNacimiento;
     private Perfil mPerfil;
@@ -41,6 +49,7 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
         setToolbar(true);
 
         mFechaNacimiento = new Date();
+        mSeleccionarContactIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
 
         if(getIntent().getSerializableExtra(Constants.KEY_PERFIL) != null){
             mPerfil = (Perfil)getIntent().getSerializableExtra(Constants.KEY_PERFIL);
@@ -129,12 +138,82 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
                 finish();
             }
         });
+
+        /**
+         * Evitar que la app se cuelgue si no hay Activity que entienda el Intent de los contactos
+         */
+        if(!Utils.understandIntent(this, mSeleccionarContactIntent))
+            mBinding.buttonSeleccionarContacto.setEnabled(false);
+
+        mBinding.buttonSeleccionarContacto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(mSeleccionarContactIntent, REQUEST_CHOOSE_CONTACT);
+            }
+        });
     }
 
     @Override
     public void onResume(){
         super.onResume();
         controlateAddButton();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode == Activity.RESULT_OK){
+            switch(requestCode){
+                case REQUEST_CHOOSE_CONTACT:
+                    if(data != null){
+                        Uri contactUri = data.getData();
+                        Cursor cursor = getContentResolver().query(
+                                contactUri,
+                                null,
+                                null,
+                                null,
+                                null
+                        );
+
+                        if(cursor != null){
+                            if(cursor.moveToFirst()){
+                                String nombreCompleto = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY));
+                                String numero = getPhone(cursor);
+                                bindDataContact(nombreCompleto, numero);
+                            }
+                            cursor.close();
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    private String getPhone(Cursor cursor) {
+        String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+        Cursor phones = getContentResolver().query(
+                Phone.CONTENT_URI,
+                null,
+                Phone.CONTACT_ID + " = " + contactId,
+                null,
+                null);
+
+        String number = "";
+        if(phones != null){
+            if (phones.moveToNext()) {
+                number = phones.getString(phones.getColumnIndex(Phone.NUMBER));
+            }
+            phones.close();
+        }
+
+        return number;
+    }
+
+    private void bindDataContact(String nombreCompleto, String numero) {
+        String[] name = nombreCompleto.split(" ");
+
+        mBinding.edittextNombre.setText(name[0]);
+        mBinding.edittextApellido.setText(nombreCompleto.substring(name[0].length()).trim());
+        mBinding.edittextNroContacto.setText(numero);
     }
 
     /**

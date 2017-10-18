@@ -46,6 +46,7 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
     private MotivosAdapter mAdapter;
 
     //TODO: SaveInstanceState
+    //TODO: Search
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

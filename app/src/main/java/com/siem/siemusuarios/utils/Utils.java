@@ -3,6 +3,7 @@ package com.siem.siemusuarios.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
@@ -76,5 +77,10 @@ public class Utils {
     public static void dialSiem(Activity activity) {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Constants.NUMBER_SIEM));
         activity.startActivity(intent);
+    }
+
+    public static boolean understandIntent(Context context, Intent intent) {
+        PackageManager packageManager = context.getPackageManager();
+        return packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null;
     }
 }

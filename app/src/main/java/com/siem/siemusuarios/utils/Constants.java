@@ -14,6 +14,8 @@ public class Constants {
 
     public static final String KEY_PERFIL = "KEY_PERFIL";
 
+    public static final String FORMAT_NOMBRE_APELLIDO = "%1$s %2$s";
+
     /**
      * Number SIEM
      */

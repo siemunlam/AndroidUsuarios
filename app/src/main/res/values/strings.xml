@@ -30,6 +30,7 @@
     <string name="menuAgregarPerfil">Agregar</string>
 
     <!-- Agregar perfil -->
+    <string name="seleccionarContacto">Seleccionar contacto</string>
     <string name="nombre">Nombre</string>
     <string name="apellido">Apellido</string>
     <string name="sexo">Sexo</string>

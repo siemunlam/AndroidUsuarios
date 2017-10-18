@@ -18,17 +18,14 @@ import com.siem.siemusuarios.utils.swipe.ItemTouchHelperAdapter;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class PerfilesAdapter extends RecyclerView.Adapter<PerfilesAdapter.PerfilesViewHolder> implements
+public class AddPerfilesAdapter extends RecyclerView.Adapter<AddPerfilesAdapter.PerfilesViewHolder> implements
         ItemTouchHelperAdapter {
-
-    private static final String FORMAT_NOMBRE_APELLIDO = "%1$s %2$s";
 
     private WeakReference<Activity> mActivity;
     private WeakReference<SwipePerfilDeleteListener> mListener;
     private List<Perfil> mListDatos;
 
-    //TODO: Eliminar perfiles
-    public PerfilesAdapter(Activity activity, List<Perfil> datos, SwipePerfilDeleteListener swipePerfilDeleteListener){
+    public AddPerfilesAdapter(Activity activity, List<Perfil> datos, SwipePerfilDeleteListener swipePerfilDeleteListener){
         mListDatos = datos;
         mActivity = new WeakReference<>(activity);
         mListener = new WeakReference<>(swipePerfilDeleteListener);
@@ -82,7 +79,7 @@ public class PerfilesAdapter extends RecyclerView.Adapter<PerfilesAdapter.Perfil
         }
 
         public void bind(final Perfil perfil) {
-            mBinding.textNombreApellido.setText(String.format(FORMAT_NOMBRE_APELLIDO, perfil.getNombre(), perfil.getApellido()));
+            mBinding.textNombreApellido.setText(String.format(Constants.FORMAT_NOMBRE_APELLIDO, perfil.getNombre(), perfil.getApellido()));
             mBinding.fila.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
