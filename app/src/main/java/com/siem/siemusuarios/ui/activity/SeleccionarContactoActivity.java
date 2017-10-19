@@ -12,6 +12,8 @@ import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.adapter.ContactoAdapter;
 import com.siem.siemusuarios.databinding.ActivitySeleccionarContactoBinding;
 import com.siem.siemusuarios.db.DBWrapper;
+import com.siem.siemusuarios.interfaces.SeleccionarContactoListener;
+import com.siem.siemusuarios.model.app.Auxilio;
 import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerItem;
@@ -24,11 +26,13 @@ import java.util.ArrayList;
  * Created by lucas on 10/17/17.
  */
 
-public class SeleccionarContactoActivity extends ToolbarActivity {
+public class SeleccionarContactoActivity extends ToolbarActivity implements
+        SeleccionarContactoListener{
 
     private ActivitySeleccionarContactoBinding mBinding;
     private ContactoAdapter mAdapter;
     private Typeface mTypeface;
+    private Bundle mSavedInstanceState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +40,9 @@ public class SeleccionarContactoActivity extends ToolbarActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_seleccionar_contacto);
         setToolbar(true);
 
+        mSavedInstanceState = savedInstanceState;
         mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT);
-        mAdapter = new ContactoAdapter(new ArrayList<Perfil>());
+        mAdapter = new ContactoAdapter(new ArrayList<Perfil>(), this);
         mBinding.recyclerview.setAdapter(mAdapter);
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
@@ -47,6 +52,16 @@ public class SeleccionarContactoActivity extends ToolbarActivity {
             @Override
             public void onClick(View v) {
                 Utils.startActivityWithTransition(SeleccionarContactoActivity.this, new Intent(SeleccionarContactoActivity.this, AgregarPerfilActivity.class));
+            }
+        });
+
+        mBinding.buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SeleccionarContactoActivity.this, GenerarAuxilioActivity.class);
+                Auxilio auxilio = getAuxilio(mSavedInstanceState);
+                intent.putExtra(Constants.KEY_AUXILIO, auxilio);
+                Utils.startActivityWithTransition(SeleccionarContactoActivity.this, intent);
             }
         });
 
@@ -60,4 +75,19 @@ public class SeleccionarContactoActivity extends ToolbarActivity {
         mAdapter.setListDatos(DBWrapper.getAllPerfiles(this));
     }
 
+    private Auxilio getAuxilio(Bundle savedInstanceState) {
+        return (Auxilio)getIntent().getSerializableExtra(Constants.KEY_AUXILIO);
+    }
+
+    /**
+     * SeleccionarContactoListener
+     */
+    @Override
+    public void contactoSeleccionado(Perfil perfil) {
+        Intent intent = new Intent(SeleccionarContactoActivity.this, GenerarAuxilioActivity.class);
+        Auxilio auxilio = getAuxilio(mSavedInstanceState);
+        auxilio.setPerfil(perfil);
+        intent.putExtra(Constants.KEY_AUXILIO, auxilio);
+        Utils.startActivityWithTransition(SeleccionarContactoActivity.this, intent);
+    }
 }

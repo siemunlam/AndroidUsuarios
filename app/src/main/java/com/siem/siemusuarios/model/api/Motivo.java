@@ -42,6 +42,17 @@ public class Motivo {
         return mPositionOptionSelected;
     }
 
+    public boolean isSelected(){
+        return mPositionOptionSelected != null;
+    }
+
+    public String getSelected(){
+        if(isSelected())
+            return mListOptions.get(getPositionOptionSelected());
+        else
+            return "";
+    }
+
     public void setPositionOptionSelected(Integer positionOptionSelected) {
         mPositionOptionSelected = positionOptionSelected;
     }

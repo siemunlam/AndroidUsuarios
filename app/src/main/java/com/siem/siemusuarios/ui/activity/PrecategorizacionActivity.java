@@ -30,12 +30,14 @@ import com.siem.siemusuarios.databinding.ActivityPrecategorizacionBinding;
 import com.siem.siemusuarios.db.DBWrapper;
 import com.siem.siemusuarios.interfaces.DeterminateNextListener;
 import com.siem.siemusuarios.model.api.Motivo;
+import com.siem.siemusuarios.model.app.Auxilio;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerItem;
 import com.siem.siemusuarios.utils.Constants;
 import com.siem.siemusuarios.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PrecategorizacionActivity extends ActivateGpsActivity implements
         DeterminateNextListener{
@@ -97,11 +99,41 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
         mBinding.buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.startActivityWithTransition(PrecategorizacionActivity.this, new Intent(PrecategorizacionActivity.this, AjusteActivity.class));
+                Auxilio auxilio = new Auxilio();
+                auxilio.setLatitud(String.valueOf(mBinding.customEdittextUbicacion.getLatitude()));
+                auxilio.setLongitud(String.valueOf(mBinding.customEdittextUbicacion.getLongitude()));
+                auxilio.setUbicacion(mBinding.customEdittextUbicacion.getText());
+                auxilio.addMotivos(mAdapter.getMotivos());
+                Intent intent = new Intent(PrecategorizacionActivity.this, AjusteActivity.class);
+                intent.putExtra(Constants.KEY_AUXILIO, auxilio);
+                Utils.startActivityWithTransition(PrecategorizacionActivity.this, intent);
             }
         });
 
         mAdapter.setListDatos(DBWrapper.getAllPrecategorizaciones(this));
+
+        if(savedInstanceState != null){
+            if(savedInstanceState.containsKey(Constants.KEY_DIRECCION) && savedInstanceState.containsKey(Constants.KEY_LAT) && savedInstanceState.containsKey(Constants.KEY_LNG)){
+                String direccion = savedInstanceState.getString(Constants.KEY_DIRECCION);
+                Double lat = savedInstanceState.getDouble(Constants.KEY_LAT);
+                Double lng = savedInstanceState.getDouble(Constants.KEY_LNG);
+                mBinding.customEdittextUbicacion.setText(direccion, lat, lng);
+            }
+            if(savedInstanceState.containsKey(Constants.KEY_MOTIVOS)){
+                HashMap<String, Integer> motivos = (HashMap<String, Integer>) savedInstanceState.getSerializable(Constants.KEY_MOTIVOS);
+                mAdapter.setListDatos(motivos);
+            }
+            determinateNext();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(Constants.KEY_DIRECCION, mBinding.customEdittextUbicacion.getText());
+        savedInstanceState.putDouble(Constants.KEY_LAT, mBinding.customEdittextUbicacion.getLatitude());
+        savedInstanceState.putDouble(Constants.KEY_LNG, mBinding.customEdittextUbicacion.getLongitude());
+        savedInstanceState.putSerializable(Constants.KEY_MOTIVOS, mAdapter.getMotivosSaveState());
     }
 
     @Override

@@ -52,6 +52,12 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden">
         </activity>
+        <activity
+            android:name=".ui.activity.GenerarAuxilioActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
 
         <!-- FCM -->
         <service

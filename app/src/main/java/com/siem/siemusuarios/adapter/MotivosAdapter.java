@@ -15,6 +15,7 @@ import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
 import com.siem.siemusuarios.utils.Constants;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.List;
 
 public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosViewHolder> {
@@ -54,13 +55,44 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
         notifyDataSetChanged();
     }
 
+    public void setListDatos(HashMap<String, Integer> motivos){
+        for (Motivo motivo : mListDatos) {
+            if(motivos.containsKey(motivo.getDescripcion())){
+                motivo.setPositionOptionSelected(motivos.get(motivo.getDescripcion()));
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     public boolean haveData(){
         for (Motivo motivo : mListDatos) {
-            if(motivo.getPositionOptionSelected() != null)
+            if(motivo.isSelected())
                 return true;
         }
 
         return false;
+    }
+
+    public HashMap<String, String> getMotivos(){
+        HashMap<String, String> motivos = new HashMap<>();
+        for (Motivo motivo : mListDatos) {
+            if(motivo.isSelected()){
+                motivos.put(motivo.getDescripcion(), motivo.getSelected());
+            }
+        }
+
+        return motivos;
+    }
+
+    public HashMap<String, Integer> getMotivosSaveState(){
+        HashMap<String, Integer> motivos = new HashMap<>();
+        for (Motivo motivo : mListDatos) {
+            if(motivo.isSelected()){
+                motivos.put(motivo.getDescripcion(), motivo.getPositionOptionSelected());
+            }
+        }
+
+        return motivos;
     }
 
 
@@ -101,7 +133,7 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
                 }
             });
 
-            if(mMotivo.getPositionOptionSelected() != null){
+            if(mMotivo.isSelected()){
                 mBinding.imgDelete.setVisibility(View.VISIBLE);
                 mTypeface = Typeface.createFromAsset(mBinding.contentRow.getContext().getAssets(), Constants.PRIMARY_FONT_BOLD);
             }else{

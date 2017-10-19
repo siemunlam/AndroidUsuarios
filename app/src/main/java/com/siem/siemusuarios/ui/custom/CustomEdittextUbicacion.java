@@ -115,9 +115,22 @@ public class CustomEdittextUbicacion extends RelativeLayout {
         mIconUbicacion.setOnClickListener(listener);
     }
 
+    public Double getLatitude() {
+        return mLatitude;
+    }
+
+    public Double getLongitude() {
+        return mLongitude;
+    }
+
+    public String getText(){
+        return mEdittext.getText().toString();
+    }
+
     public void newLocation(Location location) {
         new NewLocationTask().execute(location);
     }
+
     public boolean haveLocation(){
         return mLatitude != null && mLongitude != null;
     }

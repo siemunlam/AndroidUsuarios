@@ -82,7 +82,7 @@
             android:id="@+id/buttonNext"
             app:backgroundTint="@color/colorPrimary"
             app:fabSize="normal"
-            app:srcCompat="@drawable/ic_send"/>
+            app:srcCompat="@drawable/ic_arrow_forward"/>
 
     </RelativeLayout>
 </layout>

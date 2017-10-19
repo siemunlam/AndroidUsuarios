@@ -12,9 +12,17 @@ import java.util.Locale;
 
 public class Constants {
 
-    public static final String KEY_PERFIL = "KEY_PERFIL";
-
     public static final String FORMAT_NOMBRE_APELLIDO = "%1$s %2$s";
+
+    /**
+     * Key saveInstanceState
+     */
+    public static final String KEY_PERFIL = "KEY_PERFIL";
+    public static final String KEY_AUXILIO = "KEY_AUXILIO";
+    public static final String KEY_DIRECCION = "KEY_DIRECCION";
+    public static final String KEY_LAT = "KEY_LATITUD";
+    public static final String KEY_LNG = "KEY_LONGITUD";
+    public static final String KEY_MOTIVOS = "KEY_MOTIVOS";
 
     /**
      * Number SIEM
@@ -41,8 +49,20 @@ public class Constants {
     public static final int CODE_BAD_REQUEST = 400;
     public static final int CODE_UNAUTHORIZED = 401;
     public static final int CODE_SERVER_ERROR = 500;
+    public static final String API_GENERAR_AUXILIO = "auxilios/";
     public static final String API_MOTIVOS_PRECATEGORIZACION = "rules/motivospc/";
     public static final String API_MOTIVOS_AJUSTE = "rules/motivosajuste/";
+
+    public static final String KEY_CONTACTO = "contacto";
+    public static final String KEY_UBICACION = "ubicacion";
+    public static final String KEY_REFERENCIA = "ubicacion_especifica";
+    public static final String KEY_LATITUD = "latitud_gps";
+    public static final String KEY_LONGITUD = "longitud_gps";
+    public static final String KEY_MOTIVO = "motivo";
+    public static final String KEY_ORIGEN = "origen";
+    public static final String KEY_NOMBRE = "nombre";
+    public static final String KEY_SEXO = "sexo";
+    public static final String KEY_OBSERVACIONES = "observaciones";
 
     /**
      * PlaceAutocomplete API
