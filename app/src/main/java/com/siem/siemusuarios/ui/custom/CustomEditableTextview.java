@@ -61,4 +61,8 @@ public class CustomEditableTextview extends ConstraintLayout {
         mText.setText(text);
     }
 
+    public void setDrawable(int resId) {
+        mImage.setImageResource(resId);
+        mImage.setVisibility(VISIBLE);
+    }
 }

@@ -21,12 +21,12 @@ public class Auxilio implements Serializable {
     private String mReferencia;
     private String mLatitud;
     private String mLongitud;
-    private HashMap<String, String> mMotivo;
+    private HashMap<String, String> mMotivos;
     private String mOrigen;
     private String mObservaciones;
 
     public Auxilio(){
-        mMotivo = new HashMap<>();
+        mMotivos = new HashMap<>();
         mOrigen = ORIGEN_MOBILE;
     }
 
@@ -70,12 +70,12 @@ public class Auxilio implements Serializable {
         mLongitud = longitud;
     }
 
-    public HashMap<String, String> getMotivo() {
-        return mMotivo;
+    public HashMap<String, String> getMotivos() {
+        return mMotivos;
     }
 
     public void addMotivo(String key, String value) {
-        mMotivo.put(key, value);
+        mMotivos.put(key, value);
     }
 
     public void addMotivos(HashMap<String, String> motivos){

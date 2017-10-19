@@ -14,7 +14,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:scrollbars="none"
             android:layout_below="@+id/appBarLayout">
             <LinearLayout
@@ -64,14 +64,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/nombreDetalle"
                     android:id="@+id/nombre"
-                    app:srcCompat="@drawable/ic_edit"/>
+                    app:srcCompat="@drawable/ic_edit"
+                    android:layout_marginTop="@dimen/halfDefaultMargin"/>
 
                 <com.siem.siemusuarios.ui.custom.CustomEditableTextview
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/contactoDetalle"
                     android:id="@+id/contacto"
-                    app:srcCompat="@drawable/ic_edit"/>
+                    app:srcCompat="@drawable/ic_edit"
+                    android:layout_marginTop="@dimen/halfDefaultMargin"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"

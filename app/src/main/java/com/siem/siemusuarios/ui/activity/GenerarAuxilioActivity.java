@@ -3,11 +3,15 @@ package com.siem.siemusuarios.ui.activity;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.ActivityGenerarAuxilioBinding;
 import com.siem.siemusuarios.model.app.Auxilio;
+import com.siem.siemusuarios.ui.custom.CustomEditableTextview;
 import com.siem.siemusuarios.utils.Constants;
+
+import java.util.Map;
 
 /**
  * Created by lucas on 10/18/17.
@@ -31,6 +35,14 @@ public class GenerarAuxilioActivity extends ToolbarActivity {
         mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT);
 
         setDatos();
+        for (Map.Entry<String, String> entry : mAuxilio.getMotivos().entrySet()) {
+            CustomEditableTextview editableTextview = new CustomEditableTextview(this);
+            editableTextview.setText(getString(R.string.motivosDetalle, entry.getKey(), entry.getValue()));
+            editableTextview.setDrawable(R.drawable.ic_delete);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(0, (int) getResources().getDimension(R.dimen.halfDefaultMargin), 0, 0);
+            mBinding.contentMotivos.addView(editableTextview, layoutParams);
+        }
     }
 
     private void setDatos() {
