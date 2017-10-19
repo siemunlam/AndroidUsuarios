@@ -140,7 +140,7 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
             public void onClick(View v) {
                 mPerfil.setNombre(mBinding.edittextNombre.getText().toString());
                 mPerfil.setApellido(mBinding.edittextApellido.getText().toString());
-                mPerfil.setNroContacto(mBinding.edittextNroContacto.getText().toString());
+                mPerfil.setContacto(mBinding.edittextNroContacto.getText().toString());
                 mPerfil.setSexo(mBinding.edittextSexo.getText().toString());
                 mPerfil.setFechaNacimiento(String.valueOf(mFechaNacimiento.getTime()));
                 mPerfil.save(AgregarPerfilActivity.this);
@@ -281,8 +281,7 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
         mBinding.edittextSexo.setText(perfil.getSexo());
         mFechaNacimiento = new Date(Long.parseLong(perfil.getFechaNacimiento()));
         setDateText();
-        if(perfil.getNroContacto() != null)
-            mBinding.edittextNroContacto.setText(String.valueOf(perfil.getNroContacto()));
+        mBinding.edittextNroContacto.setText(perfil.getContacto());
     }
 
     private void setDateText() {

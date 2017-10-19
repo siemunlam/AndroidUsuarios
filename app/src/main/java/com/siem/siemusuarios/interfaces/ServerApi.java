@@ -1,6 +1,7 @@
 package com.siem.siemusuarios.interfaces;
 
 
+import com.siem.siemusuarios.model.api.ResponseGenerarAuxilio;
 import com.siem.siemusuarios.model.api.ResponseMotivos;
 import com.siem.siemusuarios.utils.Constants;
 
@@ -14,7 +15,7 @@ public interface ServerApi {
 
     @FormUrlEncoded
     @POST(Constants.API_GENERAR_AUXILIO)
-    Call<Object> generarAuxilio(
+    Call<ResponseGenerarAuxilio> generarAuxilio(
             @Field(Constants.KEY_CONTACTO) String contacto,
             @Field(Constants.KEY_UBICACION) String ubicacion,
             @Field(Constants.KEY_REFERENCIA) String referencia,

@@ -2,6 +2,7 @@ package com.siem.siemusuarios.model.app;
 
 import android.content.Context;
 
+import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.db.DBWrapper;
 
 import java.io.Serializable;
@@ -12,10 +13,13 @@ import java.io.Serializable;
 
 public class Perfil implements Serializable{
 
+    private static final String MASCULINO = "M";
+    private static final String FEMENINO = "F";
+
     private Integer mId;
     private String mNombre;
     private String mApellido;
-    private Integer mNroContacto;
+    private String mContacto;
     private String mSexo;
     private String mFechaNacimiento;
 
@@ -43,20 +47,12 @@ public class Perfil implements Serializable{
         mApellido = apellido;
     }
 
-    public Integer getNroContacto() {
-        return mNroContacto;
+    public String getContacto() {
+        return mContacto;
     }
 
-    public void setNroContacto(int nroContacto) {
-        mNroContacto = nroContacto;
-    }
-
-    public void setNroContacto(String nroContacto){
-        try{
-            mNroContacto = Integer.parseInt(nroContacto);
-        }catch (Exception e){
-            mNroContacto = null;
-        }
+    public void setContacto(String contacto) {
+        mContacto = contacto;
     }
 
     public String getSexo() {
@@ -82,4 +78,12 @@ public class Perfil implements Serializable{
             DBWrapper.savePerfil(context, this);
     }
 
+    public String getSexoApi(Context context) {
+        if(getSexo().equals(context.getString(R.string.masculino)))
+            return MASCULINO;
+        else if(getSexo().equals(context.getString(R.string.femenino)))
+            return FEMENINO;
+        else
+            return null;
+    }
 }

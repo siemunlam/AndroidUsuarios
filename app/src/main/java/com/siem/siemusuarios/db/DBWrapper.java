@@ -65,10 +65,7 @@ public class DBWrapper {
         ContentValues cv = new ContentValues();
         cv.put(DBContract.Perfiles.COLUMN_NAME_NOMBRE, perfil.getNombre());
         cv.put(DBContract.Perfiles.COLUMN_NAME_APELLIDO, perfil.getApellido());
-        if(perfil.getNroContacto() != null)
-            cv.put(DBContract.Perfiles.COLUMN_NAME_NRO_CONTACTO, perfil.getNroContacto());
-        else
-            cv.putNull(DBContract.Perfiles.COLUMN_NAME_NRO_CONTACTO);
+        cv.put(DBContract.Perfiles.COLUMN_NAME_NRO_CONTACTO, perfil.getContacto());
         cv.put(DBContract.Perfiles.COLUMN_NAME_SEXO, perfil.getSexo());
         cv.put(DBContract.Perfiles.COLUMN_NAME_FECHA_NACIMIENTO, perfil.getFechaNacimiento());
 
@@ -97,8 +94,7 @@ public class DBWrapper {
                 perfil.setId(id);
                 perfil.setNombre(nombre);
                 perfil.setApellido(apellido);
-                if(!cursor.isNull(cursor.getColumnIndex(DBContract.Perfiles.COLUMN_NAME_NRO_CONTACTO)))
-                    perfil.setNroContacto(cursor.getInt(cursor.getColumnIndex(DBContract.Perfiles.COLUMN_NAME_NRO_CONTACTO)));
+                perfil.setContacto(cursor.getString(cursor.getColumnIndex(DBContract.Perfiles.COLUMN_NAME_NRO_CONTACTO)));
                 perfil.setSexo(sexo);
                 perfil.setFechaNacimiento(fechaNacimiento);
                 listPerfiles.add(perfil);

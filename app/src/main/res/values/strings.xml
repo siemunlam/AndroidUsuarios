@@ -56,4 +56,5 @@
     <string name="observaciones">Observaciones</string>
     <string name="noEspecificado">No especificado</string>
     <string name="motivosDetalle">%1$s: %2$s</string>
+    <string name="deseaGenerarAuxilio">Desea generar el auxilio?</string>
 </resources>
