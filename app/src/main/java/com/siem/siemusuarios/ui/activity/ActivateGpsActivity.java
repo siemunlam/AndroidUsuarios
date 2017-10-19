@@ -66,9 +66,16 @@ public class ActivateGpsActivity extends ToolbarActivity implements
     private void startLocationManager() {
         stopLocationManager();
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        mLocationListener = new MyLocationListener();
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_UPDATES, MIN_DISTANCE_UPDATES, mLocationListener);
-        Toast.makeText(this, getString(R.string.getLocation), Toast.LENGTH_LONG).show();
+        Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if(location == null){
+            mLocationListener = new MyLocationListener();
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_UPDATES, MIN_DISTANCE_UPDATES, mLocationListener);
+            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_UPDATES, MIN_DISTANCE_UPDATES, mLocationListener);
+            Toast.makeText(this, getString(R.string.getLocation), Toast.LENGTH_LONG).show();
+        }else{
+            newLocation(location);
+            stopLocationManager();
+        }
     }
 
     protected void stopLocationManager() {

@@ -171,7 +171,8 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
 
     @Override
     protected void newLocation(Location location) {
-        mBinding.customEdittextUbicacion.newLocation(location);
+        if(mBinding.customEdittextUbicacion.getText().isEmpty())
+            mBinding.customEdittextUbicacion.newLocation(location);
     }
 
     @Override
