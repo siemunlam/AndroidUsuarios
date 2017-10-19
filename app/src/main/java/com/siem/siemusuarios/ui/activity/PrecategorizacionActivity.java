@@ -130,9 +130,11 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString(Constants.KEY_DIRECCION, mBinding.customEdittextUbicacion.getText());
-        savedInstanceState.putDouble(Constants.KEY_LAT, mBinding.customEdittextUbicacion.getLatitude());
-        savedInstanceState.putDouble(Constants.KEY_LNG, mBinding.customEdittextUbicacion.getLongitude());
+        if(mBinding.customEdittextUbicacion.haveData()){
+            savedInstanceState.putString(Constants.KEY_DIRECCION, mBinding.customEdittextUbicacion.getText());
+            savedInstanceState.putDouble(Constants.KEY_LAT, mBinding.customEdittextUbicacion.getLatitude());
+            savedInstanceState.putDouble(Constants.KEY_LNG, mBinding.customEdittextUbicacion.getLongitude());
+        }
         savedInstanceState.putSerializable(Constants.KEY_MOTIVOS, mAdapter.getMotivosSaveState());
     }
 

@@ -135,6 +135,10 @@ public class CustomEdittextUbicacion extends RelativeLayout {
         return mLatitude != null && mLongitude != null;
     }
 
+    public boolean haveData() {
+        return !getText().isEmpty() && getLatitude() != null && getLongitude() != null;
+    }
+
     private class NewLocationTask extends AsyncTask<Location, Constants.ReturnAsincTask, Void> {
 
         private Location mLocation;

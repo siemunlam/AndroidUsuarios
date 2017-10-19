@@ -38,7 +38,8 @@ public class CustomFragmentDialog extends Fragment {
         DialogInterface.OnClickListener acceptListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                listener.radioButtonSelected(mRadioGroup.getCheckedRadioButtonId());
+                if(mRadioGroup.getCheckedRadioButtonId() != -1)
+                    listener.radioButtonSelected(mRadioGroup.getCheckedRadioButtonId());
             }
         };
         return new AlertDialog.Builder(context)

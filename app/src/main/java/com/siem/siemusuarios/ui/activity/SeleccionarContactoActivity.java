@@ -75,8 +75,17 @@ public class SeleccionarContactoActivity extends ToolbarActivity implements
         mAdapter.setListDatos(DBWrapper.getAllPerfiles(this));
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putSerializable(Constants.KEY_AUXILIO, getAuxilio(savedInstanceState));
+    }
+
     private Auxilio getAuxilio(Bundle savedInstanceState) {
-        return (Auxilio)getIntent().getSerializableExtra(Constants.KEY_AUXILIO);
+        if(savedInstanceState != null && savedInstanceState.containsKey(Constants.KEY_AUXILIO))
+            return (Auxilio)savedInstanceState.getSerializable(Constants.KEY_AUXILIO);
+        else
+            return (Auxilio)getIntent().getSerializableExtra(Constants.KEY_AUXILIO);
     }
 
     /**

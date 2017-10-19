@@ -46,4 +46,13 @@
     <!-- Seleccionar contacto -->
     <string name="seleccionarPerfil">Seleccionar perfil</string>
     <string name="agregarNuevoPerfil">Agregar nuevo perfil</string>
+
+    <!-- Generar auxilio -->
+    <string name="auxilioIngresar">Auxilio a generar</string>
+    <string name="ubicacionDetalle">Ubicación: %1$s</string>
+    <string name="nombreDetalle">Nombre: %1$s</string>
+    <string name="contactoDetalle">Contacto: %1$s</string>
+    <string name="referencia">Referencia</string>
+    <string name="observaciones">Observaciones</string>
+    <string name="noEspecificado">No especificado</string>
 </resources>

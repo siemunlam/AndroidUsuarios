@@ -1,5 +1,9 @@
 package com.siem.siemusuarios.model.app;
 
+import android.content.Context;
+
+import com.siem.siemusuarios.R;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -90,5 +94,19 @@ public class Auxilio implements Serializable {
 
     public void setObservaciones(String observaciones) {
         mObservaciones = observaciones;
+    }
+
+    public String getNombre(Context context) {
+        if(getPerfil() != null)
+            return getPerfil().getNombre() + " " + getPerfil().getApellido();
+        else
+            return context.getString(R.string.noEspecificado);
+    }
+
+    public String getContacto(Context context) {
+        if(getPerfil() != null)
+            return String.valueOf(getPerfil().getNroContacto());
+        else
+            return context.getString(R.string.noEspecificado);
     }
 }

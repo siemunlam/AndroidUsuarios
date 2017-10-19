@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
     </data>
     <RelativeLayout
@@ -10,6 +11,96 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/appBarLayout"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_below="@+id/appBarLayout">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/halfDefaultMargin">
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:text="@string/auxilioIngresar"
+                    android:gravity="center_horizontal"
+                    android:textSize="@dimen/sizeTitleAuxilioGenerar"
+                    android:layout_marginBottom="@dimen/halfDefaultMargin"
+                    android:id="@+id/titleAuxilioGenerar"/>
+
+                <com.siem.siemusuarios.ui.custom.CustomEditableTextview
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ubicacionDetalle"
+                    android:id="@+id/ubicacion"
+                    app:srcCompat="@drawable/ic_edit"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/halfDefaultMargin"
+                    android:focusable="false">
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/edittextReferencia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/referencia"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/contentMotivos">
+                </LinearLayout>
+
+                <com.siem.siemusuarios.ui.custom.CustomEditableTextview
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombreDetalle"
+                    android:id="@+id/nombre"
+                    app:srcCompat="@drawable/ic_edit"/>
+
+                <com.siem.siemusuarios.ui.custom.CustomEditableTextview
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/contactoDetalle"
+                    android:id="@+id/contacto"
+                    app:srcCompat="@drawable/ic_edit"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/halfDefaultMargin"
+                    android:focusable="false">
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/edittextObservaciones"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/observaciones"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/defaultMargin"
+            android:tint="@android:color/white"
+            android:id="@+id/buttonSend"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_send"/>
 
     </RelativeLayout>
 </layout>

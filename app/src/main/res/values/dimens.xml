@@ -27,4 +27,8 @@
     <dimen name="sizeTitleSeleccionarContacto">20sp</dimen>
     <dimen name="sizeTitleAgregarPerfil">16sp</dimen>
     <dimen name="sizeIconAgregarPerfil">35dp</dimen>
+
+    <!-- Generar auxilio -->
+    <dimen name="sizeTitleAuxilioGenerar">21sp</dimen>
+    <dimen name="sizeGenerarAuxilio">16sp</dimen>
 </resources>

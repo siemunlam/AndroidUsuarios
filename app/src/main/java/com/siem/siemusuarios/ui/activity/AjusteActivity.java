@@ -19,6 +19,7 @@ import com.siem.siemusuarios.utils.Constants;
 import com.siem.siemusuarios.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Lucas on 15/10/17.
@@ -53,12 +54,20 @@ public class AjusteActivity extends ToolbarActivity {
                 Utils.startActivityWithTransition(AjusteActivity.this, intent);
             }
         });
+
+        if (savedInstanceState != null) {
+            if(savedInstanceState.containsKey(Constants.KEY_MOTIVOS)){
+                HashMap<String, Integer> motivos = (HashMap<String, Integer>) savedInstanceState.getSerializable(Constants.KEY_MOTIVOS);
+                mAdapter.setListDatos(motivos);
+            }
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putSerializable(Constants.KEY_AUXILIO, getAuxilio(savedInstanceState));
+        savedInstanceState.putSerializable(Constants.KEY_MOTIVOS, mAdapter.getMotivosSaveState());
     }
 
     private Auxilio getAuxilio(Bundle savedInstanceState) {
