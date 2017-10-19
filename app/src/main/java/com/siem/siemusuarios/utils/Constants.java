@@ -13,6 +13,7 @@ import java.util.Locale;
 public class Constants {
 
     public static final String FORMAT_NOMBRE_APELLIDO = "%1$s %2$s";
+    public static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1010;
 
     /**
      * Key saveInstanceState
@@ -23,6 +24,7 @@ public class Constants {
     public static final String KEY_LAT = "KEY_LATITUD";
     public static final String KEY_LNG = "KEY_LONGITUD";
     public static final String KEY_MOTIVOS = "KEY_MOTIVOS";
+    public static final String KEY_SELECCIONAR_CONTACTO_STRATEGY = "KEY_SELECCIONAR_CONTACTO_STRATEGY";
 
     /**
      * Number SIEM

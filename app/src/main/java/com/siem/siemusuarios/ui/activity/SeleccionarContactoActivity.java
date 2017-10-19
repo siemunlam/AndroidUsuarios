@@ -13,6 +13,7 @@ import com.siem.siemusuarios.adapter.ContactoAdapter;
 import com.siem.siemusuarios.databinding.ActivitySeleccionarContactoBinding;
 import com.siem.siemusuarios.db.DBWrapper;
 import com.siem.siemusuarios.interfaces.SeleccionarContactoListener;
+import com.siem.siemusuarios.interfaces.SeleccionarContactoStrategy;
 import com.siem.siemusuarios.model.app.Auxilio;
 import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
@@ -30,6 +31,7 @@ public class SeleccionarContactoActivity extends ToolbarActivity implements
         SeleccionarContactoListener{
 
     private ActivitySeleccionarContactoBinding mBinding;
+    private SeleccionarContactoStrategy mStrategy;
     private ContactoAdapter mAdapter;
     private Typeface mTypeface;
     private Bundle mSavedInstanceState;
@@ -42,6 +44,8 @@ public class SeleccionarContactoActivity extends ToolbarActivity implements
 
         mSavedInstanceState = savedInstanceState;
         mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT);
+        if(getIntent().hasExtra(Constants.KEY_SELECCIONAR_CONTACTO_STRATEGY))
+            mStrategy = (SeleccionarContactoStrategy) getIntent().getSerializableExtra(Constants.KEY_SELECCIONAR_CONTACTO_STRATEGY);
         mAdapter = new ContactoAdapter(new ArrayList<Perfil>(), this);
         mBinding.recyclerview.setAdapter(mAdapter);
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -59,7 +63,7 @@ public class SeleccionarContactoActivity extends ToolbarActivity implements
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SeleccionarContactoActivity.this, GenerarAuxilioActivity.class);
-                Auxilio auxilio = getAuxilio(mSavedInstanceState);
+                Auxilio auxilio = getAuxilio();
                 intent.putExtra(Constants.KEY_AUXILIO, auxilio);
                 Utils.startActivityWithTransition(SeleccionarContactoActivity.this, intent);
             }
@@ -75,17 +79,8 @@ public class SeleccionarContactoActivity extends ToolbarActivity implements
         mAdapter.setListDatos(DBWrapper.getAllPerfiles(this));
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState){
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putSerializable(Constants.KEY_AUXILIO, getAuxilio(savedInstanceState));
-    }
-
-    private Auxilio getAuxilio(Bundle savedInstanceState) {
-        if(savedInstanceState != null && savedInstanceState.containsKey(Constants.KEY_AUXILIO))
-            return (Auxilio)savedInstanceState.getSerializable(Constants.KEY_AUXILIO);
-        else
-            return (Auxilio)getIntent().getSerializableExtra(Constants.KEY_AUXILIO);
+    private Auxilio getAuxilio() {
+        return (Auxilio)getIntent().getSerializableExtra(Constants.KEY_AUXILIO);
     }
 
     /**
@@ -93,10 +88,7 @@ public class SeleccionarContactoActivity extends ToolbarActivity implements
      */
     @Override
     public void contactoSeleccionado(Perfil perfil) {
-        Intent intent = new Intent(SeleccionarContactoActivity.this, GenerarAuxilioActivity.class);
-        Auxilio auxilio = getAuxilio(mSavedInstanceState);
-        auxilio.setPerfil(perfil);
-        intent.putExtra(Constants.KEY_AUXILIO, auxilio);
-        Utils.startActivityWithTransition(SeleccionarContactoActivity.this, intent);
+        if(mStrategy != null)
+            mStrategy.contactoSeleccionado(this, perfil, getAuxilio());
     }
 }

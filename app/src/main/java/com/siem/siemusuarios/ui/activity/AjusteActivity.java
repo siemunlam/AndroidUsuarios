@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.siem.siemusuarios.R;
+import com.siem.siemusuarios.SeleccionarNewContactoStrategy;
 import com.siem.siemusuarios.adapter.MotivosAdapter;
 import com.siem.siemusuarios.databinding.ActivityAjusteBinding;
 import com.siem.siemusuarios.db.DBWrapper;
@@ -51,6 +52,7 @@ public class AjusteActivity extends ToolbarActivity {
                 Auxilio auxilio = getAuxilio(savedInstanceState);
                 auxilio.addMotivos(mAdapter.getMotivos());
                 intent.putExtra(Constants.KEY_AUXILIO, auxilio);
+                intent.putExtra(Constants.KEY_SELECCIONAR_CONTACTO_STRATEGY, new SeleccionarNewContactoStrategy());
                 Utils.startActivityWithTransition(AjusteActivity.this, intent);
             }
         });

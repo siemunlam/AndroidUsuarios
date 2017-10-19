@@ -11,12 +11,18 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.siem.siemusuarios.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static com.siem.siemusuarios.utils.Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE;
 
 /**
  * Created by Lucas on 20/9/17.
@@ -37,6 +43,11 @@ public class Utils {
 
     public static void startActivityWithTransition(Activity activity, Intent intent) {
         activity.startActivity(intent);
+        addStartTransitionAnimation(activity);
+    }
+
+    public static void startActivityWithTransitionForResult(Activity activity, Intent intent, int requestCode) {
+        activity.startActivityForResult(intent, requestCode);
         addStartTransitionAnimation(activity);
     }
 
@@ -82,5 +93,22 @@ public class Utils {
     public static boolean understandIntent(Context context, Intent intent) {
         PackageManager packageManager = context.getPackageManager();
         return packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null;
+    }
+
+    public static void startPlaceAutocomplete(Activity activity) {
+        try {
+            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                    .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
+                    .setCountry(Constants.CODE_ARGENTINA)
+                    .build();
+
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                    .setFilter(typeFilter)
+                    .build(activity);
+
+            activity.startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            Toast.makeText(activity, activity.getString(R.string.errorNoPlayServices), Toast.LENGTH_LONG).show();
+        }
     }
 }

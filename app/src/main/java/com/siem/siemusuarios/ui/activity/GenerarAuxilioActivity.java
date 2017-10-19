@@ -1,6 +1,7 @@
 package com.siem.siemusuarios.ui.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -8,15 +9,22 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.siem.siemusuarios.R;
+import com.siem.siemusuarios.SeleccionarUpdateContactoStrategy;
 import com.siem.siemusuarios.databinding.ActivityGenerarAuxilioBinding;
 import com.siem.siemusuarios.model.api.ResponseGenerarAuxilio;
 import com.siem.siemusuarios.model.app.Auxilio;
+import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.ui.custom.CustomEditableTextview;
 import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
 import com.siem.siemusuarios.utils.Constants;
 import com.siem.siemusuarios.utils.RetrofitClient;
+import com.siem.siemusuarios.utils.Utils;
 
 import java.util.Map;
 
@@ -24,12 +32,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.siem.siemusuarios.utils.Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE;
+
 /**
  * Created by lucas on 10/18/17.
  */
 
 public class GenerarAuxilioActivity extends ToolbarActivity implements
         DialogInterface.OnClickListener {
+
+    private static final int UPDATE_PERFIL = 1055;
 
     private Auxilio mAuxilio;
     private ActivityGenerarAuxilioBinding mBinding;
@@ -46,7 +58,7 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
         mBoldTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT_BOLD);
         mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT);
 
-        setDatos();
+        setUI();
         for (Map.Entry<String, String> entry : mAuxilio.getMotivos().entrySet()) {
             CustomEditableTextview editableTextview = new CustomEditableTextview(this);
             editableTextview.setText(getString(R.string.motivosDetalle, entry.getKey(), entry.getValue()));
@@ -69,16 +81,48 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
                         true).show();
             }
         });
+
+        mBinding.ubicacion.setOnImageClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.startPlaceAutocomplete(GenerarAuxilioActivity.this);
+            }
+        });
+
+        mBinding.nombre.setOnImageClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editPerfil();
+            }
+        });
+
+        mBinding.contacto.setOnImageClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editPerfil();
+            }
+        });
     }
 
-    private void setDatos() {
-        mBinding.titleAuxilioGenerar.setTypeface(mBoldTypeface);
-        mBinding.edittextReferencia.setTypeface(mTypeface);
-        mBinding.edittextObservaciones.setTypeface(mTypeface);
-
-        mBinding.ubicacion.setText(getString(R.string.ubicacionDetalle, mAuxilio.getUbicacion()));
-        mBinding.nombre.setText(getString(R.string.nombreDetalle, mAuxilio.getNombre(getString(R.string.noEspecificado))));
-        mBinding.contacto.setText(getString(R.string.contactoDetalle, mAuxilio.getContacto(getString(R.string.noEspecificado))));
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                LatLng latlng = place.getLatLng();
+                mAuxilio.setUbicacion(place.getAddress().toString());
+                mAuxilio.setLatitud(String.valueOf(latlng.latitude));
+                mAuxilio.setLongitud(String.valueOf(latlng.longitude));
+                setDatos();
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                Toast.makeText(GenerarAuxilioActivity.this, getString(R.string.errorPlaceApi, status.getStatusCode()), Toast.LENGTH_LONG).show();
+            }
+        }else if(requestCode == UPDATE_PERFIL && resultCode == RESULT_OK){
+            Perfil perfil = (Perfil)data.getSerializableExtra(Constants.KEY_PERFIL);
+            mAuxilio.setPerfil(perfil);
+            setDatos();
+        }
     }
 
     @Override
@@ -87,11 +131,34 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
         savedInstanceState.putSerializable(Constants.KEY_AUXILIO, getAuxilio(savedInstanceState));
     }
 
+    private void setUI() {
+        mBinding.titleAuxilioGenerar.setTypeface(mBoldTypeface);
+        mBinding.edittextReferencia.setTypeface(mTypeface);
+        mBinding.edittextObservaciones.setTypeface(mTypeface);
+        setDatos();
+    }
+
+    private void setDatos(){
+        mBinding.ubicacion.setText(getString(R.string.ubicacionDetalle, mAuxilio.getUbicacion()));
+        mBinding.nombre.setText(getString(R.string.nombreDetalle, mAuxilio.getNombre(getString(R.string.noEspecificado))));
+        mBinding.contacto.setText(getString(R.string.contactoDetalle, mAuxilio.getContacto(getString(R.string.noEspecificado))));
+    }
+
+    private void editPerfil() {
+        Intent intent = new Intent(this, SeleccionarContactoActivity.class);
+        intent.putExtra(Constants.KEY_SELECCIONAR_CONTACTO_STRATEGY, new SeleccionarUpdateContactoStrategy());
+        Utils.startActivityWithTransitionForResult(this, intent, UPDATE_PERFIL);
+    }
+
     private Auxilio getAuxilio(Bundle savedInstanceState) {
-        if(savedInstanceState != null && savedInstanceState.containsKey(Constants.KEY_AUXILIO))
-            return (Auxilio)savedInstanceState.getSerializable(Constants.KEY_AUXILIO);
-        else
-            return (Auxilio)getIntent().getSerializableExtra(Constants.KEY_AUXILIO);
+        if(mAuxilio == null){
+            if(savedInstanceState != null && savedInstanceState.containsKey(Constants.KEY_AUXILIO))
+                return (Auxilio)savedInstanceState.getSerializable(Constants.KEY_AUXILIO);
+            else
+                return (Auxilio)getIntent().getSerializableExtra(Constants.KEY_AUXILIO);
+        }else{
+            return mAuxilio;
+        }
     }
 
     /**

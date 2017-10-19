@@ -65,4 +65,8 @@ public class CustomEditableTextview extends ConstraintLayout {
         mImage.setImageResource(resId);
         mImage.setVisibility(VISIBLE);
     }
+
+    public void setOnImageClickListener(OnClickListener listener){
+        mImage.setOnClickListener(listener);
+    }
 }

@@ -17,10 +17,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.model.LatLng;
@@ -39,11 +36,12 @@ import com.siem.siemusuarios.utils.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.siem.siemusuarios.utils.Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE;
+
 public class PrecategorizacionActivity extends ActivateGpsActivity implements
         DeterminateNextListener{
 
     private static final int LOCATION_PERMISSIONS_REQUEST = 1000;
-    private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1010;
     private ActivityPrecategorizacionBinding mBinding;
     private MotivosAdapter mAdapter;
 
@@ -79,20 +77,7 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
         mBinding.customEdittextUbicacion.setEdittextOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-                            .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
-                            .setCountry(Constants.CODE_ARGENTINA)
-                            .build();
-
-                    Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                            .setFilter(typeFilter)
-                            .build(PrecategorizacionActivity.this);
-
-                    startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-                } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-                    Toast.makeText(PrecategorizacionActivity.this, getString(R.string.errorNoPlayServices), Toast.LENGTH_LONG).show();
-                }
+                Utils.startPlaceAutocomplete(PrecategorizacionActivity.this);
             }
         });
 
