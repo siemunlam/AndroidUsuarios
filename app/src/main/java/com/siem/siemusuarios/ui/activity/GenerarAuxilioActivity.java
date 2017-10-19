@@ -59,14 +59,7 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
         mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT);
 
         setUI();
-        for (Map.Entry<String, String> entry : mAuxilio.getMotivos().entrySet()) {
-            CustomEditableTextview editableTextview = new CustomEditableTextview(this);
-            editableTextview.setText(getString(R.string.motivosDetalle, entry.getKey(), entry.getValue()));
-            editableTextview.setDrawable(R.drawable.ic_delete);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(0, (int) getResources().getDimension(R.dimen.halfDefaultMargin), 0, 0);
-            mBinding.contentMotivos.addView(editableTextview, layoutParams);
-        }
+        showMotivos();
 
         mBinding.buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +124,15 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
         savedInstanceState.putSerializable(Constants.KEY_AUXILIO, getAuxilio(savedInstanceState));
     }
 
+    private void deleteMotivo(String key) {
+        if (mAuxilio.getMotivos().size() > 1) {
+            mAuxilio.getMotivos().remove(key);
+            showMotivos();
+        }else{
+            Toast.makeText(this, getString(R.string.minimumMotivos), Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void setUI() {
         mBinding.titleAuxilioGenerar.setTypeface(mBoldTypeface);
         mBinding.edittextReferencia.setTypeface(mTypeface);
@@ -142,6 +144,24 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
         mBinding.ubicacion.setText(getString(R.string.ubicacionDetalle, mAuxilio.getUbicacion()));
         mBinding.nombre.setText(getString(R.string.nombreDetalle, mAuxilio.getNombre(getString(R.string.noEspecificado))));
         mBinding.contacto.setText(getString(R.string.contactoDetalle, mAuxilio.getContacto(getString(R.string.noEspecificado))));
+    }
+
+    private void showMotivos() {
+        mBinding.contentMotivos.removeAllViews();
+        for (final Map.Entry<String, String> entry : mAuxilio.getMotivos().entrySet()) {
+            CustomEditableTextview editableTextview = new CustomEditableTextview(this);
+            editableTextview.setText(getString(R.string.motivosDetalle, entry.getKey(), entry.getValue()));
+            //editableTextview.setDrawable(R.drawable.ic_delete);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(0, (int) getResources().getDimension(R.dimen.halfDefaultMargin), 0, 0);
+            /*editableTextview.setOnImageClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteMotivo(entry.getKey());
+                }
+            });*/
+            mBinding.contentMotivos.addView(editableTextview, layoutParams);
+        }
     }
 
     private void editPerfil() {
