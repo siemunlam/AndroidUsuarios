@@ -47,7 +47,6 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
 
     //TODO: SaveInstanceState
     //TODO: Search
-    //TODO: Ordenar precategorizacion y ajustes alfabeticamente
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -15,6 +15,8 @@ import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
 import com.siem.siemusuarios.utils.Constants;
 
 import java.lang.ref.WeakReference;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
 
     public MotivosAdapter(List<Motivo> datos, DeterminateNextListener listener){
         mListDatos = datos;
+        sortData();
         mListener = new WeakReference<>(listener);
     }
 
@@ -46,13 +49,19 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
         return mListDatos != null ? mListDatos.size() : 0;
     }
 
-    public void addMotivo(Motivo motivo){
-        mListDatos.add(motivo);
-    }
-
     public void setListDatos(List<Motivo> listDatos) {
         mListDatos = listDatos;
+        sortData();
         notifyDataSetChanged();
+    }
+
+    private void sortData() {
+        Collections.sort(mListDatos, new Comparator<Motivo>() {
+            @Override
+            public int compare(Motivo first, Motivo second) {
+                return first.getDescripcion().compareTo(second.getDescripcion());
+            }
+        });
     }
 
     public void setListDatos(HashMap<String, Integer> motivos){
