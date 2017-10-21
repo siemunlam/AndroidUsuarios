@@ -52,7 +52,7 @@
     <string name="ubicacionDetalle">Ubicación: %1$s</string>
     <string name="nombreDetalle">Nombre: %1$s</string>
     <string name="contactoDetalle">Contacto: %1$s</string>
-    <string name="referencia">Referencia</string>
+    <string name="referencia">Referencia de la ubicación</string>
     <string name="observaciones">Observaciones</string>
     <string name="noEspecificado">No especificado</string>
     <string name="motivosDetalle">%1$s: %2$s</string>

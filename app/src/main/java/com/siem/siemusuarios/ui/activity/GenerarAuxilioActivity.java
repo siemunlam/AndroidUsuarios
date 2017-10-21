@@ -3,6 +3,7 @@ package com.siem.siemusuarios.ui.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.siem.siemusuarios.utils.Utils;
 
 import java.util.Map;
 
+import it.sephiroth.android.library.tooltip.Tooltip;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -85,7 +87,25 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
         mBinding.nombre.setOnImageClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editPerfil();
+                //editPerfil();
+                Tooltip.make(GenerarAuxilioActivity.this,
+                        new Tooltip.Builder(101)
+                                .anchor(mBinding.nombre.getImage(), Tooltip.Gravity.BOTTOM)
+                                .closePolicy(
+                                        new Tooltip.ClosePolicy()
+                                        .insidePolicy(true, false)
+                                        .outsidePolicy(true, false), 10000)
+                                .activateDelay(800)
+                                .showDelay(300)
+                                .text("Por ejemplo: Av. Rivadavia 1500 3°A. Puerta blanca")
+                                .maxWidth(500)
+                                .withArrow(true)
+                                .withOverlay(true)
+                                .typeface(mBoldTypeface)
+                                .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
+                                .withStyleId(R.style.TooltipStyle)
+                                .build()
+                ).show();
             }
         });
 

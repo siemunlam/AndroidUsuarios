@@ -7,6 +7,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.utils.Constants;
@@ -55,6 +56,10 @@ public class CustomEditableTextview extends ConstraintLayout {
 
             typed.recycle();
         }
+    }
+
+    public View getImage(){
+        return mImage;
     }
 
     public void setText(String text){
