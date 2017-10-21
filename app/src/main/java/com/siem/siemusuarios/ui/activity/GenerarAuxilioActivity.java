@@ -97,7 +97,7 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
                                         .outsidePolicy(true, false), 10000)
                                 .activateDelay(800)
                                 .showDelay(300)
-                                .text("Por ejemplo: Av. Rivadavia 1500 3°A. Puerta blanca")
+                                .text(getString(R.string.exampleReferencia))
                                 .maxWidth(500)
                                 .withArrow(true)
                                 .withOverlay(true)
