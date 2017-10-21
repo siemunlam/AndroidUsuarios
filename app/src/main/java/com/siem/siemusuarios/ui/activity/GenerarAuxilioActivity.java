@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -207,7 +208,8 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
                     case Constants.CODE_SERVER_OK_201:
                         //TODO: Generar
                         Toast.makeText(GenerarAuxilioActivity.this, "GENERADO.....", Toast.LENGTH_LONG).show();
-                        //ResponseGenerarAuxilio responseGenerarAuxilio = response.body();
+                        ResponseGenerarAuxilio responseGenerarAuxilio = response.body();
+                        Log.i("123456789", "Code: " + responseGenerarAuxilio.getCodigoSuscripcion());
                         //savePrecategorizacionMotivos(responseMotivos);
                         break;
                     default:

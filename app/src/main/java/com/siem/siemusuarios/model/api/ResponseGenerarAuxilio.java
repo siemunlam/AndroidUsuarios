@@ -10,4 +10,12 @@ public class ResponseGenerarAuxilio {
 
     @SerializedName("codigo_suscripcion")
     private String mCodigoSuscripcion;
+
+    public String getCodigoSuscripcion() {
+        return mCodigoSuscripcion;
+    }
+
+    public void setCodigoSuscripcion(String codigoSuscripcion) {
+        mCodigoSuscripcion = codigoSuscripcion;
+    }
 }
