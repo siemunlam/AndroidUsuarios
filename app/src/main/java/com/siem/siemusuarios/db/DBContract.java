@@ -29,6 +29,7 @@ public class DBContract {
      * Path constants
      */
     public static final String PERFILES = "perfiles";
+    public static final String AUXILIOS = "auxilios";
     public static final String PRECATEGORIZACION = "precategorizacion";
     public static final String OPCION_PRECATEGORIZACION = "opcion_precategorizacion";
     public static final String AJUSTE = "ajuste";
@@ -54,6 +55,17 @@ public class DBContract {
         public static final String COLUMN_NAME_NRO_CONTACTO = "nro_contacto";
         public static final String COLUMN_NAME_SEXO = "sexo";
         public static final String COLUMN_NAME_FECHA_NACIMIENTO = "fecha_nacimiento";
+    }
+
+    public static abstract class Auxilios implements BaseColumns {
+        public static final String TABLE_NAME = "auxilios";
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendEncodedPath(AUXILIOS).build();
+
+        public static final String COLUMN_NAME_CODIGO = "codigo";
+        public static final String COLUMN_NAME_ESTADO = "estado";
+        public static final String COLUMN_NAME_FECHA = "fecha";
     }
 
     /**

@@ -18,7 +18,7 @@ public class ConsultarAuxilioActivity extends ToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_consultar_auxilio);
-        setToolbar(true);
+        setToolbar(false);
 
     }
 

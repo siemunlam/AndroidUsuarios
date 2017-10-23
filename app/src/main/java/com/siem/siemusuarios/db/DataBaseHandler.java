@@ -27,6 +27,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             "DROP TABLE IF EXISTS " + DBContract.Ajuste.TABLE_NAME;
     public static final String SQL_DELETE_OPCION_AJUSTE =
             "DROP TABLE IF EXISTS " + DBContract.OpcionAjuste.TABLE_NAME;
+    public static final String SQL_DELETE_AUXILIOS =
+            "DROP TABLE IF EXISTS " + DBContract.Auxilios.TABLE_NAME;
 
     /**
      * Create tables
@@ -61,6 +63,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     + DBContract.OpcionAjuste._ID + DBContract.INTEGER_TYPE + DBContract.PRIMARY_KEY + DBContract.AUTOINCREMENT + DBContract.COMMA_SEP
                     + DBContract.OpcionAjuste.COLUMN_NAME_ID_AJUSTE + DBContract.INTEGER_TYPE + DBContract.COMMA_SEP
                     + DBContract.OpcionAjuste.COLUMN_NAME_DESCRIPCION + DBContract.TEXT_TYPE + ") ";
+
+    private static final String SQL_CREATE_AUXILIOS =
+            "CREATE TABLE " + DBContract.Auxilios.TABLE_NAME + "("
+                    + DBContract.Auxilios._ID + DBContract.INTEGER_TYPE + DBContract.PRIMARY_KEY + DBContract.AUTOINCREMENT + DBContract.COMMA_SEP
+                    + DBContract.Auxilios.COLUMN_NAME_CODIGO + DBContract.TEXT_TYPE + DBContract.COMMA_SEP
+                    + DBContract.Auxilios.COLUMN_NAME_ESTADO + DBContract.TEXT_TYPE + DBContract.COMMA_SEP
+                    + DBContract.Auxilios.COLUMN_NAME_FECHA + DBContract.TEXT_TYPE + ") ";
 
 
     private DataBaseHandler(Context context) {

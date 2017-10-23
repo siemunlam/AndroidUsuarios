@@ -39,7 +39,7 @@ public class PerfilesActivity extends ToolbarActivity implements SwipePerfilDele
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_perfiles);
-        setToolbar(true);
+        setToolbar(false);
 
         mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT);
         mAdapter = new AddPerfilesAdapter(this, null, this);

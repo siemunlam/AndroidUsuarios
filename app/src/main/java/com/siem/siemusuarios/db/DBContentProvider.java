@@ -17,6 +17,7 @@ public class DBContentProvider extends ContentProvider {
     public static final int OPCION_PRECATEGORIZACION = 3;
     public static final int AJUSTE = 4;
     public static final int OPCION_AJUSTE = 5;
+    public static final int AUXILIOS = 6;
 
     private DataBaseHandler dbHandler;
     private SQLiteDatabase db;
@@ -29,6 +30,7 @@ public class DBContentProvider extends ContentProvider {
         sUriMatcher.addURI(cAuthority, DBContract.OPCION_PRECATEGORIZACION, OPCION_PRECATEGORIZACION);
         sUriMatcher.addURI(cAuthority, DBContract.AJUSTE, AJUSTE);
         sUriMatcher.addURI(cAuthority, DBContract.OPCION_AJUSTE, OPCION_AJUSTE);
+        sUriMatcher.addURI(cAuthority, DBContract.AUXILIOS, AUXILIOS);
     }
 
     public DBContentProvider() {
@@ -59,6 +61,9 @@ public class DBContentProvider extends ContentProvider {
 
             case OPCION_AJUSTE:
                 return DBContract.MIME_DIR + "/" + DBContract.OPCION_AJUSTE;
+
+            case AUXILIOS:
+                return DBContract.MIME_DIR + "/" + DBContract.AUXILIOS;
 
             default:
                 return null;
@@ -127,6 +132,17 @@ public class DBContentProvider extends ContentProvider {
                         sortOrder
                 );
 
+            case AUXILIOS:
+                return db.query(
+                        DBContract.Auxilios.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+
             default:
                 return null;
         }
@@ -180,6 +196,14 @@ public class DBContentProvider extends ContentProvider {
                 );
                 return Uri.parse(DBContract.OpcionAjuste.CONTENT_URI + "/" + id);
 
+            case AUXILIOS:
+                id = db.insert(
+                        DBContract.Auxilios.TABLE_NAME,
+                        null,
+                        contentValues
+                );
+                return Uri.parse(DBContract.Auxilios.CONTENT_URI + "/" + id);
+
             default:
                 return uri;
         }
@@ -232,6 +256,14 @@ public class DBContentProvider extends ContentProvider {
                 );
                 return deleted;
 
+            case AUXILIOS:
+                deleted = db.delete(
+                        DBContract.Auxilios.TABLE_NAME,
+                        selection,
+                        selectionArgs
+                );
+                return deleted;
+
             default:
                 return 0;
         }
@@ -278,6 +310,14 @@ public class DBContentProvider extends ContentProvider {
             case OPCION_AJUSTE:
                 return db.update(
                         DBContract.OpcionAjuste.TABLE_NAME,
+                        values,
+                        selection,
+                        selectionArgs
+                );
+
+            case AUXILIOS:
+                return db.update(
+                        DBContract.Auxilios.TABLE_NAME,
                         values,
                         selection,
                         selectionArgs

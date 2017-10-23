@@ -23,6 +23,10 @@ public class Auxilio implements Serializable {
     private String mOrigen;
     private String mObservaciones;
 
+    private String mCodigo;
+    private String mEstado;
+    private String mFecha;
+
     public Auxilio(){
         mMotivos = new HashMap<>();
         mOrigen = ORIGEN_MOBILE;
@@ -92,6 +96,30 @@ public class Auxilio implements Serializable {
 
     public void setObservaciones(String observaciones) {
         mObservaciones = observaciones;
+    }
+
+    public String getCodigo() {
+        return mCodigo;
+    }
+
+    public void setCodigo(String codigo) {
+        mCodigo = codigo;
+    }
+
+    public String getEstado() {
+        return mEstado;
+    }
+
+    public void setEstado(String estado) {
+        mEstado = estado;
+    }
+
+    public String getFecha() {
+        return mFecha;
+    }
+
+    public void setFecha(String fecha) {
+        mFecha = fecha;
     }
 
     public String getNombre(String defaultStr) {

@@ -22,6 +22,7 @@ public class DBWrapper {
         cleanPerfiles(context);
         cleanPrecategorizaciones(context);
         cleanAjuste(context);
+        cleanAuxilios(context);
     }
 
     /**
@@ -281,6 +282,17 @@ public class DBWrapper {
         }
 
         return listOpcionesAjuste;
+    }
+
+    /**
+     * Auxilios
+     */
+    public static void cleanAuxilios(Context context) {
+        context.getContentResolver().delete(
+                DBContract.Auxilios.CONTENT_URI,
+                null,
+                null
+        );
     }
 
 }
