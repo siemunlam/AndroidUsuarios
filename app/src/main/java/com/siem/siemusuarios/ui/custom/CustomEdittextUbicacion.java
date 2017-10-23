@@ -12,7 +12,6 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.utils.Constants;
@@ -157,7 +156,7 @@ public class CustomEdittextUbicacion extends RelativeLayout {
                     break;
 
                 case IOEXCEPTION:
-                    Toast.makeText(mContext, mContext.getString(R.string.error), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(mContext, mContext.getString(R.string.error), Toast.LENGTH_LONG).show();
                     break;
             }
         }
