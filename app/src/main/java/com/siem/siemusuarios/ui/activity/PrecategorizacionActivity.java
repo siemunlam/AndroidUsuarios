@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -34,6 +35,7 @@ import com.siem.siemusuarios.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.siem.siemusuarios.utils.Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE;
 
@@ -43,6 +45,7 @@ public class PrecategorizacionActivity extends ActivateGpsActivity{
     private ActivityPrecategorizacionBinding mBinding;
     private MotivosAdapter mAdapter;
     private Typeface mTypeface;
+    private Toast mToast;
 
     //TODO: SaveInstanceState
 
@@ -81,8 +84,9 @@ public class PrecategorizacionActivity extends ActivateGpsActivity{
         mBinding.buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mBinding.customEdittextUbicacion.haveLocation() &&
-                        mAdapter.haveData()){
+                boolean hasLocation = mBinding.customEdittextUbicacion.hasLocation();
+                boolean hasData = mAdapter.hasData();
+                if(hasLocation && hasData){
                     Auxilio auxilio = new Auxilio();
                     auxilio.setLatitud(String.valueOf(mBinding.customEdittextUbicacion.getLatitude()));
                     auxilio.setLongitud(String.valueOf(mBinding.customEdittextUbicacion.getLongitude()));
@@ -92,7 +96,24 @@ public class PrecategorizacionActivity extends ActivateGpsActivity{
                     intent.putExtra(Constants.KEY_AUXILIO, auxilio);
                     Utils.startActivityWithTransition(PrecategorizacionActivity.this, intent);
                 }else{
+                    List<View> listVibrate = new ArrayList<>();
+                    String error = "";
+                    if(!hasLocation) {
+                        listVibrate.add(mBinding.customEdittextUbicacion);
+                        error = getString(R.string.errorNoLocation);
+                    }
+                    if(!hasData) {
+                        listVibrate.add(mBinding.recyclerview);
+                        error = getString(R.string.errorNoSintoma);
+                    }
+                    if(!hasLocation && !hasData)
+                        error = getString(R.string.errorFaltanDatos);
 
+                    vibrate(listVibrate);
+                    if(mToast != null)
+                        mToast.cancel();
+                    mToast = Toast.makeText(PrecategorizacionActivity.this, error, Toast.LENGTH_LONG);
+                    mToast.show();
                 }
             }
         });
@@ -118,7 +139,7 @@ public class PrecategorizacionActivity extends ActivateGpsActivity{
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
-        if(mBinding.customEdittextUbicacion.haveData()){
+        if(mBinding.customEdittextUbicacion.hasData()){
             savedInstanceState.putString(Constants.KEY_DIRECCION, mBinding.customEdittextUbicacion.getText());
             savedInstanceState.putDouble(Constants.KEY_LAT, mBinding.customEdittextUbicacion.getLatitude());
             savedInstanceState.putDouble(Constants.KEY_LNG, mBinding.customEdittextUbicacion.getLongitude());
@@ -182,6 +203,12 @@ public class PrecategorizacionActivity extends ActivateGpsActivity{
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 Toast.makeText(PrecategorizacionActivity.this, getString(R.string.errorPlaceApi, status.getStatusCode()), Toast.LENGTH_LONG).show();
             }
+        }
+    }
+
+    private void vibrate(List<View> listErrorView) {
+        for (View view : listErrorView) {
+            view.startAnimation(AnimationUtils.loadAnimation(PrecategorizacionActivity.this, R.anim.vibrate));
         }
     }
 }

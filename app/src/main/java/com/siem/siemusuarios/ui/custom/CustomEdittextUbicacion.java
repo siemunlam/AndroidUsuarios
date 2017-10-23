@@ -123,11 +123,11 @@ public class CustomEdittextUbicacion extends RelativeLayout {
         new NewLocationTask().execute(location);
     }
 
-    public boolean haveLocation(){
+    public boolean hasLocation(){
         return mLatitude != null && mLongitude != null;
     }
 
-    public boolean haveData() {
+    public boolean hasData() {
         return !getText().isEmpty() && getLatitude() != null && getLongitude() != null;
     }
 

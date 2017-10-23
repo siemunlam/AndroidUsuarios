@@ -69,7 +69,7 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
         notifyDataSetChanged();
     }
 
-    public boolean haveData(){
+    public boolean hasData(){
         for (Motivo motivo : mListDatos) {
             if(motivo.isSelected())
                 return true;
