@@ -114,6 +114,22 @@ public class Auxilio implements Serializable {
         mEstado = estado;
     }
 
+    public String getCodigo() {
+        return mCodigo;
+    }
+
+    public void setCodigo(String codigo) {
+        mCodigo = codigo;
+    }
+
+    public String getEstado() {
+        return mEstado;
+    }
+
+    public void setEstado(String estado) {
+        mEstado = estado;
+    }
+
     public String getFecha() {
         return mFecha;
     }

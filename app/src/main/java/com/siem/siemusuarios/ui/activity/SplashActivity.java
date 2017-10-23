@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.ActivitySplashBinding;
 import com.siem.siemusuarios.db.DBWrapper;
 import com.siem.siemusuarios.model.api.Motivo;
 import com.siem.siemusuarios.model.api.ResponseMotivos;
 import com.siem.siemusuarios.utils.Constants;
+import com.siem.siemusuarios.utils.PreferencesHelper;
 import com.siem.siemusuarios.utils.RetrofitClient;
 import com.siem.siemusuarios.utils.Utils;
 
@@ -39,6 +41,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
+
+        PreferencesHelper preferencesHelper = PreferencesHelper.getInstance();
+        preferencesHelper.setFirebaseToken(FirebaseInstanceId.getInstance().getToken());
 
         mBinding.buttonGenerarAuxilio.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -55,7 +55,7 @@ public class Constants {
     public static final String API_GENERAR_AUXILIO = "auxilios/";
     public static final String API_MOTIVOS_PRECATEGORIZACION = "rules/motivospc/";
     public static final String API_MOTIVOS_AJUSTE = "rules/motivosajuste/";
-    public static final String API_SUSCRIBIRSE_AUXILIO = "auxilios/{codigo}/suscribirse";
+    public static final String API_SUSCRIBIRSE_AUXILIO = "auxilios/{code}/suscribirse";
 
     public static final String KEY_CONTACTO = "contacto";
     public static final String KEY_UBICACION = "ubicacion";
@@ -67,6 +67,8 @@ public class Constants {
     public static final String KEY_NOMBRE = "nombre";
     public static final String KEY_SEXO = "sexo";
     public static final String KEY_OBSERVACIONES = "observaciones";
+    public static final String KEY_CODIGO = "codigo";
+    public static final String KEY_CODE = "code";
 
     /**
      * PlaceAutocomplete API
@@ -85,6 +87,11 @@ public class Constants {
     public static final String[] contacts_permissions = {
             Manifest.permission.READ_CONTACTS
     };
+
+    /**
+     * Shared preferences constants
+     */
+    static final String NAME_SHAREDPREFERENCES = "SIEM_USUARIOS_PREFERENCES";
 
     /**
      * ENUM AsincTask Geocoder

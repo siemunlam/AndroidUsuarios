@@ -19,11 +19,13 @@ import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.SeleccionarUpdateContactoStrategy;
 import com.siem.siemusuarios.databinding.ActivityGenerarAuxilioBinding;
 import com.siem.siemusuarios.model.api.ResponseGenerarAuxilio;
+import com.siem.siemusuarios.model.api.ResponseSuscribirse;
 import com.siem.siemusuarios.model.app.Auxilio;
 import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.ui.custom.CustomEditableTextview;
 import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
 import com.siem.siemusuarios.utils.Constants;
+import com.siem.siemusuarios.utils.PreferencesHelper;
 import com.siem.siemusuarios.utils.RetrofitClient;
 import com.siem.siemusuarios.utils.Utils;
 
@@ -43,6 +45,7 @@ import static com.siem.siemusuarios.utils.Constants.PLACE_AUTOCOMPLETE_REQUEST_C
 public class GenerarAuxilioActivity extends ToolbarActivity implements
         DialogInterface.OnClickListener {
 
+    //TODO: Revisar si al generar un auxilio desde la app, le devuelve un codigo, y intenta vincularse nuevamente a ese codigo
     private static final int UPDATE_PERFIL = 1055;
     private static final int TIME_TOOLTIP_DURATION = 10000;
 
@@ -235,11 +238,10 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
                 switch(response.code()){
                     case Constants.CODE_SERVER_OK:
                     case Constants.CODE_SERVER_OK_201:
-                        //TODO: Generar
-                        Toast.makeText(GenerarAuxilioActivity.this, "GENERADO.....", Toast.LENGTH_LONG).show();
                         ResponseGenerarAuxilio responseGenerarAuxilio = response.body();
-                        Log.i("123456789", "Code: " + responseGenerarAuxilio.getCodigoSuscripcion());
-                        //savePrecategorizacionMotivos(responseMotivos);
+                        if(responseGenerarAuxilio != null){
+                            suscribirse(responseGenerarAuxilio.getCodigoSuscripcion());
+                        }
                         break;
                     default:
                         error();
@@ -251,6 +253,32 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
             public void onFailure(Call<ResponseGenerarAuxilio> call, Throwable t) {
                 error();
             }
+        });
+    }
+
+    private void suscribirse(String codigoSuscripcion) {
+        mAuxilio.setCodigo(codigoSuscripcion);
+        PreferencesHelper preferencesHelper = PreferencesHelper.getInstance();
+        Call<ResponseSuscribirse> response = RetrofitClient.getServerClient().suscribirse(codigoSuscripcion, preferencesHelper.getFirebaseToken());
+        response.enqueue(new Callback<ResponseSuscribirse>() {
+            @Override
+            public void onResponse(Call<ResponseSuscribirse> call, Response<ResponseSuscribirse> response) {
+                switch(response.code()){
+                    case Constants.CODE_SERVER_OK:
+                    case Constants.CODE_SERVER_OK_201:
+                        ResponseSuscribirse responseSuscribirse = response.body();
+                        if(responseSuscribirse != null){
+                            //TODO: Guardar en auxilio
+                        }
+                        break;
+                    default:
+                        //Siguiente
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseSuscribirse> call, Throwable t) {}
         });
     }
 
