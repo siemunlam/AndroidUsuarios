@@ -31,6 +31,7 @@ import com.siem.siemusuarios.utils.Utils;
 
 import java.util.Map;
 
+import it.sephiroth.android.library.tooltip.Tooltip;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,11 +47,13 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
 
     //TODO: Revisar si al generar un auxilio desde la app, le devuelve un codigo, y intenta vincularse nuevamente a ese codigo
     private static final int UPDATE_PERFIL = 1055;
+    private static final int TIME_TOOLTIP_DURATION = 10000;
 
     private Auxilio mAuxilio;
     private ActivityGenerarAuxilioBinding mBinding;
     private Typeface mBoldTypeface;
     private Typeface mTypeface;
+    private Tooltip.TooltipView mTooltipView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,33 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
                 editPerfil();
             }
         });
+
+        mBinding.referencia.setOnImageClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mTooltipView != null)
+                    mTooltipView.hide();
+                mTooltipView = Tooltip.make(GenerarAuxilioActivity.this,
+                        new Tooltip.Builder(101)
+                                .anchor(mBinding.referencia.getImage(), Tooltip.Gravity.BOTTOM)
+                                .closePolicy(
+                                        new Tooltip.ClosePolicy()
+                                                .insidePolicy(true, false)
+                                                .outsidePolicy(true, false), TIME_TOOLTIP_DURATION)
+                                .activateDelay(800)
+                                .showDelay(300)
+                                .text(getString(R.string.exampleReferencia))
+                                .maxWidth(750)
+                                .withArrow(true)
+                                .withOverlay(true)
+                                .typeface(mBoldTypeface)
+                                .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
+                                .withStyleId(R.style.TooltipStyle)
+                                .build()
+                );
+                mTooltipView.show();
+            }
+        });
     }
 
     @Override
@@ -139,7 +169,6 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
 
     private void setUI() {
         mBinding.titleAuxilioGenerar.setTypeface(mBoldTypeface);
-        mBinding.edittextReferencia.setTypeface(mTypeface);
         mBinding.edittextObservaciones.setTypeface(mTypeface);
         setDatos();
     }
@@ -194,7 +223,7 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
         Call<ResponseGenerarAuxilio> response = RetrofitClient.getServerClient().generarAuxilio(
                 mAuxilio.getContacto(null),
                 mAuxilio.getUbicacion(),
-                mBinding.edittextReferencia.getText().toString(),
+                mBinding.referencia.getText(),
                 mAuxilio.getLatitud(),
                 mAuxilio.getLongitud(),
                 jsonMotivos,

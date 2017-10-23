@@ -2,6 +2,7 @@ package com.siem.siemusuarios.ui.activity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ public class AjusteActivity extends ToolbarActivity {
 
     private ActivityAjusteBinding mBinding;
     private MotivosAdapter mAdapter;
+    private Typeface mTypeface;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -37,13 +39,15 @@ public class AjusteActivity extends ToolbarActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_ajuste);
         setToolbar(true);
 
-        mAdapter = new MotivosAdapter(new ArrayList<Motivo>(), null);
+        mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT_BOLD);
+        mAdapter = new MotivosAdapter(new ArrayList<Motivo>());
         mBinding.recyclerview.setAdapter(mAdapter);
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerEndItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
 
         mAdapter.setListDatos(DBWrapper.getAllAjuste(this));
+        mBinding.titleAjuste.setTypeface(mTypeface);
 
         mBinding.buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.View;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.siem.siemusuarios.R;
@@ -15,6 +15,7 @@ import com.siem.siemusuarios.model.api.ResponseMotivos;
 import com.siem.siemusuarios.utils.Constants;
 import com.siem.siemusuarios.utils.PreferencesHelper;
 import com.siem.siemusuarios.utils.RetrofitClient;
+import com.siem.siemusuarios.utils.Utils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +44,27 @@ public class SplashActivity extends AppCompatActivity {
 
         PreferencesHelper preferencesHelper = PreferencesHelper.getInstance();
         preferencesHelper.setFirebaseToken(FirebaseInstanceId.getInstance().getToken());
+
+        mBinding.buttonGenerarAuxilio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.startActivityWithTransition(SplashActivity.this, new Intent(SplashActivity.this, PrecategorizacionActivity.class));
+            }
+        });
+
+        mBinding.buttonConsultarAuxilio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.startActivityWithTransition(SplashActivity.this, new Intent(SplashActivity.this, ConsultarAuxilioActivity.class));
+            }
+        });
+
+        mBinding.buttonPerfiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.startActivityWithTransition(SplashActivity.this, new Intent(SplashActivity.this, PerfilesActivity.class));
+            }
+        });
     }
 
     @Override
@@ -150,13 +172,14 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void isFinished() {
-        if(mIsSavePrecategorizaciones && mIsSaveAjustes)
-            goToFirstActivity();
+        if(mIsSavePrecategorizaciones && mIsSaveAjustes){
+            showButtons();
+        }
     }
 
-    private void goToFirstActivity() {
-        startActivity(new Intent(SplashActivity.this, PrecategorizacionActivity.class));
-        finish();
+    private void showButtons() {
+        mBinding.progress.setVisibility(View.GONE);
+        mBinding.contentButtons.setVisibility(View.VISIBLE);
     }
 
 }

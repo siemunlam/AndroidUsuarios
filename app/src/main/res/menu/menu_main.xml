@@ -16,16 +16,4 @@
         android:orderInCategory="2"
         android:icon="@drawable/ic_phone"/>
 
-    <item
-        android:title="@string/menuPerfiles"
-        android:id="@+id/menuPerfiles"
-        app:showAsAction="ifRoom"
-        android:orderInCategory="3"/>
-
-    <item
-        android:title="@string/menuConsultarAuxilio"
-        android:id="@+id/menuConsultarAuxilio"
-        app:showAsAction="ifRoom"
-        android:orderInCategory="4"/>
-
 </menu>

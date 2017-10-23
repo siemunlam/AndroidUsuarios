@@ -12,19 +12,41 @@
             android:layout_height="wrap_content"
             android:id="@+id/appBarLayout"/>
 
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/appBarLayout"
+            android:id="@+id/titleUbicacion"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textsizeTitle"
+            android:layout_marginTop="@dimen/halfDefaultMargin"
+            android:layout_marginRight="@dimen/halfDefaultMargin"
+            android:layout_marginLeft="@dimen/halfDefaultMargin"
+            android:text="@string/titleUbicacion"/>
+
         <com.siem.siemusuarios.ui.custom.CustomEdittextUbicacion
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/customEdittextUbicacion"
             android:hint="@string/ubicacion"
             android:focusable="false"
-            android:layout_below="@+id/appBarLayout"/>
+            android:layout_below="@+id/titleUbicacion"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/customEdittextUbicacion"
+            android:id="@+id/titleSintomas"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textsizeTitle"
+            android:layout_margin="@dimen/halfDefaultMargin"
+            android:text="@string/titleSintomas"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:id="@+id/itemSeparator"
-            android:layout_below="@+id/customEdittextUbicacion"
+            android:layout_below="@+id/titleSintomas"
             android:background="@color/colorSeparator"/>
 
         <android.support.v7.widget.RecyclerView
@@ -45,7 +67,6 @@
             android:layout_margin="@dimen/defaultMargin"
             android:tint="@android:color/white"
             android:id="@+id/buttonNext"
-            android:visibility="gone"
             app:backgroundTint="@color/colorPrimary"
             app:fabSize="normal"
             app:srcCompat="@drawable/ic_next"/>

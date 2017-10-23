@@ -12,10 +12,8 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.siem.siemusuarios.R;
-import com.siem.siemusuarios.interfaces.DeterminateNextListener;
 import com.siem.siemusuarios.utils.Constants;
 import com.siem.siemusuarios.utils.Utils;
 
@@ -32,7 +30,6 @@ public class CustomEdittextUbicacion extends RelativeLayout {
     private AppCompatEditText mEdittext;
     private AppCompatImageView mIconUbicacion;
     private AppCompatImageView mIconClear;
-    private DeterminateNextListener mListener;
 
     private boolean mIconUbicacionEnable = true;
     private Double mLatitude;
@@ -99,12 +96,6 @@ public class CustomEdittextUbicacion extends RelativeLayout {
         mEdittext.setText(text);
         mLatitude = lat;
         mLongitude = lng;
-        if(mListener != null)
-            mListener.determinateNext();
-    }
-
-    public void setListener(DeterminateNextListener listener) {
-        mListener = listener;
     }
 
     public void setEdittextOnClickListener(OnClickListener listener){
@@ -131,11 +122,11 @@ public class CustomEdittextUbicacion extends RelativeLayout {
         new NewLocationTask().execute(location);
     }
 
-    public boolean haveLocation(){
+    public boolean hasLocation(){
         return mLatitude != null && mLongitude != null;
     }
 
-    public boolean haveData() {
+    public boolean hasData() {
         return !getText().isEmpty() && getLatitude() != null && getLongitude() != null;
     }
 
@@ -165,7 +156,7 @@ public class CustomEdittextUbicacion extends RelativeLayout {
                     break;
 
                 case IOEXCEPTION:
-                    Toast.makeText(mContext, mContext.getString(R.string.error), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(mContext, mContext.getString(R.string.error), Toast.LENGTH_LONG).show();
                     break;
             }
         }

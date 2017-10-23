@@ -12,12 +12,29 @@
             android:layout_height="wrap_content"
             android:id="@+id/appBarLayout"/>
 
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/appBarLayout"
+            android:id="@+id/titleAjuste"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textsizeTitle"
+            android:layout_margin="@dimen/halfDefaultMargin"
+            android:text="@string/titleAjuste"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/itemSeparator"
+            android:layout_below="@+id/titleAjuste"
+            android:background="@color/colorSeparator"/>
+
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recyclerview"
             android:focusable="true"
-            android:layout_below="@+id/appBarLayout">
+            android:layout_below="@+id/itemSeparator">
             <requestFocus />
         </android.support.v7.widget.RecyclerView>
 
