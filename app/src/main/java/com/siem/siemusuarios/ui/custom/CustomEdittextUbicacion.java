@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.siem.siemusuarios.R;
-import com.siem.siemusuarios.interfaces.DeterminateNextListener;
 import com.siem.siemusuarios.utils.Constants;
 import com.siem.siemusuarios.utils.Utils;
 
@@ -32,7 +31,6 @@ public class CustomEdittextUbicacion extends RelativeLayout {
     private AppCompatEditText mEdittext;
     private AppCompatImageView mIconUbicacion;
     private AppCompatImageView mIconClear;
-    private DeterminateNextListener mListener;
 
     private boolean mIconUbicacionEnable = true;
     private Double mLatitude;
@@ -99,12 +97,6 @@ public class CustomEdittextUbicacion extends RelativeLayout {
         mEdittext.setText(text);
         mLatitude = lat;
         mLongitude = lng;
-        if(mListener != null)
-            mListener.determinateNext();
-    }
-
-    public void setListener(DeterminateNextListener listener) {
-        mListener = listener;
     }
 
     public void setEdittextOnClickListener(OnClickListener listener){

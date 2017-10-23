@@ -58,6 +58,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden">
         </activity>
+        <activity
+            android:name=".ui.activity.ConsultarAuxilioActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <!-- FCM -->
         <service

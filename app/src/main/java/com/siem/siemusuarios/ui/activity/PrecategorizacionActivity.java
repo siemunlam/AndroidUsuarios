@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -25,7 +25,6 @@ import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.adapter.MotivosAdapter;
 import com.siem.siemusuarios.databinding.ActivityPrecategorizacionBinding;
 import com.siem.siemusuarios.db.DBWrapper;
-import com.siem.siemusuarios.interfaces.DeterminateNextListener;
 import com.siem.siemusuarios.model.api.Motivo;
 import com.siem.siemusuarios.model.app.Auxilio;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
@@ -38,15 +37,14 @@ import java.util.HashMap;
 
 import static com.siem.siemusuarios.utils.Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE;
 
-public class PrecategorizacionActivity extends ActivateGpsActivity implements
-        DeterminateNextListener{
+public class PrecategorizacionActivity extends ActivateGpsActivity{
 
     private static final int LOCATION_PERMISSIONS_REQUEST = 1000;
     private ActivityPrecategorizacionBinding mBinding;
     private MotivosAdapter mAdapter;
+    private Typeface mTypeface;
 
     //TODO: SaveInstanceState
-    //TODO: Search
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +52,13 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_precategorizacion);
         setToolbar(false);
 
-        mAdapter = new MotivosAdapter(new ArrayList<Motivo>(), this);
+        mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT_BOLD);
+        mAdapter = new MotivosAdapter(new ArrayList<Motivo>());
         mBinding.recyclerview.setAdapter(mAdapter);
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerEndItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
 
-        mBinding.customEdittextUbicacion.setListener(this);
         mBinding.customEdittextUbicacion.setUbicacionOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,18 +81,25 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
         mBinding.buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Auxilio auxilio = new Auxilio();
-                auxilio.setLatitud(String.valueOf(mBinding.customEdittextUbicacion.getLatitude()));
-                auxilio.setLongitud(String.valueOf(mBinding.customEdittextUbicacion.getLongitude()));
-                auxilio.setUbicacion(mBinding.customEdittextUbicacion.getText());
-                auxilio.addMotivos(mAdapter.getMotivos());
-                Intent intent = new Intent(PrecategorizacionActivity.this, AjusteActivity.class);
-                intent.putExtra(Constants.KEY_AUXILIO, auxilio);
-                Utils.startActivityWithTransition(PrecategorizacionActivity.this, intent);
+                if(mBinding.customEdittextUbicacion.haveLocation() &&
+                        mAdapter.haveData()){
+                    Auxilio auxilio = new Auxilio();
+                    auxilio.setLatitud(String.valueOf(mBinding.customEdittextUbicacion.getLatitude()));
+                    auxilio.setLongitud(String.valueOf(mBinding.customEdittextUbicacion.getLongitude()));
+                    auxilio.setUbicacion(mBinding.customEdittextUbicacion.getText());
+                    auxilio.addMotivos(mAdapter.getMotivos());
+                    Intent intent = new Intent(PrecategorizacionActivity.this, AjusteActivity.class);
+                    intent.putExtra(Constants.KEY_AUXILIO, auxilio);
+                    Utils.startActivityWithTransition(PrecategorizacionActivity.this, intent);
+                }else{
+
+                }
             }
         });
 
         mAdapter.setListDatos(DBWrapper.getAllPrecategorizaciones(this));
+        mBinding.titleUbicacion.setTypeface(mTypeface);
+        mBinding.titleSintomas.setTypeface(mTypeface);
 
         if(savedInstanceState != null){
             if(savedInstanceState.containsKey(Constants.KEY_DIRECCION) && savedInstanceState.containsKey(Constants.KEY_LAT) && savedInstanceState.containsKey(Constants.KEY_LNG)){
@@ -107,7 +112,6 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
                 HashMap<String, Integer> motivos = (HashMap<String, Integer>) savedInstanceState.getSerializable(Constants.KEY_MOTIVOS);
                 mAdapter.setListDatos(motivos);
             }
-            determinateNext();
         }
     }
 
@@ -138,14 +142,6 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
 
             case R.id.menuLlamar:
                 Utils.dialSiem(this);
-                return true;
-
-            case R.id.menuPerfiles:
-                Utils.startActivityWithTransition(this, new Intent(PrecategorizacionActivity.this, PerfilesActivity.class));
-                return true;
-
-            case R.id.menuConsultarAuxilio:
-
                 return true;
 
             default:
@@ -186,33 +182,6 @@ public class PrecategorizacionActivity extends ActivateGpsActivity implements
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 Toast.makeText(PrecategorizacionActivity.this, getString(R.string.errorPlaceApi, status.getStatusCode()), Toast.LENGTH_LONG).show();
             }
-        }
-    }
-
-    /**
-     * DeterminateNextListener
-     */
-    @Override
-    public void determinateNext() {
-        if(mBinding.customEdittextUbicacion.haveLocation() &&
-                mAdapter.haveData()){
-            showButton();
-        }else{
-            hideButton();
-        }
-    }
-
-    public void showButton() {
-        if(mBinding.buttonNext.getVisibility() != View.VISIBLE){
-            mBinding.buttonNext.startAnimation(AnimationUtils.loadAnimation(this, R.anim.show_center));
-            mBinding.buttonNext.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public void hideButton() {
-        if (mBinding.buttonNext.getVisibility() != View.GONE) {
-            mBinding.buttonNext.startAnimation(AnimationUtils.loadAnimation(this, R.anim.hide_center));
-            mBinding.buttonNext.setVisibility(View.GONE);
         }
     }
 }

@@ -20,5 +20,51 @@
             android:layout_marginLeft="@dimen/marginHorizontalLogo"
             android:layout_marginRight="@dimen/marginHorizontalLogo"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/contentButtons"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:layout_marginLeft="@dimen/doubleDefaultMargin"
+            android:layout_marginRight="@dimen/doubleDefaultMargin">
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonGenerarAuxilio"
+                android:layout_marginBottom="@dimen/defaultMargin"
+                android:text="@string/generarAuxilio"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:textAllCaps="false"/>
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonConsultarAuxilio"
+                android:layout_marginBottom="@dimen/defaultMargin"
+                android:text="@string/menuConsultarAuxilio"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:textAllCaps="false"/>
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonPerfiles"
+                android:layout_marginBottom="@dimen/doubleDefaultMargin"
+                android:text="@string/menuPerfiles"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/progress"
+            android:theme="@style/AppTheme.colorAccent"
+            android:visibility="gone"/>
+
     </RelativeLayout>
 </layout>

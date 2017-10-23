@@ -12,6 +12,7 @@
     <dimen name="paddingIconEdittextUbicacion">7dp</dimen>
     <dimen name="paddingLeftEdittextUbicacion">10dp</dimen>
     <dimen name="paddingRightEdittextUbicacion">45dp</dimen>
+    <dimen name="textsizeTitle">17sp</dimen>
 
     <!-- Splash -->
     <dimen name="marginHorizontalLogo">50dp</dimen>

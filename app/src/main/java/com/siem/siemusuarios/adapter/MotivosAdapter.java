@@ -8,13 +8,11 @@ import android.view.ViewGroup;
 
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.FilaMotivosBinding;
-import com.siem.siemusuarios.interfaces.DeterminateNextListener;
 import com.siem.siemusuarios.interfaces.RadioButtonSelectedListener;
 import com.siem.siemusuarios.model.api.Motivo;
 import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
 import com.siem.siemusuarios.utils.Constants;
 
-import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -23,12 +21,10 @@ import java.util.List;
 public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosViewHolder> {
 
     private List<Motivo> mListDatos;
-    private WeakReference<DeterminateNextListener> mListener;
 
-    public MotivosAdapter(List<Motivo> datos, DeterminateNextListener listener){
+    public MotivosAdapter(List<Motivo> datos){
         mListDatos = datos;
         sortData();
-        mListener = new WeakReference<>(listener);
     }
 
     @Override
@@ -160,8 +156,6 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
         private void setPositionOptionSelected(Integer position) {
             mMotivo.setPositionOptionSelected(position);
             notifyDataSetChanged();
-            if(mListener != null && mListener.get() != null)
-                mListener.get().determinateNext();
         }
     }
 
