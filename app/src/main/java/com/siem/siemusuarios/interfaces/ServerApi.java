@@ -3,6 +3,7 @@ package com.siem.siemusuarios.interfaces;
 
 import com.siem.siemusuarios.model.api.ResponseGenerarAuxilio;
 import com.siem.siemusuarios.model.api.ResponseMotivos;
+import com.siem.siemusuarios.model.api.ResponseSuscribirse;
 import com.siem.siemusuarios.utils.Constants;
 
 import retrofit2.Call;
@@ -10,6 +11,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ServerApi {
 
@@ -32,5 +34,11 @@ public interface ServerApi {
 
     @GET(Constants.API_MOTIVOS_AJUSTE)
     Call<ResponseMotivos> getMotivosAjuste();
+
+    @FormUrlEncoded
+    @POST(Constants.API_SUSCRIBIRSE_AUXILIO)
+    Call<ResponseSuscribirse> suscribirse(
+            @Path(Constants.KEY_CODE) String code,
+            @Field(Constants.KEY_CODIGO) String codigo);
 
 }

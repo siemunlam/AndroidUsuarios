@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.siem.siemusuarios.utils.PreferencesHelper;
 
 /**
  * Created by Lucas on 20/9/17.
@@ -20,8 +21,8 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     private void sendRegistrationToServer(String token) {
         Log.i("123456789", "Aca: " + token);
-        //PreferencesHelper preferences = PreferencesHelper.getInstance();
-        //preferences.setFirebaseToken(token);
+        PreferencesHelper preferences = PreferencesHelper.getInstance();
+        preferences.setFirebaseToken(token);
     }
 
 }
