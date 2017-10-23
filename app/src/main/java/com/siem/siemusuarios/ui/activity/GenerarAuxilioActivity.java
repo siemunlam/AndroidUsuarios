@@ -3,7 +3,6 @@ package com.siem.siemusuarios.ui.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -44,11 +43,13 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
         DialogInterface.OnClickListener {
 
     private static final int UPDATE_PERFIL = 1055;
+    private static final int TIME_TOOLTIP_DURATION = 10000;
 
     private Auxilio mAuxilio;
     private ActivityGenerarAuxilioBinding mBinding;
     private Typeface mBoldTypeface;
     private Typeface mTypeface;
+    private Tooltip.TooltipView mTooltipView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,25 +88,7 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
         mBinding.nombre.setOnImageClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //editPerfil();
-                Tooltip.make(GenerarAuxilioActivity.this,
-                        new Tooltip.Builder(101)
-                                .anchor(mBinding.nombre.getImage(), Tooltip.Gravity.BOTTOM)
-                                .closePolicy(
-                                        new Tooltip.ClosePolicy()
-                                        .insidePolicy(true, false)
-                                        .outsidePolicy(true, false), 10000)
-                                .activateDelay(800)
-                                .showDelay(300)
-                                .text(getString(R.string.exampleReferencia))
-                                .maxWidth(500)
-                                .withArrow(true)
-                                .withOverlay(true)
-                                .typeface(mBoldTypeface)
-                                .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
-                                .withStyleId(R.style.TooltipStyle)
-                                .build()
-                ).show();
+                editPerfil();
             }
         });
 
@@ -113,6 +96,33 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
             @Override
             public void onClick(View v) {
                 editPerfil();
+            }
+        });
+
+        mBinding.referencia.setOnImageClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mTooltipView != null)
+                    mTooltipView.hide();
+                mTooltipView = Tooltip.make(GenerarAuxilioActivity.this,
+                        new Tooltip.Builder(101)
+                                .anchor(mBinding.referencia.getImage(), Tooltip.Gravity.BOTTOM)
+                                .closePolicy(
+                                        new Tooltip.ClosePolicy()
+                                                .insidePolicy(true, false)
+                                                .outsidePolicy(true, false), TIME_TOOLTIP_DURATION)
+                                .activateDelay(800)
+                                .showDelay(300)
+                                .text(getString(R.string.exampleReferencia))
+                                .maxWidth(750)
+                                .withArrow(true)
+                                .withOverlay(true)
+                                .typeface(mBoldTypeface)
+                                .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
+                                .withStyleId(R.style.TooltipStyle)
+                                .build()
+                );
+                mTooltipView.show();
             }
         });
     }
@@ -155,7 +165,6 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
 
     private void setUI() {
         mBinding.titleAuxilioGenerar.setTypeface(mBoldTypeface);
-        mBinding.edittextReferencia.setTypeface(mTypeface);
         mBinding.edittextObservaciones.setTypeface(mTypeface);
         setDatos();
     }
@@ -210,7 +219,7 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
         Call<ResponseGenerarAuxilio> response = RetrofitClient.getServerClient().generarAuxilio(
                 mAuxilio.getContacto(null),
                 mAuxilio.getUbicacion(),
-                mBinding.edittextReferencia.getText().toString(),
+                mBinding.referencia.getText(),
                 mAuxilio.getLatitud(),
                 mAuxilio.getLongitud(),
                 jsonMotivos,
