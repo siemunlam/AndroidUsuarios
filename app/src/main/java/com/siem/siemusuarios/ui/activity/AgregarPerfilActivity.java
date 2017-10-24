@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.ActivityAgregarPerfilBinding;
-import com.siem.siemusuarios.interfaces.RadioButtonSelectedListener;
+import com.siem.siemusuarios.interfaces.RadioButtonDialogListener;
 import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
 import com.siem.siemusuarios.utils.Constants;
@@ -38,7 +38,7 @@ import java.util.Date;
 
 public class AgregarPerfilActivity extends ToolbarActivity implements
         DatePickerDialog.OnDateSetListener,
-        RadioButtonSelectedListener {
+        RadioButtonDialogListener {
 
     private static final int REQUEST_CHOOSE_CONTACT = 50;
     private static final int CONTACT_PERMISSIONS_REQUEST = 1000;
@@ -267,7 +267,7 @@ public class AgregarPerfilActivity extends ToolbarActivity implements
     }
 
     /**
-     * RadioButtonSelectedListener
+     * RadioButtonDialogListener
      */
     @Override
     public void radioButtonSelected(int positionItem) {

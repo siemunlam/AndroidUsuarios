@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.FilaMotivosBinding;
-import com.siem.siemusuarios.interfaces.RadioButtonSelectedListener;
+import com.siem.siemusuarios.interfaces.RadioButtonDialogListener;
 import com.siem.siemusuarios.model.api.Motivo;
 import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
 import com.siem.siemusuarios.utils.Constants;
@@ -102,7 +102,7 @@ public class MotivosAdapter extends RecyclerView.Adapter<MotivosAdapter.MotivosV
 
 
     public class MotivosViewHolder extends RecyclerView.ViewHolder
-            implements RadioButtonSelectedListener{
+            implements RadioButtonDialogListener {
 
         private FilaMotivosBinding mBinding;
         private Motivo mMotivo;
