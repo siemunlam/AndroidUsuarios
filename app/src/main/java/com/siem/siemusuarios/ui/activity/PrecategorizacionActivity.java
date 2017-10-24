@@ -1,6 +1,7 @@
 package com.siem.siemusuarios.ui.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
@@ -94,7 +95,7 @@ public class PrecategorizacionActivity extends ActivateGpsActivity{
                     auxilio.addMotivos(mAdapter.getMotivos());
                     Intent intent = new Intent(PrecategorizacionActivity.this, AjusteActivity.class);
                     intent.putExtra(Constants.KEY_AUXILIO, auxilio);
-                    Utils.startActivityWithTransition(PrecategorizacionActivity.this, intent);
+                    Utils.startActivityWithTransitionForResult(PrecategorizacionActivity.this, intent, Constants.KEY_AUXILIO_GENERADO);
                 }else{
                     List<View> listVibrate = new ArrayList<>();
                     String error = "";
@@ -203,6 +204,10 @@ public class PrecategorizacionActivity extends ActivateGpsActivity{
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 Toast.makeText(PrecategorizacionActivity.this, getString(R.string.errorPlaceApi, status.getStatusCode()), Toast.LENGTH_LONG).show();
             }
+        }else if(requestCode == Constants.KEY_AUXILIO_GENERADO && resultCode == RESULT_OK){
+            Intent intent = new Intent();
+            setResult(Activity.RESULT_OK, intent);
+            finish();
         }
     }
 

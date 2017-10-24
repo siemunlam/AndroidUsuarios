@@ -12,6 +12,8 @@ import com.siem.siemusuarios.utils.Utils;
 
 import java.io.Serializable;
 
+import static com.siem.siemusuarios.utils.Constants.KEY_AUXILIO_GENERADO;
+
 /**
  * Created by lucas on 10/19/17.
  */
@@ -23,7 +25,7 @@ public class SeleccionarNewContactoStrategy implements SeleccionarContactoStrate
         Intent intent = new Intent(activity, GenerarAuxilioActivity.class);
         auxilio.setPerfil(perfil);
         intent.putExtra(Constants.KEY_AUXILIO, auxilio);
-        Utils.startActivityWithTransition(activity, intent);
+        Utils.startActivityWithTransitionForResult(activity, intent, KEY_AUXILIO_GENERADO);
     }
 
 }

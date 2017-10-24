@@ -14,6 +14,7 @@ public class Constants {
 
     public static final String FORMAT_NOMBRE_APELLIDO = "%1$s %2$s";
     public static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1010;
+    public static final int KEY_AUXILIO_GENERADO = 1050;
 
     /**
      * Key saveInstanceState

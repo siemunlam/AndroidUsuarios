@@ -1,5 +1,6 @@
 package com.siem.siemusuarios.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
@@ -57,7 +58,7 @@ public class AjusteActivity extends ToolbarActivity {
                 auxilio.addMotivos(mAdapter.getMotivos());
                 intent.putExtra(Constants.KEY_AUXILIO, auxilio);
                 intent.putExtra(Constants.KEY_SELECCIONAR_CONTACTO_STRATEGY, new SeleccionarNewContactoStrategy());
-                Utils.startActivityWithTransition(AjusteActivity.this, intent);
+                Utils.startActivityWithTransitionForResult(AjusteActivity.this, intent, Constants.KEY_AUXILIO_GENERADO);
             }
         });
 
@@ -74,6 +75,17 @@ public class AjusteActivity extends ToolbarActivity {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putSerializable(Constants.KEY_AUXILIO, getAuxilio(savedInstanceState));
         savedInstanceState.putSerializable(Constants.KEY_MOTIVOS, mAdapter.getMotivosSaveState());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.KEY_AUXILIO_GENERADO) {
+            if (resultCode == RESULT_OK) {
+                Intent intent = new Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        }
     }
 
     private Auxilio getAuxilio(Bundle savedInstanceState) {

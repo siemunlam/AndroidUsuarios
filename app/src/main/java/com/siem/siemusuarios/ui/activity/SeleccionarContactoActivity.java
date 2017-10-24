@@ -1,5 +1,6 @@
 package com.siem.siemusuarios.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
@@ -65,7 +66,7 @@ public class SeleccionarContactoActivity extends ToolbarActivity implements
                 Intent intent = new Intent(SeleccionarContactoActivity.this, GenerarAuxilioActivity.class);
                 Auxilio auxilio = getAuxilio();
                 intent.putExtra(Constants.KEY_AUXILIO, auxilio);
-                Utils.startActivityWithTransition(SeleccionarContactoActivity.this, intent);
+                Utils.startActivityWithTransitionForResult(SeleccionarContactoActivity.this, intent, Constants.KEY_AUXILIO_GENERADO);
             }
         });
 
@@ -77,6 +78,17 @@ public class SeleccionarContactoActivity extends ToolbarActivity implements
     public void onResume(){
         super.onResume();
         mAdapter.setListDatos(DBWrapper.getAllPerfiles(this));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.KEY_AUXILIO_GENERADO) {
+            if (resultCode == RESULT_OK) {
+                Intent intent = new Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        }
     }
 
     private Auxilio getAuxilio() {

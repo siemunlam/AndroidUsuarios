@@ -1,5 +1,6 @@
 package com.siem.siemusuarios.ui.activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -290,7 +291,11 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
     private void goToConsultarAuxilio() {
         if(mAuxilio.getEstado() == null || mAuxilio.getEstado().isEmpty())
             mAuxilio.setEstado(getString(R.string.estadoPendiente));
+        Toast.makeText(this, getString(R.string.auxilioGeneradoCorrectamente, mAuxilio.getCodigo()), Toast.LENGTH_LONG).show();
         DBWrapper.saveAuxilio(this, mAuxilio);
+        Intent intent = new Intent();
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 
     private void error(){

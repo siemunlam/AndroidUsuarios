@@ -67,4 +67,5 @@
     <string name="minimumMotivos">Debe haber al menos 1 motivo</string>
     <string name="exampleReferencia">Por ejemplo: Av. Rivadavia 1500 3°A. Puerta blanca</string>
     <string name="estadoPendiente">Pendiente</string>
+    <string name="auxilioGeneradoCorrectamente">Auxilio generado correctamente.\nCodigo de auxilio: %1$s</string>
 </resources>

@@ -48,7 +48,7 @@ public class SplashActivity extends AppCompatActivity {
         mBinding.buttonGenerarAuxilio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.startActivityWithTransition(SplashActivity.this, new Intent(SplashActivity.this, PrecategorizacionActivity.class));
+                Utils.startActivityWithTransitionForResult(SplashActivity.this, new Intent(SplashActivity.this, PrecategorizacionActivity.class), Constants.KEY_AUXILIO_GENERADO);
             }
         });
 
@@ -89,6 +89,13 @@ public class SplashActivity extends AppCompatActivity {
         super.onPause();
         /*if(mHandler != null)
             mHandler.removeCallbacks(mRunnable);*/
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == Constants.KEY_AUXILIO_GENERADO && resultCode == RESULT_OK){
+            Utils.startActivityWithTransition(SplashActivity.this, new Intent(SplashActivity.this, ConsultarAuxilioActivity.class));
+        }
     }
 
     public void getMotivosPrecategorizacion() {
