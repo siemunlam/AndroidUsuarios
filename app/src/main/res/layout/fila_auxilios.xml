@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:test="http://schemas.android.com/tools">
+    <data>
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heightFilaPerfiles"
+        android:id="@+id/contentRow"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/halfDefaultMargin"
+        android:paddingRight="@dimen/halfDefaultMargin">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textCodigo"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            test:text="ABCDE12345"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textCodigo"
+            android:id="@+id/textEstado"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            test:text="Estado: Pendiente"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textFecha"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            test:text="12/05/2017"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+</layout>

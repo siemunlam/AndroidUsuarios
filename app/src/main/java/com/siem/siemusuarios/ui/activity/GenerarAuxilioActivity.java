@@ -306,6 +306,7 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
     private void setTouchable(boolean touchable) {
         mBinding.edittextObservaciones.setEnabled(touchable);
         mBinding.referencia.setEnabled(touchable);
+        mBinding.progressContent.setVisibility(touchable ? View.GONE : View.VISIBLE);
         if(touchable){
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }else{

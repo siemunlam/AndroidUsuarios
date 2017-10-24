@@ -308,4 +308,33 @@ public class DBWrapper {
         );
     }
 
+    public static List<Auxilio> getAuxilios(Context context){
+        Cursor cursor = context.getContentResolver().query(
+                DBContract.Auxilios.CONTENT_URI,
+                null,
+                null,
+                null,
+                DBContract.Auxilios.COLUMN_NAME_FECHA + " DESC"
+        );
+
+        List<Auxilio> listAuxilios = new ArrayList<>();
+        if(cursor != null){
+            while(cursor.moveToNext()){
+                String codigo = cursor.getString(cursor.getColumnIndex(DBContract.Auxilios.COLUMN_NAME_CODIGO));
+                String estado = cursor.getString(cursor.getColumnIndex(DBContract.Auxilios.COLUMN_NAME_ESTADO));
+                String fecha = cursor.getString(cursor.getColumnIndex(DBContract.Auxilios.COLUMN_NAME_FECHA));
+
+                Auxilio auxilio = new Auxilio();
+                auxilio.setCodigo(codigo);
+                auxilio.setEstado(estado);
+                auxilio.setFecha(fecha);
+
+                listAuxilios.add(auxilio);
+            }
+            cursor.close();
+        }
+
+        return listAuxilios;
+    }
+
 }

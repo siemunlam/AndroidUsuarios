@@ -11,5 +11,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/appBarLayout"/>
 
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyclerview"
+            android:focusable="true"
+            android:layout_below="@+id/appBarLayout">
+            <requestFocus />
+        </android.support.v7.widget.RecyclerView>
+
     </RelativeLayout>
 </layout>

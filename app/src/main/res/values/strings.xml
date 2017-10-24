@@ -68,4 +68,7 @@
     <string name="exampleReferencia">Por ejemplo: Av. Rivadavia 1500 3°A. Puerta blanca</string>
     <string name="estadoPendiente">Pendiente</string>
     <string name="auxilioGeneradoCorrectamente">Auxilio generado correctamente.\nCodigo de auxilio: %1$s</string>
+
+    <!-- Consultar auxilio -->
+    <string name="estadoDescripcion">Estado: %1$s</string>
 </resources>
