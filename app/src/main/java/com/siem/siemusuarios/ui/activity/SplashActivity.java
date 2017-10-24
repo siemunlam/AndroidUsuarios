@@ -11,6 +11,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.ActivitySplashBinding;
 import com.siem.siemusuarios.db.DBWrapper;
+import com.siem.siemusuarios.interfaces.NotificationStrategy;
 import com.siem.siemusuarios.model.api.Motivo;
 import com.siem.siemusuarios.model.api.ResponseMotivos;
 import com.siem.siemusuarios.utils.Constants;
@@ -25,6 +26,8 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.siem.siemusuarios.fcm.MyFirebaseMessagingService.KEY_NOTIFICATION_STRATEGY;
 
 /**
  * Created by Lucas on 2/10/17.
@@ -70,6 +73,11 @@ public class SplashActivity extends AppCompatActivity {
         mBinding.buttonGenerarAuxilio.setTypeface(mTypeface);
         mBinding.buttonConsultarAuxilio.setTypeface(mTypeface);
         mBinding.buttonPerfiles.setTypeface(mTypeface);
+
+        if(getIntent(). hasExtra(KEY_NOTIFICATION_STRATEGY)){
+            NotificationStrategy strategy = (NotificationStrategy) getIntent().getSerializableExtra(KEY_NOTIFICATION_STRATEGY);
+            strategy.run(this);
+        }
     }
 
     @Override

@@ -1,11 +1,21 @@
 package com.siem.siemusuarios.fcm;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.siem.siemusuarios.ConsultarAuxilioNotificationStrategy;
+import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.db.DBWrapper;
 import com.siem.siemusuarios.model.app.Auxilio;
+import com.siem.siemusuarios.ui.activity.SplashActivity;
 import com.siem.siemusuarios.utils.Constants;
 
 import java.util.Date;
@@ -16,6 +26,8 @@ import java.util.Map;
  */
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+
+    public static final String KEY_NOTIFICATION_STRATEGY = "KEY_NOTIFICATION_STRATEGY";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -44,6 +56,31 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
         auxilio.setFecha(String.valueOf(date.getTime()));
         DBWrapper.updateAuxilio(this, auxilio);
+
+        sendNotification(getString(R.string.auxilioChangeStatus, auxilio.getCodigo()), auxilio.getEstado());
+    }
+
+    private void sendNotification(String contentTitle, String messageBody) {
+        Intent intent = new Intent(this, SplashActivity.class);
+        intent.putExtra(KEY_NOTIFICATION_STRATEGY, new ConsultarAuxilioNotificationStrategy());
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        long[] vibrate = {1000, 1000, 1000, 1000};
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+        mBuilder.setSmallIcon(R.drawable.ic_notif_ambulance);
+        mBuilder.setAutoCancel(true);
+        mBuilder.setSound(defaultSoundUri);
+        mBuilder.setContentIntent(pendingIntent);
+        mBuilder.setVibrate(vibrate);
+        mBuilder.setContentTitle(contentTitle);
+        if(messageBody != null)
+            mBuilder.setContentText(messageBody);
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(Constants.NOTIFICATION_ID, mBuilder.build());
     }
 
 }

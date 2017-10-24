@@ -17,6 +17,11 @@ public class Constants {
     public static final int KEY_AUXILIO_GENERADO = 1050;
 
     /**
+     * Notification ID
+     */
+    public static final int NOTIFICATION_ID = 2010;
+
+    /**
      * Key saveInstanceState
      */
     public static final String KEY_PERFIL = "KEY_PERFIL";

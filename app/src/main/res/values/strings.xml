@@ -71,4 +71,7 @@
 
     <!-- Consultar auxilio -->
     <string name="estadoDescripcion">Estado: %1$s</string>
+
+    <!-- Notification -->
+    <string name="auxilioChangeStatus">El auxilio %1$s ha cambiado de estado</string>
 </resources>
