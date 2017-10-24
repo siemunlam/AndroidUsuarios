@@ -55,7 +55,7 @@ public class Constants {
     public static final String API_GENERAR_AUXILIO = "auxilios/";
     public static final String API_MOTIVOS_PRECATEGORIZACION = "rules/motivospc/";
     public static final String API_MOTIVOS_AJUSTE = "rules/motivosajuste/";
-    public static final String API_SUSCRIBIRSE_AUXILIO = "auxilios/{code}/suscribirse";
+    public static final String API_SUSCRIBIRSE_AUXILIO = "auxilios/{code}/suscribirse/";
 
     public static final String KEY_CONTACTO = "contacto";
     public static final String KEY_UBICACION = "ubicacion";

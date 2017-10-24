@@ -10,4 +10,12 @@ public class ResponseSuscribirse {
 
     @SerializedName("status")
     private String mStatus;
+
+    public String getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(String status) {
+        mStatus = status;
+    }
 }

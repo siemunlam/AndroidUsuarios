@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.SeleccionarUpdateContactoStrategy;
 import com.siem.siemusuarios.databinding.ActivityGenerarAuxilioBinding;
+import com.siem.siemusuarios.db.DBWrapper;
 import com.siem.siemusuarios.model.api.ResponseGenerarAuxilio;
 import com.siem.siemusuarios.model.api.ResponseSuscribirse;
 import com.siem.siemusuarios.model.app.Auxilio;
@@ -219,6 +220,7 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
      */
     @Override
     public void onClick(DialogInterface dialog, int which) {
+        setTouchable(false);
         String jsonMotivos = new Gson().toJson(mAuxilio.getMotivos());
         Call<ResponseGenerarAuxilio> response = RetrofitClient.getServerClient().generarAuxilio(
                 mAuxilio.getContacto(null),
@@ -268,21 +270,41 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
                     case Constants.CODE_SERVER_OK_201:
                         ResponseSuscribirse responseSuscribirse = response.body();
                         if(responseSuscribirse != null){
-                            //TODO: Guardar en auxilio
+                            mAuxilio.setEstado(responseSuscribirse.getStatus());
                         }
+                        goToConsultarAuxilio();
                         break;
                     default:
-                        //Siguiente
+                        goToConsultarAuxilio();
                         break;
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseSuscribirse> call, Throwable t) {}
+            public void onFailure(Call<ResponseSuscribirse> call, Throwable t) {
+                goToConsultarAuxilio();
+            }
         });
     }
 
+    private void goToConsultarAuxilio() {
+        if(mAuxilio.getEstado() == null || mAuxilio.getEstado().isEmpty())
+            mAuxilio.setEstado(getString(R.string.estadoPendiente));
+        DBWrapper.saveAuxilio(this, mAuxilio);
+    }
+
     private void error(){
+        setTouchable(true);
         Toast.makeText(this, getString(R.string.error), Toast.LENGTH_LONG).show();
+    }
+
+    private void setTouchable(boolean touchable) {
+        mBinding.edittextObservaciones.setEnabled(touchable);
+        mBinding.referencia.setEnabled(touchable);
+        if(touchable){
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }else{
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        }
     }
 }

@@ -77,4 +77,8 @@ public class CustomEditableEditText extends ConstraintLayout {
     public void setOnImageClickListener(OnClickListener listener){
         mImage.setOnClickListener(listener);
     }
+
+    public void setEnabled(boolean enabled){
+        mEditText.setEnabled(enabled);
+    }
 }

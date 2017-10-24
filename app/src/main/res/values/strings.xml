@@ -66,4 +66,5 @@
     <string name="deseaGenerarAuxilio">Desea generar el auxilio?</string>
     <string name="minimumMotivos">Debe haber al menos 1 motivo</string>
     <string name="exampleReferencia">Por ejemplo: Av. Rivadavia 1500 3°A. Puerta blanca</string>
+    <string name="estadoPendiente">Pendiente</string>
 </resources>

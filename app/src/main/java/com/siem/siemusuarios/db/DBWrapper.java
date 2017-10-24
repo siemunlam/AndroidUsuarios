@@ -7,9 +7,11 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import com.siem.siemusuarios.model.api.Motivo;
+import com.siem.siemusuarios.model.app.Auxilio;
 import com.siem.siemusuarios.model.app.Perfil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -292,6 +294,17 @@ public class DBWrapper {
                 DBContract.Auxilios.CONTENT_URI,
                 null,
                 null
+        );
+    }
+
+    public static void saveAuxilio(Context context, Auxilio auxilio){
+        ContentValues cv = new ContentValues();
+        cv.put(DBContract.Auxilios.COLUMN_NAME_CODIGO, auxilio.getCodigo());
+        cv.put(DBContract.Auxilios.COLUMN_NAME_ESTADO, auxilio.getEstado());
+        cv.put(DBContract.Auxilios.COLUMN_NAME_FECHA, new Date().getTime());
+        context.getContentResolver().insert(
+                DBContract.Auxilios.CONTENT_URI,
+                cv
         );
     }
 
