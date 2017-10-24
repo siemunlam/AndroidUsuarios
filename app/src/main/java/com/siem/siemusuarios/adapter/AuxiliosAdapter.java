@@ -15,6 +15,8 @@ import java.util.List;
 
 public class AuxiliosAdapter extends RecyclerView.Adapter<AuxiliosAdapter.AuxiliosViewHolder> {
 
+    //TODO: Pantalla cuando no hay auxilios en el historial
+    //TODO: Poder consultar un auxilio
     private List<Auxilio> mListDatos;
 
     public AuxiliosAdapter(List<Auxilio> datos){
@@ -63,7 +65,7 @@ public class AuxiliosAdapter extends RecyclerView.Adapter<AuxiliosAdapter.Auxili
             mBinding.textCodigo.setText(auxilio.getCodigo());
             mBinding.textEstado.setText(mBinding.contentRow.getContext().getString(R.string.estadoDescripcion, auxilio.getEstado()));
             Date date = new Date(Long.parseLong(auxilio.getFecha()));
-            mBinding.textFecha.setText(Constants.DATE_FORMAT.format(date));
+            mBinding.textFecha.setText(Constants.DATE_FORMAT_SHOW.format(date));
         }
     }
 

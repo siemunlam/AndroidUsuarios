@@ -202,6 +202,7 @@ public class DBContentProvider extends ContentProvider {
                         null,
                         contentValues
                 );
+                notifyChange(DBContract.Auxilios.CONTENT_URI, null);
                 return Uri.parse(DBContract.Auxilios.CONTENT_URI + "/" + id);
 
             default:
@@ -276,52 +277,59 @@ public class DBContentProvider extends ContentProvider {
 
         switch (match) {
             case PERFILES:
-                return db.update(
+                int updated = db.update(
                         DBContract.Perfiles.TABLE_NAME,
                         values,
                         selection,
                         selectionArgs
                 );
+                return updated;
 
             case PRECATEGORIZACION:
-                return db.update(
+                updated = db.update(
                         DBContract.Precategorizacion.TABLE_NAME,
                         values,
                         selection,
                         selectionArgs
                 );
+                return updated;
 
             case OPCION_PRECATEGORIZACION:
-                return db.update(
+                updated = db.update(
                         DBContract.OpcionPrecategorizacion.TABLE_NAME,
                         values,
                         selection,
                         selectionArgs
                 );
+                return updated;
 
             case AJUSTE:
-                return db.update(
+                updated = db.update(
                         DBContract.Ajuste.TABLE_NAME,
                         values,
                         selection,
                         selectionArgs
                 );
+                return updated;
 
             case OPCION_AJUSTE:
-                return db.update(
+                updated = db.update(
                         DBContract.OpcionAjuste.TABLE_NAME,
                         values,
                         selection,
                         selectionArgs
                 );
+                return updated;
 
             case AUXILIOS:
-                return db.update(
+                updated = db.update(
                         DBContract.Auxilios.TABLE_NAME,
                         values,
                         selection,
                         selectionArgs
                 );
+                notifyChange(DBContract.Auxilios.CONTENT_URI, null);
+                return updated;
 
             default:
                 return 0;

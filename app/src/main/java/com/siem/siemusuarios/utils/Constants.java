@@ -44,6 +44,8 @@ public class Constants {
      * Date
      */
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+    public static final SimpleDateFormat DATE_FORMAT_SHOW = new SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.US);
+    public static final SimpleDateFormat DATE_FORMAT_API = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 
     /**
      * API Server
@@ -74,9 +76,10 @@ public class Constants {
     /**
      * Push Notifications Keys
      */
-    public static final String KEY_STATUS = "status";
-    public static final String KEY_TIMESTAMP = "timestamp";
-    public static final String KEY_ESTIMACION = "estimacion";
+    public static final String PUSH_STATUS = "status";
+    public static final String PUSH_TIMESTAMP = "timestamp";
+    public static final String PUSH_AUXILIO = "auxilio";
+    public static final String PUSH_ESTIMACION = "estimacion";
 
     /**
      * PlaceAutocomplete API
