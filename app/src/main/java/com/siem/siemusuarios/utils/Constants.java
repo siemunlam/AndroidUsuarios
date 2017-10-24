@@ -72,6 +72,13 @@ public class Constants {
     public static final String KEY_CODE = "code";
 
     /**
+     * Push Notifications Keys
+     */
+    public static final String KEY_STATUS = "status";
+    public static final String KEY_TIMESTAMP = "timestamp";
+    public static final String KEY_ESTIMACION = "estimacion";
+
+    /**
      * PlaceAutocomplete API
      */
     public static final String CODE_ARGENTINA = "AR";

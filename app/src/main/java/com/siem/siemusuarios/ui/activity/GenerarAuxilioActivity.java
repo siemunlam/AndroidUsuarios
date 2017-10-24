@@ -176,16 +176,16 @@ public class GenerarAuxilioActivity extends ToolbarActivity implements
     }
 
     private void setDatos(){
-        mBinding.ubicacion.setText(getString(R.string.ubicacionDetalle, mAuxilio.getUbicacion()));
-        mBinding.nombre.setText(getString(R.string.nombreDetalle, mAuxilio.getNombre(getString(R.string.noEspecificado))));
-        mBinding.contacto.setText(getString(R.string.contactoDetalle, mAuxilio.getContacto(getString(R.string.noEspecificado))));
+        mBinding.ubicacion.setTextSpanned(getString(R.string.ubicacionDetalle, mAuxilio.getUbicacion()));
+        mBinding.nombre.setTextSpanned(getString(R.string.nombreDetalle, mAuxilio.getNombre(getString(R.string.noEspecificado))));
+        mBinding.contacto.setTextSpanned(getString(R.string.contactoDetalle, mAuxilio.getContacto(getString(R.string.noEspecificado))));
     }
 
     private void showMotivos() {
         mBinding.contentMotivos.removeAllViews();
         for (final Map.Entry<String, String> entry : mAuxilio.getMotivos().entrySet()) {
             CustomEditableTextview editableTextview = new CustomEditableTextview(this);
-            editableTextview.setText(getString(R.string.motivosDetalle, entry.getKey(), entry.getValue()));
+            editableTextview.setTextSpanned(getString(R.string.motivosDetalle, entry.getKey(), entry.getValue()));
             //editableTextview.setDrawable(R.drawable.ic_delete);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(0, (int) getResources().getDimension(R.dimen.halfDefaultMargin), 0, 0);

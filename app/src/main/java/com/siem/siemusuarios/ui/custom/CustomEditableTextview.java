@@ -3,9 +3,12 @@ package com.siem.siemusuarios.ui.custom;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -64,6 +67,16 @@ public class CustomEditableTextview extends ConstraintLayout {
 
     public void setText(String text){
         mText.setText(text);
+    }
+
+    public void setTextSpanned(String text){
+        Spanned spanned;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            spanned = Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            spanned = Html.fromHtml(text);
+        }
+        mText.setText(spanned);
     }
 
     public void setDrawable(int resId) {

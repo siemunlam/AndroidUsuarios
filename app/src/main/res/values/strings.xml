@@ -56,13 +56,13 @@
 
     <!-- Generar auxilio -->
     <string name="auxilioIngresar">Auxilio a generar</string>
-    <string name="ubicacionDetalle">Ubicación: %1$s</string>
-    <string name="nombreDetalle">Nombre: %1$s</string>
-    <string name="contactoDetalle">Contacto: %1$s</string>
+    <string name="ubicacionDetalle"><![CDATA[<b>Ubicación:</b> %1$s]]></string>
+    <string name="nombreDetalle"><![CDATA[<b>Nombre:</b> %1$s]]></string>
+    <string name="contactoDetalle"><![CDATA[<b>Contacto:</b> %1$s]]></string>
     <string name="referencia">Referencia de la ubicación</string>
     <string name="observaciones">Observaciones</string>
     <string name="noEspecificado">No especificado</string>
-    <string name="motivosDetalle">%1$s: %2$s</string>
+    <string name="motivosDetalle"><![CDATA[<b>%1$s:</b> %2$s]]></string>
     <string name="deseaGenerarAuxilio">Desea generar el auxilio?</string>
     <string name="minimumMotivos">Debe haber al menos 1 motivo</string>
     <string name="exampleReferencia">Por ejemplo: Av. Rivadavia 1500 3°A. Puerta blanca</string>

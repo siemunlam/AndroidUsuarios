@@ -2,6 +2,7 @@ package com.siem.siemusuarios.ui.activity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -32,16 +33,16 @@ import retrofit2.Response;
 public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding mBinding;
-    //private Handler mHandler;
-    //private Runnable mRunnable;
     private boolean mIsSavePrecategorizaciones = false;
     private boolean mIsSaveAjustes = false;
+    private Typeface mTypeface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
 
+        mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT);
         PreferencesHelper preferencesHelper = PreferencesHelper.getInstance();
         preferencesHelper.setFirebaseToken(FirebaseInstanceId.getInstance().getToken());
 
@@ -65,6 +66,10 @@ public class SplashActivity extends AppCompatActivity {
                 Utils.startActivityWithTransition(SplashActivity.this, new Intent(SplashActivity.this, PerfilesActivity.class));
             }
         });
+
+        mBinding.buttonGenerarAuxilio.setTypeface(mTypeface);
+        mBinding.buttonConsultarAuxilio.setTypeface(mTypeface);
+        mBinding.buttonPerfiles.setTypeface(mTypeface);
     }
 
     @Override
@@ -73,22 +78,11 @@ public class SplashActivity extends AppCompatActivity {
 
         getMotivosPrecategorizacion();
         getMotivosAjuste();
-
-        /*mHandler = new Handler();
-        mRunnable = new Runnable() {
-            @Override
-            public void run() {
-                goToFirstActivity();
-            }
-        };
-        mHandler.postDelayed(mRunnable, 5000);*/
     }
 
     @Override
     protected void onPause(){
         super.onPause();
-        /*if(mHandler != null)
-            mHandler.removeCallbacks(mRunnable);*/
     }
 
     @Override
