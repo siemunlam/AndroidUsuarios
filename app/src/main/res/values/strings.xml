@@ -80,4 +80,5 @@
 
     <!-- Notification -->
     <string name="auxilioChangeStatus">El auxilio %1$s ha cambiado de estado</string>
+    <string name="auxilioEnCurso">%1$s\nLlegará aproximadamente en %2$s.\nDistancia aproximada %3$s</string>
 </resources>

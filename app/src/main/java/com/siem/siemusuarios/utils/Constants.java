@@ -85,6 +85,8 @@ public class Constants {
     public static final String PUSH_TIMESTAMP = "timestamp";
     public static final String PUSH_AUXILIO = "auxilio";
     public static final String PUSH_ESTIMACION = "estimacion";
+    public static final String PUSH_TIEMPO = "tiempo";
+    public static final String PUSH_DISTANCIA = "distancia";
 
     /**
      * PlaceAutocomplete API

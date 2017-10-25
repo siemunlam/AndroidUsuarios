@@ -16,7 +16,6 @@ import java.util.List;
 public class AuxiliosAdapter extends RecyclerView.Adapter<AuxiliosAdapter.AuxiliosViewHolder> {
 
     //TODO: Pantalla cuando no hay auxilios en el historial
-    //TODO: Poder consultar un auxilio
     private List<Auxilio> mListDatos;
 
     public AuxiliosAdapter(List<Auxilio> datos){

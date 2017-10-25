@@ -11,6 +11,8 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.siem.siemusuarios.ConsultarAuxilioNotificationStrategy;
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.db.DBWrapper;
@@ -42,8 +44,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String estado = data.get(Constants.PUSH_STATUS);
         String timestamp = data.get(Constants.PUSH_TIMESTAMP);
         String codigo = data.get(Constants.PUSH_AUXILIO);
+        JsonObject jsonObject = null;
         if(data.containsKey(Constants.PUSH_ESTIMACION)){
             String estimacion = data.get(Constants.PUSH_ESTIMACION);
+            jsonObject = new JsonParser().parse(estimacion).getAsJsonObject();
         }
 
         auxilio.setEstado(estado);
@@ -57,7 +61,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         auxilio.setFecha(String.valueOf(date.getTime()));
         DBWrapper.updateAuxilio(this, auxilio);
 
-        sendNotification(getString(R.string.auxilioChangeStatus, auxilio.getCodigo()), auxilio.getEstado());
+        String messageBody;
+        if(jsonObject != null && jsonObject.has(Constants.PUSH_TIEMPO) && jsonObject.has(Constants.PUSH_DISTANCIA)){
+            String tiempo = jsonObject.get(Constants.PUSH_TIEMPO).toString().replaceAll("\"", "");
+            String distancia = jsonObject.get(Constants.PUSH_DISTANCIA).toString().replaceAll("\"", "");
+            messageBody = getString(R.string.auxilioEnCurso, auxilio.getEstado(), tiempo, distancia);
+        }else{
+            messageBody = auxilio.getEstado();
+        }
+        sendNotification(getString(R.string.auxilioChangeStatus, auxilio.getCodigo()), messageBody);
     }
 
     private void sendNotification(String contentTitle, String messageBody) {
@@ -76,6 +88,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         mBuilder.setContentTitle(contentTitle);
         if(messageBody != null)
             mBuilder.setContentText(messageBody);
+
+        new NotificationCompat.BigTextStyle(mBuilder)
+                .bigText(messageBody)
+                .setBigContentTitle(contentTitle);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

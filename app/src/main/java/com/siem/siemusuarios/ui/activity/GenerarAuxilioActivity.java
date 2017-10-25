@@ -47,7 +47,6 @@ import static com.siem.siemusuarios.utils.Constants.PLACE_AUTOCOMPLETE_REQUEST_C
 public class GenerarAuxilioActivity extends ToolbarActivity implements
         DialogInterface.OnClickListener {
 
-    //TODO: Revisar si al generar un auxilio desde la app, le devuelve un codigo, y intenta vincularse nuevamente a ese codigo
     private static final int UPDATE_PERFIL = 1055;
     private static final int TIME_TOOLTIP_DURATION = 10000;
 
