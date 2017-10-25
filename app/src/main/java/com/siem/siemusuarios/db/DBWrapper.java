@@ -298,14 +298,18 @@ public class DBWrapper {
     }
 
     public static void saveAuxilio(Context context, Auxilio auxilio){
-        ContentValues cv = new ContentValues();
-        cv.put(DBContract.Auxilios.COLUMN_NAME_CODIGO, auxilio.getCodigo());
-        cv.put(DBContract.Auxilios.COLUMN_NAME_ESTADO, auxilio.getEstado());
-        cv.put(DBContract.Auxilios.COLUMN_NAME_FECHA, new Date().getTime());
-        context.getContentResolver().insert(
-                DBContract.Auxilios.CONTENT_URI,
-                cv
-        );
+        if(getAuxilio(context, auxilio.getCodigo()) == null){
+            ContentValues cv = new ContentValues();
+            cv.put(DBContract.Auxilios.COLUMN_NAME_CODIGO, auxilio.getCodigo());
+            cv.put(DBContract.Auxilios.COLUMN_NAME_ESTADO, auxilio.getEstado());
+            cv.put(DBContract.Auxilios.COLUMN_NAME_FECHA, new Date().getTime());
+            context.getContentResolver().insert(
+                    DBContract.Auxilios.CONTENT_URI,
+                    cv
+            );
+        }else{
+            updateAuxilio(context, auxilio);
+        }
     }
 
     public static void updateAuxilio(Context context, Auxilio auxilio){
@@ -347,6 +351,32 @@ public class DBWrapper {
         }
 
         return listAuxilios;
+    }
+
+    public static Auxilio getAuxilio(Context context, String codigo){
+        Cursor cursor = context.getContentResolver().query(
+                DBContract.Auxilios.CONTENT_URI,
+                null,
+                DBContract.Auxilios.COLUMN_NAME_CODIGO + " = ? ",
+                new String[]{ codigo },
+                null
+        );
+
+        Auxilio auxilio = null;
+        if(cursor != null){
+            if(cursor.moveToNext()){
+                String estado = cursor.getString(cursor.getColumnIndex(DBContract.Auxilios.COLUMN_NAME_ESTADO));
+                String fecha = cursor.getString(cursor.getColumnIndex(DBContract.Auxilios.COLUMN_NAME_FECHA));
+
+                auxilio = new Auxilio();
+                auxilio.setCodigo(codigo);
+                auxilio.setEstado(estado);
+                auxilio.setFecha(fecha);
+            }
+            cursor.close();
+        }
+
+        return auxilio;
     }
 
 }

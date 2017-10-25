@@ -74,7 +74,7 @@
     <!-- Consultar auxilio -->
     <string name="estadoDescripcion">Estado: %1$s</string>
     <string name="ingresarCodigo">Código de auxilio</string>
-    <string name="suscribirseCorrectamente">Se pudo suscribir correctamente al auxilio %1$s</string>
+    <string name="suscribirseCorrectamente">Se suscribió correctamente al auxilio %1$s</string>
     <string name="errorNoSuscribirse">No se pudo suscribir al auxilio</string>
     <string name="errorCodigoAuxilio">Código de auxilio incorrecto</string>
 
