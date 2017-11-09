@@ -7,6 +7,7 @@ import com.siem.siemusuarios.model.api.ResponseSuscribirse;
 import com.siem.siemusuarios.utils.Constants;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -38,7 +39,12 @@ public interface ServerApi {
     @FormUrlEncoded
     @POST(Constants.API_SUSCRIBIRSE_AUXILIO)
     Call<ResponseSuscribirse> suscribirse(
-            @Path(Constants.KEY_CODE) String code,
+            @Path(Constants.KEY_CODIGO_AUXILIO) String codigo_auxilio,
             @Field(Constants.KEY_CODIGO) String codigo);
+
+    @DELETE(Constants.API_CANCELAR_SUSCRIPCION_AUXILIO)
+    Call<Object> desuscribirse(
+            @Path(Constants.KEY_CODIGO_AUXILIO) String codigo_auxilio,
+            @Path(Constants.KEY_CODIGO_FCM) String codigo_fcm);
 
 }

@@ -54,7 +54,7 @@ public class PrecategorizacionActivity extends ActivateGpsActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_precategorizacion);
-        setToolbar(false);
+        setToolbar(true);
 
         mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT_BOLD);
         mAdapter = new MotivosAdapter(new ArrayList<Motivo>());

@@ -7,19 +7,26 @@ import android.view.ViewGroup;
 
 import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.databinding.FilaAuxiliosBinding;
+import com.siem.siemusuarios.interfaces.SwipeItemDeleteListener;
 import com.siem.siemusuarios.model.app.Auxilio;
+import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.utils.Constants;
+import com.siem.siemusuarios.utils.swipe.ItemTouchHelperAdapter;
 
+import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.List;
 
-public class AuxiliosAdapter extends RecyclerView.Adapter<AuxiliosAdapter.AuxiliosViewHolder> {
+public class AuxiliosAdapter extends RecyclerView.Adapter<AuxiliosAdapter.AuxiliosViewHolder> implements
+        ItemTouchHelperAdapter {
 
     //TODO: Pantalla cuando no hay auxilios en el historial
     private List<Auxilio> mListDatos;
+    private WeakReference<SwipeItemDeleteListener> mListener;
 
-    public AuxiliosAdapter(List<Auxilio> datos){
+    public AuxiliosAdapter(List<Auxilio> datos, SwipeItemDeleteListener swipeItemDeleteListener){
         mListDatos = datos;
+        mListener = new WeakReference<>(swipeItemDeleteListener);
     }
 
     @Override
@@ -43,6 +50,14 @@ public class AuxiliosAdapter extends RecyclerView.Adapter<AuxiliosAdapter.Auxili
     public void setListDatos(List<Auxilio> listDatos) {
         mListDatos = listDatos;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        Auxilio auxilio = mListDatos.remove(position);
+        notifyItemRemoved(position);
+        if(mListener != null && mListener.get() != null)
+            mListener.get().deleteItem(auxilio);
     }
 
 

@@ -17,7 +17,8 @@ import com.siem.siemusuarios.R;
 import com.siem.siemusuarios.adapter.AddPerfilesAdapter;
 import com.siem.siemusuarios.databinding.ActivityPerfilesBinding;
 import com.siem.siemusuarios.db.DBWrapper;
-import com.siem.siemusuarios.interfaces.SwipePerfilDeleteListener;
+import com.siem.siemusuarios.interfaces.SwipeItemDeleteListener;
+import com.siem.siemusuarios.model.app.Item;
 import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerItem;
@@ -29,7 +30,7 @@ import com.siem.siemusuarios.utils.swipe.SimpleItemTouchHelperCallback;
  * Created by Lucas on 25/9/17.
  */
 
-public class PerfilesActivity extends ToolbarActivity implements SwipePerfilDeleteListener {
+public class PerfilesActivity extends ToolbarActivity implements SwipeItemDeleteListener {
 
     private Typeface mTypeface;
     private ActivityPerfilesBinding mBinding;
@@ -39,7 +40,7 @@ public class PerfilesActivity extends ToolbarActivity implements SwipePerfilDele
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_perfiles);
-        setToolbar(false);
+        setToolbar(true);
 
         mTypeface = Typeface.createFromAsset(getAssets(), Constants.PRIMARY_FONT);
         mAdapter = new AddPerfilesAdapter(this, null, this);
@@ -85,7 +86,8 @@ public class PerfilesActivity extends ToolbarActivity implements SwipePerfilDele
      * SwipePerfilDeleteListener
      */
     @Override
-    public void deletePerfil(final Perfil perfil) {
+    public void deleteItem(Item item) {
+        final Perfil perfil = (Perfil)item;
         DBWrapper.deletePerfil(this, perfil);
         controlatePerfiles();
         Snackbar.make(mBinding.view, getString(R.string.perfilEliminado), Snackbar.LENGTH_LONG)

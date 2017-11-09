@@ -11,7 +11,7 @@ import java.io.Serializable;
  * Created by Lucas on 25/9/17.
  */
 
-public class Perfil implements Serializable{
+public class Perfil extends Item implements Serializable{
 
     private static final String MASCULINO = "M";
     private static final String FEMENINO = "F";

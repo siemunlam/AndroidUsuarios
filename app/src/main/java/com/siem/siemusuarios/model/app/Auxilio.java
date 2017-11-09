@@ -10,7 +10,7 @@ import java.util.Map;
  * Created by lucas on 10/18/17.
  */
 
-public class Auxilio implements Serializable {
+public class Auxilio extends Item implements Serializable {
 
     private static final String ORIGEN_MOBILE = "3";
 

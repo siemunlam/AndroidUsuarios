@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,14 +19,18 @@ import com.siem.siemusuarios.databinding.ActivityConsultarAuxilioBinding;
 import com.siem.siemusuarios.db.DBContract;
 import com.siem.siemusuarios.db.DBWrapper;
 import com.siem.siemusuarios.interfaces.EdittextDialogListener;
+import com.siem.siemusuarios.interfaces.SwipeItemDeleteListener;
 import com.siem.siemusuarios.model.api.ResponseSuscribirse;
 import com.siem.siemusuarios.model.app.Auxilio;
+import com.siem.siemusuarios.model.app.Item;
+import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerItem;
 import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
 import com.siem.siemusuarios.utils.Constants;
 import com.siem.siemusuarios.utils.PreferencesHelper;
 import com.siem.siemusuarios.utils.RetrofitClient;
+import com.siem.siemusuarios.utils.swipe.SimpleItemTouchHelperCallback;
 
 import java.util.Date;
 
@@ -38,7 +43,8 @@ import retrofit2.Response;
  */
 
 public class ConsultarAuxilioActivity extends ToolbarActivity implements
-        EdittextDialogListener {
+        EdittextDialogListener,
+        SwipeItemDeleteListener {
 
     private ActivityConsultarAuxilioBinding mBinding;
     private AuxiliosAdapter mAdapter;
@@ -48,13 +54,18 @@ public class ConsultarAuxilioActivity extends ToolbarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_consultar_auxilio);
-        setToolbar(false);
+        setToolbar(true);
 
-        mAdapter = new AuxiliosAdapter(null);
+        mAdapter = new AuxiliosAdapter(null, this);
         mBinding.recyclerview.setAdapter(mAdapter);
         mBinding.recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
         mBinding.recyclerview.addItemDecoration(new CustomDecorationDividerEndItem(ContextCompat.getDrawable(this, R.drawable.custom_dividerrecyclerview)));
+
+        //Enabled swipe in recyclerview
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(mBinding.recyclerview);
 
         mObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
             public void onChange(boolean selfChange) {
@@ -153,5 +164,14 @@ public class ConsultarAuxilioActivity extends ToolbarActivity implements
                 Toast.makeText(ConsultarAuxilioActivity.this, getString(R.string.error), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    /**
+     * SwipeItemDeleteListener
+     */
+    @Override
+    public void deleteItem(Item item) {
+        Auxilio auxilio = (Auxilio)item;
+        RetrofitClient.getServerClient().desuscribirse();
     }
 }

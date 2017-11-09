@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.siem.siemusuarios.databinding.FilaPerfilesBinding;
-import com.siem.siemusuarios.interfaces.SwipePerfilDeleteListener;
+import com.siem.siemusuarios.interfaces.SwipeItemDeleteListener;
 import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.ui.activity.AgregarPerfilActivity;
 import com.siem.siemusuarios.utils.Constants;
@@ -23,10 +23,10 @@ public class AddPerfilesAdapter extends RecyclerView.Adapter<AddPerfilesAdapter.
         ItemTouchHelperAdapter {
 
     private WeakReference<Activity> mActivity;
-    private WeakReference<SwipePerfilDeleteListener> mListener;
+    private WeakReference<SwipeItemDeleteListener> mListener;
     private List<Perfil> mListDatos;
 
-    public AddPerfilesAdapter(Activity activity, List<Perfil> datos, SwipePerfilDeleteListener swipePerfilDeleteListener){
+    public AddPerfilesAdapter(Activity activity, List<Perfil> datos, SwipeItemDeleteListener swipePerfilDeleteListener){
         mListDatos = datos;
         mActivity = new WeakReference<>(activity);
         mListener = new WeakReference<>(swipePerfilDeleteListener);
@@ -67,7 +67,7 @@ public class AddPerfilesAdapter extends RecyclerView.Adapter<AddPerfilesAdapter.
         Perfil perfil = mListDatos.remove(position);
         notifyItemRemoved(position);
         if(mListener != null && mListener.get() != null)
-            mListener.get().deletePerfil(perfil);
+            mListener.get().deleteItem(perfil);
     }
 
     public class PerfilesViewHolder extends RecyclerView.ViewHolder{
