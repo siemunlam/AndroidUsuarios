@@ -23,7 +23,6 @@ import com.siem.siemusuarios.interfaces.SwipeItemDeleteListener;
 import com.siem.siemusuarios.model.api.ResponseSuscribirse;
 import com.siem.siemusuarios.model.app.Auxilio;
 import com.siem.siemusuarios.model.app.Item;
-import com.siem.siemusuarios.model.app.Perfil;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerEndItem;
 import com.siem.siemusuarios.ui.custom.CustomDecorationDividerItem;
 import com.siem.siemusuarios.ui.custom.CustomFragmentDialog;
@@ -172,6 +171,15 @@ public class ConsultarAuxilioActivity extends ToolbarActivity implements
     @Override
     public void deleteItem(Item item) {
         Auxilio auxilio = (Auxilio)item;
-        RetrofitClient.getServerClient().desuscribirse();
+        PreferencesHelper preferencesHelper = PreferencesHelper.getInstance();
+        DBWrapper.deleteAuxilio(this, auxilio.getCodigo());
+        Call<Object> response = RetrofitClient.getServerClient().desuscribirse(auxilio.getCodigo(), preferencesHelper.getFirebaseToken());
+        response.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {}
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {}
+        });
     }
 }

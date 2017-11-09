@@ -46,8 +46,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String codigo = data.get(Constants.PUSH_AUXILIO);
         JsonObject jsonObject = null;
         if(data.containsKey(Constants.PUSH_ESTIMACION)){
-            String estimacion = data.get(Constants.PUSH_ESTIMACION);
-            jsonObject = new JsonParser().parse(estimacion).getAsJsonObject();
+            try{
+                String estimacion = data.get(Constants.PUSH_ESTIMACION);
+                jsonObject = new JsonParser().parse(estimacion).getAsJsonObject();
+            }catch(Exception e){}
         }
 
         auxilio.setEstado(estado);
@@ -59,17 +61,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             date = new Date();
         }
         auxilio.setFecha(String.valueOf(date.getTime()));
-        DBWrapper.updateAuxilio(this, auxilio);
+        int rowsUpdated = DBWrapper.updateAuxilio(this, auxilio);
 
-        String messageBody;
-        if(jsonObject != null && jsonObject.has(Constants.PUSH_TIEMPO) && jsonObject.has(Constants.PUSH_DISTANCIA)){
-            String tiempo = jsonObject.get(Constants.PUSH_TIEMPO).toString().replaceAll("\"", "");
-            String distancia = jsonObject.get(Constants.PUSH_DISTANCIA).toString().replaceAll("\"", "");
-            messageBody = getString(R.string.auxilioEnCurso, auxilio.getEstado(), tiempo, distancia);
-        }else{
-            messageBody = auxilio.getEstado();
+        if(rowsUpdated > 0){
+            String messageBody;
+            if(jsonObject != null && jsonObject.has(Constants.PUSH_TIEMPO) && jsonObject.has(Constants.PUSH_DISTANCIA)){
+                String tiempo = jsonObject.get(Constants.PUSH_TIEMPO).toString().replaceAll("\"", "");
+                String distancia = jsonObject.get(Constants.PUSH_DISTANCIA).toString().replaceAll("\"", "");
+                messageBody = getString(R.string.auxilioEnCurso, auxilio.getEstado(), tiempo, distancia);
+            }else{
+                messageBody = auxilio.getEstado();
+            }
+            sendNotification(getString(R.string.auxilioChangeStatus, auxilio.getCodigo()), messageBody);
         }
-        sendNotification(getString(R.string.auxilioChangeStatus, auxilio.getCodigo()), messageBody);
     }
 
     private void sendNotification(String contentTitle, String messageBody) {

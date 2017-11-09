@@ -312,15 +312,23 @@ public class DBWrapper {
         }
     }
 
-    public static void updateAuxilio(Context context, Auxilio auxilio){
+    public static int updateAuxilio(Context context, Auxilio auxilio){
         ContentValues cv = new ContentValues();
         cv.put(DBContract.Auxilios.COLUMN_NAME_ESTADO, auxilio.getEstado());
         cv.put(DBContract.Auxilios.COLUMN_NAME_FECHA, new Date().getTime());
-        context.getContentResolver().update(
+        return context.getContentResolver().update(
                 DBContract.Auxilios.CONTENT_URI,
                 cv,
                 DBContract.Auxilios.COLUMN_NAME_CODIGO + " = ? ",
                 new String[]{ auxilio.getCodigo() }
+        );
+    }
+
+    public static void deleteAuxilio(Context context, String codigoAuxilio){
+        context.getContentResolver().delete(
+                DBContract.Auxilios.CONTENT_URI,
+                DBContract.Auxilios.COLUMN_NAME_CODIGO + " = ? ",
+                new String[]{ codigoAuxilio }
         );
     }
 
