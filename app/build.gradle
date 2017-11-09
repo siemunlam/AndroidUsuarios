@@ -26,7 +26,7 @@ android {
         versionCode 2
         versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "BASE_API_URL", "\"http://siemunlam.pythonanywhere.com/api/\""
+        buildConfigField "String", "BASE_API_URL", "\"https://siemunlam.pythonanywhere.com/api/\""
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
