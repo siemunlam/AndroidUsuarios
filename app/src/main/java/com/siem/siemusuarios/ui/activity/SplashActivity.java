@@ -2,9 +2,14 @@ package com.siem.siemusuarios.ui.activity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -78,6 +83,7 @@ public class SplashActivity extends AppCompatActivity {
             NotificationStrategy strategy = (NotificationStrategy) getIntent().getSerializableExtra(KEY_NOTIFICATION_STRATEGY);
             strategy.run(this);
         }
+        setBackgroundImage();
     }
 
     @Override
@@ -98,6 +104,25 @@ public class SplashActivity extends AppCompatActivity {
         if(requestCode == Constants.KEY_AUXILIO_GENERADO && resultCode == RESULT_OK){
             Utils.startActivityWithTransition(SplashActivity.this, new Intent(SplashActivity.this, ConsultarAuxilioActivity.class));
         }
+    }
+
+    private void setBackgroundImage() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 2;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.background, options);
+        Bitmap resizedbitmap = Bitmap.createScaledBitmap(bitmap, width, height, true);
+        BitmapDrawable bmpDrawable = new BitmapDrawable(getResources(), resizedbitmap);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mBinding.imageBackground.setBackground(bmpDrawable);
+        }else{
+            mBinding.imageBackground.setBackgroundDrawable(bmpDrawable);
+        }
+        bitmap.recycle();
     }
 
     public void getMotivosPrecategorizacion() {

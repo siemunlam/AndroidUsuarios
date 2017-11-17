@@ -23,8 +23,8 @@ android {
         applicationId "com.siem.siemusuarios"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 2
-        versionName "1.2"
+        versionCode 3
+        versionName "1.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "BASE_API_URL", "\"https://siemunlam.pythonanywhere.com/api/\""
         vectorDrawables.useSupportLibrary = true

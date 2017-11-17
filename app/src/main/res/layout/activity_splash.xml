@@ -9,9 +9,9 @@
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/background"
             android:scaleType="centerCrop"
-            android:alpha="0.5"/>
+            android:alpha="0.5"
+            android:id="@+id/imageBackground"/>
 
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="match_parent"
